@@ -1,94 +1,103 @@
-"use server"
+"use server";
 
-import { cookies } from "next/headers"
+import { cookies } from "next/headers";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { redirect } from "next/navigation";
+import { loginSchema } from "../_schemas/authSchemas";
+
+export type LoginState = {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  redirectTo?: string;
+};
 
 
-type LoginState = {
-    success: boolean,
-    statusCode: number,
-    message: string,
-    data: {
-        accessToken: string,
-        refreshToken: string,
-        user: {
-            id: string,
-            name: string,
-            email: string,
-            phone: string,
-            profilePhoto: string | null,
-            role: string,
-            status: string,
-            stripeCustomerId: string | null,
-            hasCompletedPayment: boolean,
-            createdAt: string,
-            updatedAt: string
-        }
+const LoginAction = async ( _previousState: LoginState, formData: FormData ): Promise<LoginState> => {
+
+  const parsed = loginSchema.safeParse({
+    email: formData.get("email"),
+    password: formData.get("password"),
+  });
+
+  if (!parsed.success) {
+    return {
+      success: false,
+      statusCode: 400,
+      message: parsed.error.issues[0]?.message ?? "Invalid login details",
+    };
+  }
+
+
+  try {
+    const response = await fetch(`${process.env.BACKEND_APP_URL}/api/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(parsed.data),
+    });
+    const result = await response.json();
+
+    if (!result.success || !result.data?.accessToken || !result.data?.refreshToken) {
+      return {
+        success: false,
+        statusCode: result.statusCode ?? response.status,
+        message: result.message ?? result.errorMessage ?? "Unable to sign in",
+      };
     }
-}
 
 
-const LoginAction = async (previousState: LoginState, formData: FormData) => {
-    // console.log(formData, "Form Data");
+    const cookieStore = await cookies();
 
+    const cookieOptions = {
+      httpOnly: true,
+      sameSite: "lax" as const,
+      secure: process.env.NODE_ENV === "production",
+    };
 
-    console.log(previousState, "Previous State");
-
-    const email = formData.get("email");
-    const password = formData.get("password");
-
-
-    const payload = {
-        email,
-        password
-    }
-
-
-    const res = await fetch(`${process.env.BACKEND_APP_URL}/api/auth/login`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
+    cookieStore.set("accessToken", result.data.accessToken, {
+      ...cookieOptions,
+      maxAge: 60 * 60 * 24,
+    });
+    cookieStore.set("refreshToken", result.data.refreshToken, {
+      ...cookieOptions,
+      maxAge: 60 * 60 * 24 * 7,
     });
 
-    const result = await res.json();
 
-    console.log(result, "Response Data");
 
-    if(result.success) {
-        const cookieStore = await cookies();
+    const token = jwt.decode(result.data.accessToken) as JwtPayload;
 
-        cookieStore.set("accessToken", result.data.accessToken ,{
-            httpOnly: false,
-            sameSite: "lax",
-            maxAge: 60 * 60 * 24 // 1 Day
-        })
+    const dashboardByRole = {
+      TENANT: "/dashboard/tenant",
+      LANDLORD: "/dashboard/landlord",
+      ADMIN: "/dashboard/admin",
+    } as const;
 
-        cookieStore.set("refreshToken", result.data.refreshToken ,{
-            httpOnly: false,
-            sameSite: "lax",
-            maxAge: 60 * 60 * 24 * 7 // 7 Day
-        })
 
-        const decodedToken = jwt.decode(result.data.accessToken) as JwtPayload;
+    const destination = dashboardByRole[token?.role as keyof typeof dashboardByRole];
 
-        console.log(decodedToken, "decodedToken from AuthAction.ts file");
-
-        if(decodedToken.role === "TENANT"){
-            redirect("/dashboard/tenant", "replace");
-        } else if (decodedToken.role === "LANDLORD"){
-            redirect("/dashboard/landlord", "replace");
-        } else if (decodedToken.role === "ADMIN"){
-            redirect("/dashboard/admin", "replace");
-        }
-        
+    if (!destination) {
+      return {
+        success: false,
+        statusCode: 400,
+        message: "Your account role is not supported",
+      };
     }
 
-    return result;
+    return {
+      success: true,
+      statusCode: response.status,
+      message: "Signed in successfully",
+      redirectTo: destination,
+    };
 
-}
+  } catch {
+    return {
+      success: false,
+      statusCode: 500,
+      message: "Unable to reach the server. Please try again.",
+    };
+  }
+};
 
 
 export default LoginAction;
