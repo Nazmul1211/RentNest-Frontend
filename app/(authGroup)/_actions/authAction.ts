@@ -1,6 +1,8 @@
 "use server"
 
 import { cookies } from "next/headers"
+import jwt, { JwtPayload } from "jsonwebtoken";
+import { redirect } from "next/navigation";
 
 
 type LoginState = {
@@ -70,6 +72,17 @@ const LoginAction = async (previousState: LoginState, formData: FormData) => {
             maxAge: 60 * 60 * 24 * 7 // 7 Day
         })
 
+        const decodedToken = jwt.decode(result.data.accessToken) as JwtPayload;
+
+        console.log(decodedToken, "decodedToken from AuthAction.ts file");
+
+        if(decodedToken.role === "TENANT"){
+            redirect("/dashboard/tenant", "replace");
+        } else if (decodedToken.role === "LANDLORD"){
+            redirect("/dashboard/landlord", "replace");
+        } else if (decodedToken.role === "ADMIN"){
+            redirect("/dashboard/admin", "replace");
+        }
         
     }
 
