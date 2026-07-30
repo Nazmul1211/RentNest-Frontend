@@ -100,4 +100,11 @@ const LoginAction = async ( _previousState: LoginState, formData: FormData ): Pr
 };
 
 
+export const LogoutAction = async () => {
+  const cookieStore = await cookies();
+  cookieStore.delete("accessToken");
+  cookieStore.delete("refreshToken");
+  return { success: true };
+};
+
 export default LoginAction;
