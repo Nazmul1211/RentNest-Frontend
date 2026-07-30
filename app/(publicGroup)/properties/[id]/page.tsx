@@ -3,8 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Bed, Bath, Ruler, MapPin, Calendar, CheckCircle2, ShieldCheck, Mail, Phone, CalendarDays } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Property } from "../../_components/PropertyCard";
+import RentanSubmissionModal from "../../_components/RentanSubmissionModal";
+
+
 
 export default async function PropertyDetailPage({
   params,
@@ -19,9 +21,10 @@ export default async function PropertyDetailPage({
     const res = await fetch(`${process.env.BACKEND_APP_URL}/api/properties/${id}`, {
       cache: "no-store", // Fetch fresh status/details
     });
-    
+
     if (res.ok) {
       const data = await res.json();
+      // console.log(data, 'data');
       property = data.data || null;
     }
   } catch (error) {
@@ -36,10 +39,10 @@ export default async function PropertyDetailPage({
   const categoryName = property.categoryId === "a2c49963-308b-478c-9f42-262edff5e996"
     ? "Apartment"
     : property.categoryId === "36788eab-f75e-488c-8120-8252fab6c49c"
-    ? "House"
-    : property.categoryId === "55f0ad3b-fddf-4586-b96d-78eb49c286f9"
-    ? "Penthouse"
-    : "Property";
+      ? "House"
+      : property.categoryId === "55f0ad3b-fddf-4586-b96d-78eb49c286f9"
+        ? "Penthouse"
+        : "Property";
   const formattedRent = Number(property.rentAmount).toLocaleString();
   const formattedDeposit = Number(property.securityDeposit).toLocaleString();
 
@@ -65,7 +68,7 @@ export default async function PropertyDetailPage({
 
       {/* Main Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
+
         {/* Left column: Image & Details */}
         <div className="lg:col-span-2 space-y-8">
           {/* Main Image */}
@@ -143,6 +146,7 @@ export default async function PropertyDetailPage({
           </div>
         </div>
 
+
         {/* Right column: Sticky Checkout Widget */}
         <div className="lg:col-span-1">
           <div className="sticky top-24 p-6 rounded-2xl border border-border/40 bg-card shadow-md space-y-6">
@@ -179,13 +183,9 @@ export default async function PropertyDetailPage({
             </div>
 
             <div className="pt-4 border-t border-border/40 space-y-3">
-              <Button className="w-full h-10 font-bold" disabled={!property.isAvailable}>
-                {property.isAvailable ? "Request Booking" : "Already Rented"}
-              </Button>
-              <Button variant="outline" className="w-full h-10 font-bold">
-                Contact Landlord
-              </Button>
+              <RentanSubmissionModal property={property} triggerText="Contact Landlord" buttonVariant="outline" />
             </div>
+
 
             {/* Verification promise */}
             <div className="flex gap-2 p-3 bg-muted/30 rounded-lg text-[10px] leading-normal text-muted-foreground">

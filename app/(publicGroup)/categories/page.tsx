@@ -1,7 +1,6 @@
 import React from "react";
 import CategoryCard, { categoryType } from "../_components/CategoryCard";
 import { Grid3X3, Layers } from "lucide-react";
-import showToast from "../_components/showToast";
 
 const CategoryPage = async () => {
     let categories: categoryType[] = [];
@@ -22,7 +21,6 @@ const CategoryPage = async () => {
         }
     } catch (error: any) {
         console.error("Error fetching categories:", error);
-        showToast({ message: error.message })
     }
 
     return (
@@ -66,4 +64,4 @@ const CategoryPage = async () => {
     );
 }
 
-export default CategoryPage
+export default CategoryPage;
