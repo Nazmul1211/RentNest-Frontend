@@ -6,7 +6,13 @@ const CategoryPage = async () => {
     let categories: categoryType[] = [];
 
     try {
-        const baseUrl = process.env.BACKEND_APP_URL?.replace(/\/$/, "") || "";
+        const baseUrl = process.env.BACKEND_APP_URL?.replace(/\/$/, "");
+        
+        if (!baseUrl) {
+            console.warn("[v0] BACKEND_APP_URL environment variable is not set");
+            throw new Error("BACKEND_APP_URL environment variable is required");
+        }
+
         const res = await fetch(`${baseUrl}/api/categories`, {
             method: "GET",
             headers: {
@@ -18,13 +24,15 @@ const CategoryPage = async () => {
         if (res.ok) {
             const result = await res.json();
             categories = result?.data || [];
+        } else {
+            console.warn(`[v0] Failed to fetch categories: ${res.status} ${res.statusText}`);
         }
     } catch (error: any) {
-        console.error("Error fetching categories:", error);
+        console.error("[v0] Error fetching categories:", error?.message || error);
     }
 
     return (
-        <div className="min-h-screen bg-linear-to-b from-background to-muted/20 px-4 sm:px-6 lg:px-8 py-12 mt-16 max-w-7xl mx-auto">
+        <div className="min-h-screen bg-gradient-to-b from-background to-muted/20 px-4 sm:px-6 lg:px-8 py-12 mt-16 max-w-7xl mx-auto">
             {/* Page Header */}
             <div className="mb-12 text-center max-w-2xl mx-auto space-y-3">
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-600 text-xs font-bold uppercase tracking-wider">
