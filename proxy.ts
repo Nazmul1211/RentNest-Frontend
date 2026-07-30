@@ -8,7 +8,7 @@ import getNewAccessToken from "./service/refreshToken";
 
 
 const AUTH_ROUTES = ["/login", "/register"];
-const PUBLIC_ROUTES = ["/", "/properties", "/categories"];
+const PUBLIC_ROUTES = ["/", "/properties", "/categories", "/about", "/contact"];
 
 export default async function proxy(request: NextRequest) {
 
@@ -29,13 +29,13 @@ export default async function proxy(request: NextRequest) {
     ? jwtUtils.verifyToken(refreshToken, process.env.JWT_REFRESH_SECRET as string)
     : null;
 
-  if(!decodedAccessToken?.success && decodedRefreshToken?.success){
+  if (!decodedAccessToken?.success && decodedRefreshToken?.success) {
     // If access token has expired but refresh token is valid then get new access token from the backend and set it in the cookies
 
     cookieStore.delete("accessToken");
     const result = await getNewAccessToken();
 
-    if(result.success){
+    if (result.success) {
       const newAccessToken = result.data.accessToken;
 
       cookieStore.set("accessToken", newAccessToken, {
@@ -49,7 +49,7 @@ export default async function proxy(request: NextRequest) {
       // Update the decodedAccessToken with the new access token
       const updatedDecodedAccessToken = jwtUtils.verifyToken(newAccessToken, process.env.JWT_SECRET as string);
 
-      if(!updatedDecodedAccessToken?.success){
+      if (!updatedDecodedAccessToken?.success) {
         // If the new access token is invalid, redirect to login
         return NextResponse.redirect(new URL("/login", request.url));
       }
@@ -64,7 +64,7 @@ export default async function proxy(request: NextRequest) {
   let userRole = null;
 
   if (decodedAccessToken?.success && decodedAccessToken.data) {
-    userRole = (decodedAccessToken.data as JwtPayload).role; 
+    userRole = (decodedAccessToken.data as JwtPayload).role;
   }
 
   //If User is logged in and trying to access register and login page again by url then redirect them to the user role specific dashboards
