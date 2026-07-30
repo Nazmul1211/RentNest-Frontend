@@ -21,7 +21,6 @@ import {
 } from "../_schemas/authSchemas";
 
 
-
 const initialState: RegistrationState = {
   success: false,
   statusCode: 0,
@@ -56,7 +55,7 @@ const RegistrationForm = () => {
     },
   });
 
-  
+
   useEffect(() => {
     if (!state.statusCode) return;
     if (state.success) {
