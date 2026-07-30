@@ -1,0 +1,194 @@
+import React from "react";
+import Link from "next/link";
+import { Calendar, DollarSign, Clock, CheckCircle2, XCircle, AlertCircle, FileText, ArrowRight } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { GetAllTenantRentalRequest, RentalRequest } from "../_action/TenantAction";
+
+
+const getStatusBadge = (status: string) => {
+
+    switch (status) {
+        case "PENDING":
+            return (
+                <Badge variant="outline" className="bg-amber-500/10 text-amber-600 border-amber-500/30 flex items-center gap-1">
+                    <Clock className="size-3" />
+                    <span>Pending Approval</span>
+                </Badge>
+
+            );
+
+        case "APPROVED":
+            return (
+                <div className="flex items-center gap-2">
+                    <Badge variant="outline" className="bg-emerald-500/10 text-emerald-600 border-emerald-500/30 flex items-center gap-1">
+                        <CheckCircle2 className="size-3" />
+                        <span>Approved</span>
+                    </Badge>
+
+                    {/* <button onClick={() => { handlePayment }} className="bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-1 px-3 rounded-lg">Pay Now</button> */}
+                </div>
+            );
+
+        case "REJECTED":
+            return (
+                <Badge variant="outline" className="bg-rose-500/10 text-rose-600 border-rose-500/30 flex items-center gap-1">
+                    <XCircle className="size-3" />
+                    <span>Rejected</span>
+                </Badge>
+            );
+
+        case "PAID":
+        case "COMPLETED":
+            return (
+                <Badge variant="outline" className="bg-cyan-500/10 text-cyan-600 border-cyan-500/30 flex items-center gap-1">
+                    <CheckCircle2 className="size-3" />
+                    <span>{status}</span>
+                </Badge>
+            );
+
+        default:
+            return (
+                <Badge variant="outline" className="bg-muted text-muted-foreground">
+                    {status}
+                </Badge>
+            );
+    }
+}
+
+const formatDate = (dateStr: string) => {
+    if (!dateStr) return "N/A";
+    const date = new Date(dateStr);
+    if (isNaN(date.getTime())) return dateStr;
+
+    return date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+    });
+}
+
+
+
+
+const GetTenantRentalRequest = async () => {
+
+    const rentalRequests: RentalRequest[] = await GetAllTenantRentalRequest();
+
+    if (!rentalRequests || rentalRequests.length === 0) {
+        return (
+            <div className="flex flex-col items-center justify-center p-8 border border-dashed border-border rounded-xl bg-card/40 text-center space-y-3">
+                <div className="size-12 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-600">
+                    <FileText className="size-6" />
+                </div>
+                <div className="space-y-1">
+                    <h4 className="font-bold text-foreground text-sm">No Rental Requests Found</h4>
+                    <p className="text-xs text-muted-foreground max-w-sm">
+                        You haven't submitted any rental requests yet. Explore properties and request your ideal home!
+                    </p>
+                </div>
+                <Button size="sm" className="bg-cyan-600 hover:bg-cyan-700 text-white font-bold" asChild>
+                    <Link href="/properties">
+                        Browse Properties <ArrowRight className="size-3.5 ml-1" />
+                    </Link>
+                </Button>
+            </div>
+        );
+    }
+
+
+    return (
+        <div className="space-y-4 my-4">
+            {/* mapping each rental request for that Tenant */}
+            {rentalRequests.map((req) => (
+
+                <div
+                    key={req.id}
+                    className="p-5 rounded-xl border border-border/50 bg-card hover:border-cyan-500/30 transition-all shadow-xs space-y-4"
+                >
+                    {/* Top Header */}
+                    <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-border/40">
+                        <div className="space-y-0.5">
+                            <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">
+                                Request ${req.id}
+                            </span>
+                            <h4 className="text-base font-bold text-foreground">
+                                {req.property?.title || `Property ID: ${req.propertyId}`}
+                            </h4>
+                        </div>
+                        {getStatusBadge(req.status)}
+                    </div>
+
+                    {/* Details Grid */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                        {/* Move Dates */}
+                        <div className="space-y-1 bg-muted/30 p-2.5 rounded-lg">
+                            <span className="text-muted-foreground flex items-center gap-1 font-medium">
+                                <Calendar className="size-3.5 text-cyan-600" /> Lease Duration
+                            </span>
+                            <p className="font-semibold text-foreground">
+                                {formatDate(req.moveInDate)} &rarr; {formatDate(req.moveOutDate)}
+                            </p>
+                            <p className="text-[11px] text-muted-foreground">({req.totalMonths} Month{req.totalMonths > 1 ? "s" : ""})</p>
+                        </div>
+
+                        {/* Financial Details */}
+                        <div className="space-y-1 bg-muted/30 p-2.5 rounded-lg">
+                            <span className="text-muted-foreground flex items-center gap-1 font-medium">
+                                <DollarSign className="size-3.5 text-cyan-600" /> Rent & Total
+                            </span>
+                            <p className="font-semibold text-foreground">
+                                ৳{Number(req.monthlyRent).toLocaleString()} / mo
+                            </p>
+                            <p className="text-[11px] text-cyan-600 font-bold">
+                                Total: ৳{Number(req.totalAmount).toLocaleString()}
+                            </p>
+                        </div>
+
+
+                        {/* Application Date */}
+                        <div className="space-y-1 bg-muted/30 p-2.5 rounded-lg">
+                            <span className="text-muted-foreground flex items-center gap-1 font-medium">
+                                <Clock className="size-3.5 text-cyan-600" /> Submitted On
+                            </span>
+                            <p className="font-semibold text-foreground">{formatDate(req.createdAt)}</p>
+                            <p className="text-[11px] text-muted-foreground">Status: {req.status}</p>
+                        </div>
+                    </div>
+
+
+                    {/* Tenant Messages */}
+                    {req.tenantMessage && (
+                        <div className="p-3 bg-muted/20 rounded-lg text-xs space-y-1 border border-border/30">
+                            <span className="font-bold text-foreground text-[11px] uppercase tracking-wide">Your Message:</span>
+                            <p className="text-muted-foreground leading-relaxed">{req.tenantMessage}</p>
+                        </div>
+                    )}
+
+
+                    {req.landlordNote && (
+                        <div className="p-3 bg-amber-500/10 rounded-lg text-xs space-y-1 border border-amber-500/20 text-amber-700 dark:text-amber-400">
+                            <span className="font-bold text-[11px] uppercase tracking-wide flex items-center gap-1">
+                                <AlertCircle className="size-3" /> Landlord Note:
+                            </span>
+                            <p className="leading-relaxed">{req.landlordNote}</p>
+                        </div>
+                    )}
+
+
+                    {/* Property Link */}
+                    <div className="flex justify-end pt-1">
+                        <Button variant="ghost" size="sm" className="text-xs font-semibold text-cyan-600 hover:text-cyan-700 p-0 h-auto" asChild>
+                            <Link href={`/properties/${req.propertyId}`}>
+                                View Property Details <ArrowRight className="size-3 ml-1" />
+                            </Link>
+                        </Button>
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+}
+
+
+export default GetTenantRentalRequest;

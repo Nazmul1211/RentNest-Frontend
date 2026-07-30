@@ -24,8 +24,7 @@ export async function createRentalAction(payload: TRentanSubmissionModal) {
   }
 
   try {
-    const baseUrl = process.env.BACKEND_APP_URL?.replace(/\/$/, "") || "";
-    const res = await fetch(`${baseUrl}/api/rentals`, {
+    const res = await fetch(`${process.env.BACKEND_APP_URL}/api/rentals`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

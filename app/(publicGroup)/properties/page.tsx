@@ -108,6 +108,7 @@ const PropertiesPage = async ({ searchParams }: { searchParams: Promise<SearchPa
 
     return (
         <div className="min-h-screen bg-linear-to-b from-background to-muted/20 px-4 sm:px-6 lg:px-8 py-12 mt-16 max-w-7xl mx-auto">
+
             {/* Page Header */}
             <div className="mb-10 text-left space-y-2">
                 <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
