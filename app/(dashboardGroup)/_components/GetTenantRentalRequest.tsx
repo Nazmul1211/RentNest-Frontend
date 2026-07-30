@@ -4,8 +4,8 @@ import { Calendar, DollarSign, Clock, CheckCircle2, XCircle, AlertCircle, FileTe
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { GetAllTenantRentalRequest, RentalRequest } from "../_action/TenantAction";
-import { MakeRentalPayment } from "../_action/MakeRentalPayment";
 import HandleMakeRentalRequestByOnClick from "./HandleMakeRentalRequestByOnClick";
+import PaymentDetailsModal from "./PaymentDetailsModal";
 
 
 const getStatusBadge = (status: string) => {
@@ -72,6 +72,7 @@ const formatDate = (dateStr: string) => {
 const GetTenantRentalRequest = async () => {
 
     const rentalRequests: RentalRequest[] = await GetAllTenantRentalRequest();
+
 
     if (!rentalRequests || rentalRequests.length === 0) {
         return (
@@ -181,8 +182,9 @@ const GetTenantRentalRequest = async () => {
                     )}
 
 
-                    {/* Property Link */}
-                    <div className="flex justify-end pt-1">
+                    {/* Actions & Property Link */}
+                    <div className="flex items-center justify-between pt-3">
+                        <PaymentDetailsModal payments={req.payments} />
                         <Button variant="ghost" size="sm" className="text-xs font-semibold text-cyan-600 hover:text-cyan-700 p-0 h-auto" asChild>
                             <Link href={`/properties/${req.propertyId}`}>
                                 View Property Details <ArrowRight className="size-3 ml-1" />

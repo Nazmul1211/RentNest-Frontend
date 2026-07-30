@@ -20,7 +20,9 @@ export type RentalRequest = {
     completedAt?: string | null;
     createdAt: string;
     updatedAt: string;
+    payments?: any[];
 };
+
 
 export const GetAllTenantRentalRequest = async () => {
 
