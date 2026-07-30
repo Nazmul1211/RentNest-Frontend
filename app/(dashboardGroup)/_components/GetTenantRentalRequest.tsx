@@ -4,6 +4,8 @@ import { Calendar, DollarSign, Clock, CheckCircle2, XCircle, AlertCircle, FileTe
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { GetAllTenantRentalRequest, RentalRequest } from "../_action/TenantAction";
+import { MakeRentalPayment } from "../_action/MakeRentalPayment";
+import HandleMakeRentalRequestByOnClick from "./HandleMakeRentalRequestByOnClick";
 
 
 const getStatusBadge = (status: string) => {
@@ -20,14 +22,10 @@ const getStatusBadge = (status: string) => {
 
         case "APPROVED":
             return (
-                <div className="flex items-center gap-2">
-                    <Badge variant="outline" className="bg-emerald-500/10 text-emerald-600 border-emerald-500/30 flex items-center gap-1">
-                        <CheckCircle2 className="size-3" />
-                        <span>Approved</span>
-                    </Badge>
-
-                    {/* <button onClick={() => { handlePayment }} className="bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-1 px-3 rounded-lg">Pay Now</button> */}
-                </div>
+                <Badge variant="outline" className="bg-emerald-500/10 text-emerald-600 border-emerald-500/30 flex items-center gap-1">
+                    <CheckCircle2 className="size-3" />
+                    <span>Approved</span>
+                </Badge>
             );
 
         case "REJECTED":
@@ -116,7 +114,14 @@ const GetTenantRentalRequest = async () => {
                                 {req.property?.title || `Property ID: ${req.propertyId}`}
                             </h4>
                         </div>
-                        {getStatusBadge(req.status)}
+
+                        <div className="flex gap-4 items-center">
+                            {
+                                getStatusBadge(req.status)
+                            }
+                            <HandleMakeRentalRequestByOnClick req={req} />
+                        </div>
+
                     </div>
 
                     {/* Details Grid */}
