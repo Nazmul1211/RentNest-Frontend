@@ -2,6 +2,8 @@ import React from "react";
 import { User, Mail, Phone, Calendar, ShieldCheck, UserCheck, Users } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { GetAllUsersData } from "../_action/AdminAction";
+import UpdateUserStatusWithModal from "./UpdateUserStatusWithModal";
+
 
 const getRoleBadge = (role: string) => {
     switch (role?.toUpperCase()) {
@@ -32,6 +34,7 @@ const getRoleBadge = (role: string) => {
     }
 };
 
+
 const formatDate = (dateStr: string) => {
     if (!dateStr) return "N/A";
     const date = new Date(dateStr);
@@ -42,6 +45,7 @@ const formatDate = (dateStr: string) => {
         year: "numeric",
     });
 };
+
 
 const GetAllUsers = async () => {
     const users = await GetAllUsersData();
@@ -114,21 +118,30 @@ const GetAllUsers = async () => {
 
                             {/* User Contact Information */}
                             <div className="space-y-2 text-xs">
-                                <div className="flex items-center gap-2 text-muted-foreground">
-                                    <Mail className="size-3.5 text-cyan-600 shrink-0" />
-                                    <span className="text-foreground font-medium truncate">{user.email}</span>
-                                </div>
-
-                                {user.phone && (
+                                <div>
                                     <div className="flex items-center gap-2 text-muted-foreground">
-                                        <Phone className="size-3.5 text-cyan-600 shrink-0" />
-                                        <span className="text-foreground font-medium">{user.phone}</span>
+                                        <Mail className="size-3.5 text-cyan-600 shrink-0" />
+                                        <span className="text-foreground font-medium truncate">{user.email}</span>
                                     </div>
-                                )}
 
-                                <div className="flex items-center gap-2 text-muted-foreground pt-1 border-t border-border/20 text-[11px]">
-                                    <Calendar className="size-3.5 text-cyan-600 shrink-0" />
-                                    <span>Joined: <strong className="text-foreground">{formatDate(user.createdAt)}</strong></span>
+                                    {user.phone && (
+                                        <div className="flex items-center gap-2 text-muted-foreground">
+                                            <Phone className="size-3.5 text-cyan-600 shrink-0" />
+                                            <span className="text-foreground font-medium">{user.phone}</span>
+                                        </div>
+                                    )}
+
+                                    <div className="flex items-center gap-2 text-muted-foreground pt-1 border-t border-border/20 text-[11px]">
+                                        <Calendar className="size-3.5 text-cyan-600 shrink-0" />
+                                        <span>Joined: <strong className="text-foreground">{formatDate(user.createdAt)}</strong></span>
+                                    </div>
+                                </div>
+                                <div className="flex justify-end pt-2 border-t border-border/30">
+                                    <UpdateUserStatusWithModal
+                                        userId={user.id}
+                                        currentStatus={user.status}
+                                        userName={user.name}
+                                    />
                                 </div>
                             </div>
                         </div>

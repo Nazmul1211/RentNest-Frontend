@@ -4,6 +4,8 @@ import GetAllTenantRentalRequest from "../../_components/GetAllTenantRentalReque
 import GetAllPropertiesOfLandlords from "../../_components/GetAllPropertiesOfLandlords";
 import GetAllUsers from "../../_components/GetAllUsers";
 
+
+
 const AdminDashboardPage = async () => {
   const userResponse = await getCurrentUser();
   const user = userResponse?.data || null;
