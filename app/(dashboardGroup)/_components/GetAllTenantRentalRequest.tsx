@@ -1,3 +1,4 @@
+"use server"
 
 import Link from "next/link";
 import { Calendar, DollarSign, Clock, CheckCircle2, XCircle, AlertCircle, FileText, ArrowRight } from "lucide-react";

@@ -3,6 +3,7 @@
 
 import { cookies } from "next/headers";
 
+
 export type RentalRequest = {
     id: string;
     propertyId: string;
@@ -25,9 +26,7 @@ export type RentalRequest = {
     property?: any;
 };
 
-
 export const GetAllTenantRentalRequests = async () => {
-
     const cookieStore = await cookies();
     const token = cookieStore.get("accessToken")?.value;
 
@@ -50,8 +49,6 @@ export const GetAllTenantRentalRequests = async () => {
         }
 
         const data = await res.json();
-        // console.log(data?.data, 'tenant data from admin action');
-
         return data?.data;
 
     } catch (error) {
@@ -60,11 +57,7 @@ export const GetAllTenantRentalRequests = async () => {
     }
 };
 
-
-
-
 export const GetAllLandlordProperties = async () => {
-
     const cookieStore = await cookies();
     const token = cookieStore.get("accessToken")?.value;
 
@@ -87,8 +80,6 @@ export const GetAllLandlordProperties = async () => {
         }
 
         const data = await res.json();
-        // console.log(data?.data, 'landlord properties data from admin action');
-
         return data?.data;
 
     } catch (error) {
@@ -97,4 +88,33 @@ export const GetAllLandlordProperties = async () => {
     }
 };
 
+export const GetAllUsersData = async () => {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("accessToken")?.value;
 
+    if (!token) {
+        return [];
+    }
+
+    try {
+        const res = await fetch(`${process.env.BACKEND_APP_URL}/api/admin/users`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            cache: "no-store",
+        });
+
+        if (!res.ok) {
+            return [];
+        }
+
+        const data = await res.json();
+        return data?.data;
+
+    } catch (error) {
+        console.error("Error fetching users:", error);
+        return [];
+    }
+};

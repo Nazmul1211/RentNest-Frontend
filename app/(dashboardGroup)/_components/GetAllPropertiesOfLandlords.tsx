@@ -1,4 +1,5 @@
-import React from "react";
+"use server"
+
 import Link from "next/link";
 import { Bed, Bath, Ruler, MapPin, ArrowRight, Home, Building2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
