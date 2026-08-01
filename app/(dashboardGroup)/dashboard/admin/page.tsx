@@ -1,6 +1,7 @@
 
 import getCurrentUser from "@/lib/auth";
 import GetAllTenantRentalRequest from "../../_components/GetAllTenantRentalRequest";
+import GetAllPropertiesOfLandlords from "../../_components/GetAllPropertiesOfLandlords";
 
 const AdminDashboardPage = async () => {
   const userResponse = await getCurrentUser();
@@ -30,7 +31,7 @@ const AdminDashboardPage = async () => {
 
 
         {/* Tenant Rental Requests */}
-        <section className="flex-1 w-full rounded-2xl shadow-sm bg-card border border-border/50 p-6 space-y-6">
+        <section className="w-full rounded-2xl shadow-sm bg-card border border-border/50 p-6 space-y-6">
           <div className="space-y-1">
             <h2 className="text-xl sm:text-2xl font-extrabold text-foreground">
               All Rental Requests From Tenants
@@ -42,6 +43,19 @@ const AdminDashboardPage = async () => {
 
           {/* Tenant Rental Requests */}
           <GetAllTenantRentalRequest />
+        </section>
+
+
+        <section className="w-full lg:w-96 p-6 space-y-4 bg-card rounded-2xl shadow-sm border border-border/50 shrink-0">
+          <div className="space-y-1">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-foreground">
+              All Properties For Landlords
+            </h2>
+            <p className="text-xs sm:text-sm text-muted-foreground">
+              Manage all properties and bookings
+            </p>
+          </div>
+          <GetAllPropertiesOfLandlords />
         </section>
       </div>
     </div>
