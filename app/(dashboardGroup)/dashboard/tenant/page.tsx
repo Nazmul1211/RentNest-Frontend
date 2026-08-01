@@ -1,10 +1,11 @@
-import React from "react";
+
 import getCurrentUser from "@/lib/auth";
 import GetTenantRentalRequest from "../../_components/GetTenantRentalRequest";
 
-export default async function TenantDashboardPage() {
+const TenantDashboardPage = async () => {
   const userResponse = await getCurrentUser();
   const user = userResponse?.data || null;
+
 
   return (
     <div className="min-h-screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 mt-12">
@@ -47,4 +48,4 @@ export default async function TenantDashboardPage() {
   );
 }
 
-
+export default TenantDashboardPage

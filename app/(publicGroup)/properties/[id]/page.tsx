@@ -24,7 +24,7 @@ export default async function PropertyDetailPage({
 
     if (res.ok) {
       const data = await res.json();
-      // console.log(data, 'data');
+      console.log(data, 'data from property detailed page');
       property = data.data || null;
     }
   } catch (error) {
@@ -52,6 +52,20 @@ export default async function PropertyDetailPage({
     month: "long",
     day: "numeric",
   });
+
+  const isAlreadyBooked =
+    property.isAvailable === false ||
+    property.status === "RENTED" ||
+    property.status === "BOOKED" ||
+    (Array.isArray(property.rentalRequests)
+      ? property.rentalRequests.some((req: any) => {
+          const s = req?.status?.toUpperCase();
+          return s === "PAID" || s === "COMPLETED";
+        })
+      : (() => {
+          const s = (property.rentalRequests as any)?.status?.toUpperCase();
+          return s === "PAID" || s === "COMPLETED";
+        })());
 
   return (
     <div className="min-h-screen bg-linear-to-b from-background to-muted/20 px-4 sm:px-6 lg:px-8 py-12 mt-16 max-w-7xl mx-auto">
@@ -183,7 +197,16 @@ export default async function PropertyDetailPage({
             </div>
 
             <div className="pt-4 border-t border-border/40 space-y-3">
-              <RentanSubmissionModal property={property} triggerText="Contact Landlord" buttonVariant="outline" />
+              {isAlreadyBooked ? (
+                <button
+                  disabled
+                  className="w-full py-2.5 bg-rose-500/10 text-rose-600 font-bold border border-rose-500/30 rounded-lg cursor-not-allowed text-center text-sm"
+                >
+                  Already Booked
+                </button>
+              ) : (
+                <RentanSubmissionModal property={property} triggerText="Contact Landlord" buttonVariant="outline" />
+              )}
             </div>
 
 

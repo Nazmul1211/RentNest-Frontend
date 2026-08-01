@@ -28,6 +28,9 @@ export interface Property {
   availableFrom: string;
   createdAt: string;
   updatedAt: string;
+  rentalRequests?: {
+    status: string;
+  }[];
 }
 
 interface PropertyCardProps {

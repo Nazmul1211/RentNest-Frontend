@@ -3,9 +3,10 @@ import Link from "next/link";
 import { Calendar, DollarSign, Clock, CheckCircle2, XCircle, AlertCircle, FileText, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { GetAllTenantRentalRequest, RentalRequest } from "../_action/TenantAction";
-import HandleMakeRentalRequestByOnClick from "./HandleMakeRentalRequestByOnClick";
+import { RentalRequest } from "../_action/TenantAction";
 import PaymentDetailsModal from "./PaymentDetailsModal";
+import { GetAllTenantRentalRequests } from "../_action/AdminAction";
+
 
 
 const getStatusBadge = (status: string) => {
@@ -69,9 +70,9 @@ const formatDate = (dateStr: string) => {
 
 
 
-const GetTenantRentalRequest = async () => {
+const GetAllTenantRentalRequest = async () => {
 
-    const rentalRequests: RentalRequest[] = await GetAllTenantRentalRequest();
+    const rentalRequests: RentalRequest[] = await GetAllTenantRentalRequests();
 
 
     if (!rentalRequests || rentalRequests.length === 0) {
@@ -81,16 +82,11 @@ const GetTenantRentalRequest = async () => {
                     <FileText className="size-6" />
                 </div>
                 <div className="space-y-1">
-                    <h4 className="font-bold text-foreground text-sm">No Rental Requests Found</h4>
+                    <h4 className="font-bold text-foreground text-sm">No Tenant Rental Requests Found</h4>
                     <p className="text-xs text-muted-foreground max-w-sm">
-                        You haven't submitted any rental requests yet. Explore properties and request your ideal home!
+                        There are currently no rental requests submitted by tenants in the platform.
                     </p>
                 </div>
-                <Button size="sm" className="bg-cyan-600 hover:bg-cyan-700 text-white font-bold" asChild>
-                    <Link href="/properties">
-                        Browse Properties <ArrowRight className="size-3.5 ml-1" />
-                    </Link>
-                </Button>
             </div>
         );
     }
@@ -98,7 +94,7 @@ const GetTenantRentalRequest = async () => {
 
     return (
         <div className="space-y-4 my-4">
-            {/* mapping each rental request for that Tenant */}
+            {/* mapping each rental request for Admin view */}
             {rentalRequests.map((req) => (
 
                 <div
@@ -109,7 +105,7 @@ const GetTenantRentalRequest = async () => {
                     <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-border/40">
                         <div className="space-y-0.5">
                             <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">
-                                Request ${req.id}
+                                Request #{req.id} • Tenant ID: {req.tenantId}
                             </span>
                             <h4 className="text-base font-bold text-foreground">
                                 {req.property?.title || `Property ID: ${req.propertyId}`}
@@ -120,7 +116,6 @@ const GetTenantRentalRequest = async () => {
                             {
                                 getStatusBadge(req.status)
                             }
-                            <HandleMakeRentalRequestByOnClick req={req} />
                         </div>
 
                     </div>
@@ -166,7 +161,7 @@ const GetTenantRentalRequest = async () => {
                     {/* Tenant Messages */}
                     {req.tenantMessage && (
                         <div className="p-3 bg-muted/20 rounded-lg text-xs space-y-1 border border-border/30">
-                            <span className="font-bold text-foreground text-[11px] uppercase tracking-wide">Your Message:</span>
+                            <span className="font-bold text-foreground text-[11px] uppercase tracking-wide">Tenant Message:</span>
                             <p className="text-muted-foreground leading-relaxed">{req.tenantMessage}</p>
                         </div>
                     )}
@@ -198,4 +193,4 @@ const GetTenantRentalRequest = async () => {
 }
 
 
-export default GetTenantRentalRequest;
+export default GetAllTenantRentalRequest;

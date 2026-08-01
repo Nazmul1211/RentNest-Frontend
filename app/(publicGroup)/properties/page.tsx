@@ -41,8 +41,27 @@ const PropertiesPage = async ({ searchParams }: { searchParams: Promise<SearchPa
         categories = data.data || [];
     }
 
-    // 2. Perform robust search and filter options on Server Side
-    let filteredProperties = [...properties];
+
+    // checking if property is paid/booked
+    const isPropertyPaid = (p: Property) => {
+        if (!p) return false;
+        if (p.isAvailable === false || p.status === "RENTED" || p.status === "BOOKED") return true;
+        if (Array.isArray(p.rentalRequests)) {
+            return p.rentalRequests.some((req: any) => {
+                const s = req?.status?.toUpperCase();
+                return s === "PAID" || s === "COMPLETED";
+            });
+        }
+        if (p.rentalRequests && typeof p.rentalRequests === "object") {
+            const s = (p.rentalRequests as any)?.status?.toUpperCase();
+            return s === "PAID" || s === "COMPLETED";
+        }
+        return false;
+    };
+
+
+    // 2. Filter out paid/booked properties FIRST
+    let filteredProperties = properties.filter((p) => !isPropertyPaid(p));
 
     if (search.searchTerm) {
         const term = search.searchTerm.toLowerCase();
@@ -118,6 +137,8 @@ const PropertiesPage = async ({ searchParams }: { searchParams: Promise<SearchPa
                     Find your next nest. Browse and filter our handpicked collection of apartments, penthouses, and independent houses.
                 </p>
             </div>
+
+
 
             {/* Main layout grid */}
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">

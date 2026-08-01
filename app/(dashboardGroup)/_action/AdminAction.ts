@@ -1,3 +1,4 @@
+
 "use server";
 
 import { cookies } from "next/headers";
@@ -25,7 +26,7 @@ export type RentalRequest = {
 };
 
 
-export const GetAllTenantRentalRequest = async () => {
+export const GetAllTenantRentalRequests = async () => {
 
     const cookieStore = await cookies();
     const token = cookieStore.get("accessToken")?.value;
@@ -35,7 +36,7 @@ export const GetAllTenantRentalRequest = async () => {
     }
 
     try {
-        const res = await fetch(`${process.env.BACKEND_APP_URL}/api/rentals`, {
+        const res = await fetch(`${process.env.BACKEND_APP_URL}/api/admin/rentals`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -49,7 +50,7 @@ export const GetAllTenantRentalRequest = async () => {
         }
 
         const data = await res.json();
-        // console.log(data?.data, 'tenant data');
+        // console.log(data?.data, 'tenant data from admin action');
 
         return data?.data;
 
@@ -59,4 +60,3 @@ export const GetAllTenantRentalRequest = async () => {
     }
 };
 
-export default GetAllTenantRentalRequest;

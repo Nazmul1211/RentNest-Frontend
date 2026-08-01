@@ -17,8 +17,19 @@ export default async function FeaturedProperties() {
     if (res.ok) {
       const result = await res.json();
       const properties: Property[] = result.data || [];
-      // Take the top 3 available properties as featured
-      featured = properties.filter((p) => p.isAvailable).slice(0, 3);
+      // Take the top 3 available & unpaid properties as featured
+      featured = properties
+        .filter((p) => {
+          if (p.isAvailable === false) return false;
+          if (Array.isArray(p.rentalRequests)) {
+            return !p.rentalRequests.some((req: any) => {
+              const s = req?.status?.toUpperCase();
+              return s === "PAID" || s === "COMPLETED";
+            });
+          }
+          return true;
+        })
+        .slice(0, 3);
     }
   } catch (error) {
     console.error("Error fetching featured properties:", error);
