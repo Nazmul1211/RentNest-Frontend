@@ -1,27 +1,12 @@
-import React from "react";
+
 import CategoryCard, { categoryType } from "../_components/CategoryCard";
 import { Grid3X3, Layers } from "lucide-react";
+import { getCategories } from "../_actions/getCategories";
+
 
 const CategoryPage = async () => {
-    let categories: categoryType[] = [];
-
-    try {
-        const baseUrl = process.env.BACKEND_APP_URL?.replace(/\/$/, "") || "";
-        const res = await fetch(`${baseUrl}/api/categories`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            cache: "no-store",
-        });
-
-        if (res.ok) {
-            const result = await res.json();
-            categories = result?.data || [];
-        }
-    } catch (error: any) {
-        console.error("Error fetching categories:", error);
-    }
+    const categories = await getCategories();
+    // console.log(categories, "this categories is from categories page");
 
     return (
         <div className="min-h-screen bg-linear-to-b from-background to-muted/20 px-4 sm:px-6 lg:px-8 py-12 mt-16 max-w-7xl mx-auto">
@@ -40,7 +25,7 @@ const CategoryPage = async () => {
             </div>
 
             {/* Grid */}
-            {categories.length > 0 ? (
+            {categories && categories.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {categories.map((category) => (
                         <CategoryCard key={category.id} category={category} />
@@ -63,5 +48,7 @@ const CategoryPage = async () => {
         </div>
     );
 }
+
+
 
 export default CategoryPage;

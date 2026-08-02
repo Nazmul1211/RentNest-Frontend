@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 
+
 export type LandlordRentalRequest = {
     id: string;
     propertyId: string;
@@ -129,6 +130,11 @@ export type LandlordProperty = {
     id: string;
     landlordId?: string;
     categoryId?: string;
+    category?: {
+        id: string;
+        title: string;
+        name?: string;
+    };
     title: string;
     slug?: string;
     description?: string;
@@ -150,6 +156,7 @@ export type LandlordProperty = {
     createdAt?: string;
     updatedAt?: string;
 };
+
 
 
 
@@ -191,9 +198,9 @@ export const GetAllLandlordProperties = async () => {
 
 export const DeleteLandlordProperty = async (propertyId: string) => {
     const cookieStore = await cookies();
-    const token = cookieStore.get("accessToken");
+    const token = cookieStore.get("accessToken")?.value;
 
-    if (!token?.value) {
+    if (!token) {
         return {
             success: false,
             message: "Unauthenticated. Please sign in again."
@@ -205,7 +212,7 @@ export const DeleteLandlordProperty = async (propertyId: string) => {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token.value}`
+                Authorization: `Bearer ${token}`
             },
             cache: "no-store"
         });
@@ -225,6 +232,64 @@ export const DeleteLandlordProperty = async (propertyId: string) => {
         };
     }
 };
+
+export const UpdateLandlordProperty = async (
+    propertyId: string,
+    payload: {
+        title?: string;
+        description?: string;
+        rentAmount?: number;
+        securityDeposit?: number;
+        address?: string;
+        city?: string;
+        area?: string;
+        bedrooms?: number;
+        bathrooms?: number;
+        sizeSqft?: number;
+        isAvailable?: boolean;
+        images?: string[];
+        amenities?: string[];
+        categoryId?: string;
+    }
+) => {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("accessToken")?.value;
+
+    if (!token) {
+        return {
+            success: false,
+            message: "Unauthenticated. Please sign in again."
+        };
+    }
+
+    try {
+        const res = await fetch(`${process.env.BACKEND_APP_URL}/api/landlord/properties/${propertyId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(payload),
+            cache: "no-store"
+        });
+
+        const result = await res.json();
+
+        if (result.success) {
+            revalidatePath("/dashboard/landlord/properties");
+        }
+
+        return result;
+    } catch (error: any) {
+        console.error("Error updating landlord property:", error);
+        return {
+            success: false,
+            message: error.message || "Failed to update property"
+        };
+    }
+};
+
+
 
 
 
