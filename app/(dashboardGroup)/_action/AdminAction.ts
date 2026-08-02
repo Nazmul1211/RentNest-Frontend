@@ -140,7 +140,13 @@ export const GetSingleUser = async (id: string) => {
 
 
 
-export const UpdateUserData = async (payload: { status?: string; role?: string }, id: string) => {
+export const UpdateUserData = async (
+    payload: {
+        status?: string;
+        role?: string
+    },
+    id: string
+) => {
 
     const cookieStore = await cookies();
     const token = cookieStore.get("accessToken")?.value;
