@@ -250,6 +250,8 @@ export const UpdateLandlordProperty = async (
         images?: string[];
         amenities?: string[];
         categoryId?: string;
+        availableFrom?: string;
+        type?: string;
     }
 ) => {
     const cookieStore = await cookies();
@@ -288,6 +290,74 @@ export const UpdateLandlordProperty = async (
         };
     }
 };
+
+export type CreateLandlordPropertyPayload = {
+    title: string;
+    slug?: string;
+    description: string;
+    rentAmount: number;
+    securityDeposit: number;
+    address: string;
+    city: string;
+    area: string;
+    country: string;
+    postalCode: string;
+    bedrooms: number;
+    bathrooms: number;
+    sizeSqft: number;
+    images: string[];
+    amenities: string[];
+    categoryId: string;
+    availableFrom?: string;
+    type?: string;
+};
+
+export const CreateLandlordProperty = async (payload: CreateLandlordPropertyPayload) => {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("accessToken")?.value;
+
+    if (!token) {
+        return {
+            success: false,
+            message: "Unauthenticated. Please sign in again."
+        };
+    }
+
+    const finalPayload = {
+        ...payload,
+        slug: payload.slug || payload.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "")
+    };
+
+    try {
+        const res = await fetch(`${process.env.BACKEND_APP_URL}/api/landlord/properties`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(finalPayload),
+            cache: "no-store"
+        });
+
+        const result = await res.json();
+        console.log("CreateLandlordProperty backend response:", result);
+
+        if (result.success) {
+            revalidatePath("/dashboard/landlord/properties");
+        }
+
+        return result;
+    } catch (error: any) {
+        console.error("Error creating landlord property:", error);
+        return {
+            success: false,
+            message: error.message || "Failed to create property"
+        };
+    }
+};
+
+export const CreateLanlordProperty = CreateLandlordProperty;
+
 
 
 

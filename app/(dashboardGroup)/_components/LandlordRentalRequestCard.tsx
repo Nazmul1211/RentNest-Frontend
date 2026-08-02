@@ -233,7 +233,7 @@ export default function LandlordRentalRequestCard({ req }: LandlordRentalRequest
             )}
 
             {/* Card Footer: Action Buttons */}
-            <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-border/30">
+            <div className="flex flex-wrap items-center justify-between gap-3">
                 <Button variant="ghost" size="sm" className="text-xs font-semibold text-cyan-600 hover:text-cyan-700 p-0 h-auto" asChild>
                     <Link href={`/properties/${req.propertyId}`}>
                         View Property Details <ArrowRight className="size-3.5 ml-1" />
@@ -241,7 +241,7 @@ export default function LandlordRentalRequestCard({ req }: LandlordRentalRequest
                 </Button>
 
                 {req.status === "PENDING" ? (
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-col md:flex-row w-full md:justify-end justify-center gap-2">
                         <Button
                             size="sm"
                             className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold gap-1 px-4"

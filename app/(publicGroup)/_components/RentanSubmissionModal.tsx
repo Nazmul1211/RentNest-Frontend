@@ -106,7 +106,6 @@ const RentanSubmissionModal = ({ property, triggerText = " Contact Landlord / Re
     };
 
 
-
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
@@ -119,8 +118,7 @@ const RentanSubmissionModal = ({ property, triggerText = " Contact Landlord / Re
                 </Button>
             </DialogTrigger>
 
-
-            <DialogContent className="sm:max-w-md p-6 bg-white border border-border/50 shadow-2xl">
+            <DialogContent className="sm:max-w-md p-6 bg-white">
                 <DialogHeader className="space-y-1 text-left">
                     <DialogTitle className="text-xl font-bold text-foreground">
                         Submit Rental Request

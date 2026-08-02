@@ -59,6 +59,9 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
     const [sizeSqft, setSizeSqft] = useState(property.sizeSqft || "");
     const [isAvailable, setIsAvailable] = useState(property.isAvailable ?? true);
     const [selectedCategoryId, setSelectedCategoryId] = useState<string>(property.categoryId || "");
+    const [availableFrom, setAvailableFrom] = useState<string>(
+        property.availableFrom ? new Date(property.availableFrom).toISOString().split("T")[0] : ""
+    );
     const [amenitiesText, setAmenitiesText] = useState<string>(
         Array.isArray(property.amenities) ? property.amenities.join(", ") : ""
     );
@@ -142,6 +145,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                 sizeSqft: Number(sizeSqft),
                 isAvailable,
                 categoryId: selectedCategoryId || undefined,
+                availableFrom: availableFrom ? new Date(availableFrom).toISOString() : undefined,
                 amenities: amenitiesArray,
                 images: imagesArray,
             });
@@ -463,6 +467,17 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                                 rows={3}
                                 placeholder="https://images.unsplash.com/photo-1..."
                                 className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-cyan-500/50 outline-none font-mono text-[11px]"
+                            />
+                        </div>
+
+                        {/* Available From Date */}
+                        <div className="space-y-1">
+                            <label className="font-bold text-foreground">Available From Date</label>
+                            <input
+                                type="date"
+                                value={availableFrom}
+                                onChange={(e) => setAvailableFrom(e.target.value)}
+                                className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-cyan-500/50 outline-none"
                             />
                         </div>
 
