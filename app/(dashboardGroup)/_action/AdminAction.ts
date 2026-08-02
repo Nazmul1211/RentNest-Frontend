@@ -73,13 +73,17 @@ export const GetAllLandlordProperties = async () => {
         });
 
         const data = await res.json();
-        if (!data.success) return [];
+        console.log(data, "this data is from admin properties");
+
+        if (!data?.success) return [];
         return data?.data || [];
+
     } catch (error) {
         console.error("Error fetching landlord properties:", error);
         return [];
     }
 };
+
 
 
 

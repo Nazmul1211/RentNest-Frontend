@@ -76,7 +76,7 @@ const AuthorDashboardPage = async () => {
                 </p>
               </div>
               <Button asChild className="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-semibold">
-                <Link href="/dashboard/landlord/update-properties" className="flex items-center justify-center gap-2">
+                <Link href="/dashboard/landlord/properties" className="flex items-center justify-center gap-2">
                   Manage Properties <ArrowRight className="size-4" />
                 </Link>
               </Button>

@@ -22,7 +22,7 @@ type UserResponse = {
 };
 
 const getCurrentUser = async (): Promise<UserResponse | null> => {
-   const cookieStore = await cookies();
+    const cookieStore = await cookies();
 
     const token = cookieStore.get("accessToken")?.value;
 
@@ -38,7 +38,7 @@ const getCurrentUser = async (): Promise<UserResponse | null> => {
 
     const result: UserResponse = await res.json();
 
-    console.log(result, "user info from the auth.ts")
+    // console.log(result, "user info from the auth.ts")
 
     return result;
 }
