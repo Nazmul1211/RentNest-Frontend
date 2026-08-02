@@ -254,7 +254,7 @@ export default function CreatePropertiesPage() {
                                 <label className="font-bold text-foreground">Monthly Rent (৳) *</label>
                                 <input
                                     type="number"
-                                    {...register("rentAmount")}
+                                    {...register("rentAmount", { valueAsNumber: true })}
                                     placeholder="25000"
                                     className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 outline-none transition-all"
                                 />
@@ -267,7 +267,7 @@ export default function CreatePropertiesPage() {
                                 <label className="font-bold text-foreground">Security Deposit (৳) *</label>
                                 <input
                                     type="number"
-                                    {...register("securityDeposit")}
+                                    {...register("securityDeposit", { valueAsNumber: true })}
                                     placeholder="50000"
                                     className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 outline-none transition-all"
                                 />
@@ -282,7 +282,7 @@ export default function CreatePropertiesPage() {
                                 <label className="font-bold text-foreground">Bedrooms *</label>
                                 <input
                                     type="number"
-                                    {...register("bedrooms")}
+                                    {...register("bedrooms", { valueAsNumber: true })}
                                     min={1}
                                     className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 outline-none transition-all"
                                 />
@@ -295,7 +295,7 @@ export default function CreatePropertiesPage() {
                                 <label className="font-bold text-foreground">Bathrooms *</label>
                                 <input
                                     type="number"
-                                    {...register("bathrooms")}
+                                    {...register("bathrooms", { valueAsNumber: true })}
                                     min={1}
                                     className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 outline-none transition-all"
                                 />
@@ -308,7 +308,7 @@ export default function CreatePropertiesPage() {
                                 <label className="font-bold text-foreground">Size (sqft) *</label>
                                 <input
                                     type="number"
-                                    {...register("sizeSqft")}
+                                    {...register("sizeSqft", { valueAsNumber: true })}
                                     placeholder="1200"
                                     className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 outline-none transition-all"
                                 />
