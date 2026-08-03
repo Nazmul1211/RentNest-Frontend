@@ -1,8 +1,8 @@
-"use server"
+"use server";
 
 import { categoryType } from "../_components/CategoryCard";
 
-export const getCategories = async () => {
+export const GetCategories = async () => {
     let categories: categoryType[] = [];
 
     try {
@@ -15,13 +15,17 @@ export const getCategories = async () => {
             cache: "no-store",
         });
 
-        if (res.ok) {
-            const result = await res.json();
-            categories = result?.data || [];
-            return categories;
-        }
+        if (!res.ok) return [];
+
+        const result = await res.json();
+        categories = result?.data;
+
+        return categories;
 
     } catch (error: any) {
         console.error("Error fetching categories:", error);
+        return [];
     }
-}
+};
+
+export const getCategories = GetCategories;

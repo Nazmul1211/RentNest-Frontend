@@ -1,12 +1,24 @@
-import React from "react";
+
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Bed, Bath, Ruler, MapPin, Calendar, CheckCircle2, ShieldCheck, Mail, Phone, CalendarDays } from "lucide-react";
+import {
+  ArrowLeft,
+  Bed,
+  Bath,
+  Ruler,
+  MapPin,
+  CheckCircle2,
+  ShieldCheck,
+  CalendarDays,
+  Star,
+  MessageSquare
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Property } from "../../_components/PropertyCard";
 import RentanSubmissionModal from "../../_components/RentanSubmissionModal";
-
-
+import { GetSingleProperty } from "../../_actions/GetProperties";
+import { GetCategories } from "../../_actions/GetCategories";
+import { GetReview } from "@/app/(dashboardGroup)/_action/ManageReview";
 
 export default async function PropertyDetailPage({
   params,
@@ -15,34 +27,26 @@ export default async function PropertyDetailPage({
 }) {
   const { id } = await params;
 
-  let property: Property | null = null;
+  // 1. Fetch Property, Categories, and Reviews in parallel
+  const [propertyData, categoriesData, reviewsData] = await Promise.all([
+    GetSingleProperty(id),
+    GetCategories(),
+    GetReview(id),
+  ]);
 
-  try {
-    const res = await fetch(`${process.env.BACKEND_APP_URL}/api/properties/${id}`, {
-      cache: "no-store", // Fetch fresh status/details
-    });
-
-    if (res.ok) {
-      const data = await res.json();
-      console.log(data, 'data from property detailed page');
-      property = data.data || null;
-    }
-  } catch (error) {
-    console.error("Error fetching property detail:", error);
-  }
+  const property: Property | null = propertyData;
 
   if (!property) {
     notFound();
   }
 
+  // Find Category Name dynamically
+  const matchedCategory = Array.isArray(categoriesData)
+    ? categoriesData.find((c: any) => c.id === property.categoryId)
+    : null;
+  const categoryName = matchedCategory?.name || "Property";
+
   const mainImage = property.images && property.images.length > 0 ? property.images[0] : "";
-  const categoryName = property.categoryId === "a2c49963-308b-478c-9f42-262edff5e996"
-    ? "Apartment"
-    : property.categoryId === "36788eab-f75e-488c-8120-8252fab6c49c"
-      ? "House"
-      : property.categoryId === "55f0ad3b-fddf-4586-b96d-78eb49c286f9"
-        ? "Penthouse"
-        : "Property";
   const formattedRent = Number(property.rentAmount).toLocaleString();
   const formattedDeposit = Number(property.securityDeposit).toLocaleString();
 
@@ -59,13 +63,31 @@ export default async function PropertyDetailPage({
     property.status === "BOOKED" ||
     (Array.isArray(property.rentalRequests)
       ? property.rentalRequests.some((req: any) => {
-          const s = req?.status?.toUpperCase();
-          return s === "PAID" || s === "COMPLETED";
-        })
+        const s = req?.status?.toUpperCase();
+        return s === "PAID" || s === "COMPLETED";
+      })
       : (() => {
-          const s = (property.rentalRequests as any)?.status?.toUpperCase();
-          return s === "PAID" || s === "COMPLETED";
-        })());
+        const s = (property.rentalRequests as any)?.status?.toUpperCase();
+        return s === "PAID" || s === "COMPLETED";
+      })());
+
+  // Filter reviews for this property
+  const propertyReviews = Array.isArray(reviewsData)
+    ? reviewsData.filter(
+      (r: any) =>
+        r.propertyId === id ||
+        r.rentalRequest?.propertyId === id ||
+        r.rentalRequestId === id
+    )
+    : [];
+
+  const averageRating =
+    propertyReviews.length > 0
+      ? (
+        propertyReviews.reduce((acc: number, cur: any) => acc + (cur.rating || 5), 0) /
+        propertyReviews.length
+      ).toFixed(1)
+      : null;
 
   return (
     <div className="min-h-screen bg-linear-to-b from-background to-muted/20 px-4 sm:px-6 lg:px-8 py-12 mt-16 max-w-7xl mx-auto">
@@ -82,7 +104,6 @@ export default async function PropertyDetailPage({
 
       {/* Main Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
         {/* Left column: Image & Details */}
         <div className="lg:col-span-2 space-y-8">
           {/* Main Image */}
@@ -107,11 +128,21 @@ export default async function PropertyDetailPage({
 
           {/* Title & Location Header */}
           <div className="space-y-3">
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground leading-tight">
-              {property.title}
-            </h1>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground leading-tight">
+                {property.title}
+              </h1>
+              {averageRating && (
+                <div className="flex items-center gap-1.5 px-3 py-1 bg-amber-500/10 border border-amber-500/30 rounded-full text-xs font-bold text-amber-600">
+                  <Star className="size-4 fill-amber-500 text-amber-500" />
+                  <span>{averageRating}</span>
+                  <span className="text-muted-foreground font-normal">({propertyReviews.length} Reviews)</span>
+                </div>
+              )}
+            </div>
+
             <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-              <MapPin className="size-4 text-primary" />
+              <MapPin className="size-4 text-cyan-600" />
               <span>{property.address}, {property.area}, {property.city}, {property.country}</span>
             </div>
           </div>
@@ -119,17 +150,17 @@ export default async function PropertyDetailPage({
           {/* Quick Specs Cards */}
           <div className="grid grid-cols-3 gap-4">
             <div className="flex flex-col items-center p-4 rounded-xl border border-border/40 bg-card text-center">
-              <Bed className="size-5 text-primary mb-1.5" />
+              <Bed className="size-5 text-cyan-600 mb-1.5" />
               <span className="text-base font-bold text-foreground">{property.bedrooms}</span>
               <span className="text-xs text-muted-foreground">Bedrooms</span>
             </div>
             <div className="flex flex-col items-center p-4 rounded-xl border border-border/40 bg-card text-center">
-              <Bath className="size-5 text-primary mb-1.5" />
+              <Bath className="size-5 text-cyan-600 mb-1.5" />
               <span className="text-base font-bold text-foreground">{property.bathrooms}</span>
               <span className="text-xs text-muted-foreground">Bathrooms</span>
             </div>
             <div className="flex flex-col items-center p-4 rounded-xl border border-border/40 bg-card text-center">
-              <Ruler className="size-5 text-primary mb-1.5" />
+              <Ruler className="size-5 text-cyan-600 mb-1.5" />
               <span className="text-base font-bold text-foreground">{property.sizeSqft}</span>
               <span className="text-xs text-muted-foreground">Sq. Ft.</span>
             </div>
@@ -158,8 +189,65 @@ export default async function PropertyDetailPage({
               ))}
             </div>
           </div>
-        </div>
 
+          {/* Verified Tenant Reviews Section */}
+          <div className="space-y-4 pt-6 border-t border-border/40">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
+                <MessageSquare className="size-5 text-cyan-600" />
+                Verified Tenant Reviews
+              </h2>
+              {averageRating && (
+                <span className="text-xs font-semibold text-cyan-600">
+                  ★ {averageRating} average rating
+                </span>
+              )}
+            </div>
+
+            {propertyReviews.length === 0 ? (
+              <div className="p-6 text-center border border-dashed border-border/50 rounded-xl bg-card/30 space-y-1">
+                <p className="text-xs font-semibold text-foreground">No tenant reviews yet</p>
+                <p className="text-[11px] text-muted-foreground">
+                  Be the first tenant to leave feedback after booking this property!
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {propertyReviews.map((rev: any, index: number) => (
+                  <div
+                    key={rev.id || index}
+                    className="p-4 rounded-xl border border-border/40 bg-card space-y-2 text-xs"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className="size-7 rounded-full bg-cyan-500/10 text-cyan-600 font-bold flex items-center justify-center text-xs">
+                          {rev.tenant?.name ? rev.tenant.name[0] : "T"}
+                        </div>
+                        <span className="font-bold text-foreground">
+                          {rev.tenant?.name || "Verified Tenant"}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <Star
+                            key={star}
+                            className={`size-3.5 ${star <= (rev.rating || 5)
+                              ? "fill-amber-400 text-amber-400"
+                              : "text-slate-300 dark:text-slate-600"
+                              }`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    <p className="text-muted-foreground leading-relaxed pl-9">
+                      {rev.comment}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
 
         {/* Right column: Sticky Checkout Widget */}
         <div className="lg:col-span-1">
@@ -189,7 +277,7 @@ export default async function PropertyDetailPage({
               </div>
               <div className="flex justify-between items-center">
                 <span className="flex items-center gap-1">
-                  <CalendarDays className="size-3.5 text-primary" />
+                  <CalendarDays className="size-3.5 text-cyan-600" />
                   Available From
                 </span>
                 <strong className="text-foreground">{availableDate}</strong>
@@ -209,17 +297,15 @@ export default async function PropertyDetailPage({
               )}
             </div>
 
-
             {/* Verification promise */}
             <div className="flex gap-2 p-3 bg-muted/30 rounded-lg text-[10px] leading-normal text-muted-foreground">
-              <ShieldCheck className="size-4 text-primary shrink-0 mt-0.5" />
+              <ShieldCheck className="size-4 text-cyan-600 shrink-0 mt-0.5" />
               <span>
                 RentNest Security Promise: All listings are verified by our team. Never transfer money before visiting the property in person.
               </span>
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );

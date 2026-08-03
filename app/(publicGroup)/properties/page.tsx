@@ -1,8 +1,9 @@
-import React from "react";
 import PropertyFilters from "../_components/PropertyFilters";
 import PropertyCard, { Property } from "../_components/PropertyCard";
 import PropertyPagination from "../_components/PropertyPagination";
-import { Home, Info } from "lucide-react";
+import { Home } from "lucide-react";
+import { GetCategories } from "../_actions/GetCategories";
+import { GetProperties } from "../_actions/GetProperties";
 
 interface SearchParams {
     searchTerm?: string;
@@ -18,31 +19,11 @@ const PropertiesPage = async ({ searchParams }: { searchParams: Promise<SearchPa
 
     const search = await searchParams;
 
-    // 1. Fetch properties and categories in parallel
-    const [propertiesRes, categoriesRes] = await Promise.all([
-        fetch(`${process.env.BACKEND_APP_URL}/api/properties`, {
-            cache: "no-store",
-        }),
-        fetch(`${process.env.BACKEND_APP_URL}/api/categories`, {
-            cache: "no-store",
-        }),
-    ]);
+    // 1. get all properties and categories in parallel using server actions
+    const properties: Property[] = await GetProperties();
+    const categories = await GetCategories();
 
-    let properties: Property[] = [];
-    let categories = [];
-
-    if (propertiesRes.ok) {
-        const data = await propertiesRes.json();
-        properties = data.data || [];
-    }
-
-    if (categoriesRes.ok) {
-        const data = await categoriesRes.json();
-        categories = data.data || [];
-    }
-
-
-    // checking if property is paid/booked
+    // 2. checking if property is paid/booked
     const isPropertyPaid = (p: Property) => {
         if (!p) return false;
         if (p.isAvailable === false || p.status === "RENTED" || p.status === "BOOKED") return true;
@@ -60,13 +41,13 @@ const PropertiesPage = async ({ searchParams }: { searchParams: Promise<SearchPa
     };
 
 
-    // 2. Filter out paid/booked properties FIRST
-    let filteredProperties = properties.filter((p) => !isPropertyPaid(p));
+    // 3. Filter out paid/booked properties FIRST
+    let filteredProperties: Property[] = properties.filter((p: Property) => !isPropertyPaid(p));
 
     if (search.searchTerm) {
         const term = search.searchTerm.toLowerCase();
         filteredProperties = filteredProperties.filter(
-            (p) =>
+            (p: Property) =>
                 p.title.toLowerCase().includes(term) ||
                 p.description.toLowerCase().includes(term) ||
                 p.area.toLowerCase().includes(term) ||
@@ -76,45 +57,45 @@ const PropertiesPage = async ({ searchParams }: { searchParams: Promise<SearchPa
 
     if (search.categoryId) {
         filteredProperties = filteredProperties.filter(
-            (p) => p.categoryId === search.categoryId
+            (p: Property) => p.categoryId === search.categoryId
         );
     }
 
     if (search.minRent) {
         const min = Number(search.minRent);
         filteredProperties = filteredProperties.filter(
-            (p) => Number(p.rentAmount) >= min
+            (p: Property) => Number(p.rentAmount) >= min
         );
     }
 
     if (search.maxRent) {
         const max = Number(search.maxRent);
         filteredProperties = filteredProperties.filter(
-            (p) => Number(p.rentAmount) <= max
+            (p: Property) => Number(p.rentAmount) <= max
         );
     }
 
     if (search.bedrooms) {
         const beds = Number(search.bedrooms);
-        filteredProperties = filteredProperties.filter((p) => {
+        filteredProperties = filteredProperties.filter((p: Property) => {
             const numBeds = Number(p.bedrooms);
             return beds >= 5 ? numBeds >= 5 : numBeds === beds;
         });
     }
 
-    // 3. Sorting
+    // 4. Sorting
     if (search.sort === "price-asc") {
-        filteredProperties.sort((a, b) => Number(a.rentAmount) - Number(b.rentAmount));
+        filteredProperties.sort((a: Property, b: Property) => Number(a.rentAmount) - Number(b.rentAmount));
     } else if (search.sort === "price-desc") {
-        filteredProperties.sort((a, b) => Number(b.rentAmount) - Number(a.rentAmount));
+        filteredProperties.sort((a: Property, b: Property) => Number(b.rentAmount) - Number(a.rentAmount));
     } else {
         // Default: newest
         filteredProperties.sort(
-            (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            (a: Property, b: Property) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );
     }
 
-    // 4. Pagination
+    // 5. Pagination
     const PAGE_SIZE = 6;
     const totalItems = filteredProperties.length;
     const totalPages = Math.ceil(totalItems / PAGE_SIZE) || 1;
@@ -124,6 +105,8 @@ const PropertiesPage = async ({ searchParams }: { searchParams: Promise<SearchPa
         (currentPage - 1) * PAGE_SIZE,
         currentPage * PAGE_SIZE
     );
+
+
 
     return (
         <div className="min-h-screen bg-linear-to-b from-background to-muted/20 px-4 sm:px-6 lg:px-8 py-12 mt-16 max-w-7xl mx-auto">
@@ -197,6 +180,6 @@ const PropertiesPage = async ({ searchParams }: { searchParams: Promise<SearchPa
             </div>
         </div>
     );
-}
+};
 
 export default PropertiesPage;

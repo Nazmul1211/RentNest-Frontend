@@ -1,16 +1,18 @@
-"use server"
-import { cookies } from "next/headers"
+"use server";
+
+import { cookies } from "next/headers";
 
 export type payloadType = {
-    rentalRequestId: string,
-    rating: number,
-    comment: string,
-    tenantId: string
-}
+    rentalRequestId: string;
+    rating: number;
+    comment: string;
+    tenantId: string;
+};
+
 
 export const CreateReview = async (payload: payloadType) => {
 
-    console.log(payload, "payload from create review action")
+    // console.log(payload, "payload from create review action")
 
     const cookieStore = await cookies();
     const token = cookieStore.get("accessToken")?.value;
@@ -27,7 +29,7 @@ export const CreateReview = async (payload: payloadType) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
+                Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(payload),
             cache: "no-store",
@@ -53,4 +55,36 @@ export const CreateReview = async (payload: payloadType) => {
             message: error?.message || "An error occurred while creating the review.",
         };
     }
-}
+};
+
+
+
+
+export const GetReview = async (propertyId?: string) => {
+
+    try {
+        const res = await fetch(`${process.env.BACKEND_APP_URL}/api/reviews`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ propertyId }),
+            cache: "no-store",
+        });
+
+        if (!res.ok) {
+            return [];
+        }
+
+        const result = await res.json();
+
+        return result?.data;
+
+    } catch (error: any) {
+        console.error("Error fetching reviews:", error);
+        return {
+            success: false,
+            message: error?.message || "An error occurred while fetching reviews.",
+        };
+    }
+};

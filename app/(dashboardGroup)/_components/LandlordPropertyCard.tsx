@@ -28,7 +28,7 @@ import {
     DialogFooter
 } from "@/components/ui/dialog";
 import { LandlordProperty, DeleteLandlordProperty, UpdateLandlordProperty } from "../_action/LandlordAction";
-import { getCategories } from "@/app/(publicGroup)/_actions/getCategories";
+import { GetCategories } from "@/app/(publicGroup)/_actions/GetCategories";
 
 interface LandlordPropertyCardProps {
     property: LandlordProperty;
@@ -78,7 +78,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
         const fetchCategoriesData = async () => {
             setIsLoadingCategories(true);
             try {
-                const data = await getCategories();
+                const data = await GetCategories();
                 if (data && Array.isArray(data)) {
                     setCategoriesList(data);
                 }

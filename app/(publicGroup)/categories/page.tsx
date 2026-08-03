@@ -1,7 +1,7 @@
 
 import CategoryCard, { categoryType } from "../_components/CategoryCard";
 import { Grid3X3, Layers } from "lucide-react";
-import { getCategories } from "../_actions/getCategories";
+import { getCategories } from "../_actions/GetCategories";
 
 
 const CategoryPage = async () => {
@@ -27,7 +27,7 @@ const CategoryPage = async () => {
             {/* Grid */}
             {categories && categories.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {categories.map((category) => (
+                    {categories.map((category: categoryType) => (
                         <CategoryCard key={category.id} category={category} />
                     ))}
                 </div>

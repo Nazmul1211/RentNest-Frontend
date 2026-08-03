@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { createRentalAction, TRentanSubmissionModal } from "../_actions/rentalAction";
+import { createRentalAction, TRentanSubmissionModal } from "../_actions/RentalAction";
 
 interface PropertyContext {
     id: string;
