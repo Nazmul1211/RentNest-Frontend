@@ -21,7 +21,7 @@ export default function PaymentCancelPage() {
         </div>
 
         <div className="pt-2 space-y-3">
-          <Link href="/dashboard/tenant/requests" className="block w-full">
+          <Link href="/dashboard/tenant" className="block w-full">
             <Button size="lg" className="w-full font-semibold rounded-xl cursor-pointer">
               <LayoutDashboard className="size-4 mr-2" />
               Return to Dashboard
