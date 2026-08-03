@@ -21,6 +21,7 @@ RentNest is a modern, full-stack rental property management platform built with 
   - Production Build
 - Project Structure
 - Scripts
+- API Integration
 
 ---
 
@@ -146,3 +147,15 @@ app/
 - `pnpm build`: Builds the production application
 - `pnpm start`: Starts the production server
 - `pnpm lint`: Runs ESLint for code analysis
+
+---
+
+## API Integration
+
+All API communication is handled via Next.js Server Actions that call the RentNest backend REST API.
+
+**Backend Base URL:** `https://rent-nest-two.vercel.app`
+
+For a full breakdown of every endpoint, authentication strategy, request/response formats, and the rental status lifecycle, see the dedicated guide:
+
+👉 **[API_INTEGRATION.md](./API_INTEGRATION.md)**
