@@ -6,7 +6,8 @@ import { usePathname } from "next/navigation";
 import { Home, LogIn, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MobileNav } from "./mobile-nav";
-import { UserDropdown, UserData } from "./user-dropdown";
+import { UserDropdown } from "./user-dropdown";
+import { UserData, normalizeRole } from "@/lib/user-utils";
 
 export interface NavLink {
   label: string;
@@ -17,30 +18,29 @@ const PUBLIC_LINKS: NavLink[] = [
   { label: "Home", href: "/" },
   { label: "Properties", href: "/properties" },
   { label: "Categories", href: "/categories" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
 ];
 
 const ROLE_NAV_LINKS: Record<string, NavLink[]> = {
   tenant: [
     { label: "Home", href: "/" },
     { label: "Properties", href: "/properties" },
-    { label: "My Requests", href: "/tenant/requests" },
-    { label: "Payments", href: "/tenant/payments" },
+    { label: "Categories", href: "/categories" },
+    { label: "Dashboard", href: "/dashboard/tenant" },
   ],
   landlord: [
     { label: "Home", href: "/" },
     { label: "Properties", href: "/properties" },
-    { label: "My Listings", href: "/landlord/listings" },
-    { label: "Rental Requests", href: "/landlord/requests" },
-    { label: "Create Property", href: "/landlord/create" },
+    { label: "Dashboard", href: "/dashboard/landlord" },
+    { label: "My Properties", href: "/dashboard/landlord/properties" },
+    { label: "Rental Requests", href: "/dashboard/landlord/rental-request" },
+    { label: "Create Property", href: "/dashboard/landlord/create-properties" },
   ],
   admin: [
-    { label: "Dashboard", href: "/admin/dashboard" },
-    { label: "Users", href: "/admin/users" },
-    { label: "Properties", href: "/admin/properties" },
-    { label: "Rentals", href: "/admin/rentals" },
-    { label: "Categories", href: "/admin/categories" },
+    { label: "Home", href: "/" },
+    { label: "Dashboard", href: "/dashboard/admin" },
+    { label: "Users", href: "/dashboard/admin/users" },
+    { label: "Properties", href: "/dashboard/admin/properties" },
+    { label: "Requests", href: "/dashboard/admin/rental-requests" },
   ],
 };
 
@@ -51,11 +51,12 @@ interface NavbarClientProps {
 export function NavbarClient({ user }: NavbarClientProps) {
   const pathname = usePathname();
 
-  const roleKey = user?.role?.toLowerCase() || "";
-  const navLinks = user && ROLE_NAV_LINKS[roleKey] ? ROLE_NAV_LINKS[roleKey] : PUBLIC_LINKS;
+  const isUserLoggedIn = Boolean(user && (user.id || user.email || user.name));
+  const roleKey = isUserLoggedIn ? normalizeRole(user?.role) : "";
+  const navLinks = isUserLoggedIn && ROLE_NAV_LINKS[roleKey] ? ROLE_NAV_LINKS[roleKey] : PUBLIC_LINKS;
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur-sm supports-[backdrop-filter]:bg-background/80">
+    <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/80">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link
@@ -77,7 +78,7 @@ export function NavbarClient({ user }: NavbarClientProps) {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-medium transition-colors hover:text-cyan-600 ${
+                className={`text-xs font-semibold transition-colors hover:text-cyan-600 ${
                   isActive ? "text-cyan-600 font-bold" : "text-foreground/80"
                 }`}
               >
@@ -89,21 +90,21 @@ export function NavbarClient({ user }: NavbarClientProps) {
 
         {/* Right Side */}
         <div className="flex items-center gap-3">
-          {user ? (
+          {isUserLoggedIn ? (
             /* Logged in User Profile Dropdown */
             <div className="flex items-center gap-2">
-              <UserDropdown user={user} />
+              <UserDropdown user={user!} />
             </div>
           ) : (
             /* Guest auth buttons — desktop */
             <div className="hidden md:flex items-center gap-2">
-              <Button variant="ghost" size="sm" asChild>
+              <Button variant="ghost" size="sm" asChild className="text-xs font-semibold">
                 <Link href="/login">
                   <LogIn className="size-4 mr-1.5" />
                   Login
                 </Link>
               </Button>
-              <Button size="sm" className="bg-cyan-600 hover:bg-cyan-700 text-white" asChild>
+              <Button size="sm" className="bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-bold" asChild>
                 <Link href="/register">
                   <UserPlus className="size-4 mr-1.5" />
                   Register

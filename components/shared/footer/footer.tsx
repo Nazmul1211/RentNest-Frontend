@@ -3,26 +3,62 @@
 import Link from "next/link";
 import { Home, Mail, MapPin } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { UserData, normalizeRole } from "@/lib/user-utils";
 
-const QUICK_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "Properties", href: "/properties" },
-  { label: "Categories", href: "/categories" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-];
+interface FooterProps {
+  user?: UserData | null;
+}
 
-const LEGAL_LINKS = [
-  { label: "Privacy Policy", href: "/privacy" },
-  { label: "Terms of Service", href: "/terms" },
-];
+export function Footer({ user }: FooterProps) {
+  const roleKey = user ? normalizeRole(user.role) : "";
 
-export function Footer() {
+  // Dynamic quick links based on user role
+  const getQuickLinks = () => {
+    if (roleKey === "landlord") {
+      return [
+        { label: "Home", href: "/" },
+        { label: "Browse Properties", href: "/properties" },
+        { label: "My Properties", href: "/dashboard/landlord/properties" },
+        { label: "Rental Requests", href: "/dashboard/landlord/rental-request" },
+        { label: "Create Property", href: "/dashboard/landlord/create-properties" },
+      ];
+    }
+
+    if (roleKey === "admin") {
+      return [
+        { label: "Home", href: "/" },
+        { label: "Admin Workspace", href: "/dashboard/admin" },
+        { label: "User Management", href: "/dashboard/admin/users" },
+        { label: "All Properties", href: "/dashboard/admin/properties" },
+        { label: "Rental Requests", href: "/dashboard/admin/rental-requests" },
+      ];
+    }
+
+    if (roleKey === "tenant") {
+      return [
+        { label: "Home", href: "/" },
+        { label: "Browse Properties", href: "/properties" },
+        { label: "Categories", href: "/categories" },
+        { label: "Tenant Dashboard", href: "/dashboard/tenant" },
+      ];
+    }
+
+    return [
+      { label: "Home", href: "/" },
+      { label: "Properties", href: "/properties" },
+      { label: "Categories", href: "/categories" },
+      { label: "Sign In", href: "/login" },
+      { label: "Register", href: "/register" },
+    ];
+  };
+
+  const quickLinks = getQuickLinks();
+
   return (
-    <footer className="bg-card border-t border-border mt-auto">
+    <footer className="bg-card border-t border-border/50 mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="flex flex-col md:flex-row justify-between gap-8 items-start">
-          
+
           {/* Brand Column */}
           <div className="space-y-3 max-w-sm">
             <Link
@@ -35,9 +71,9 @@ export function Footer() {
                 Rent<span className="text-cyan-600">Nest</span>
               </span>
             </Link>
-            
+
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Connecting tenants and landlords with modern property listings and simple rental management.
+              Connecting tenants and landlords with modern property listings and simplified rental management workflows.
             </p>
 
             <div className="flex flex-col gap-1.5 pt-1 text-xs text-muted-foreground">
@@ -58,15 +94,15 @@ export function Footer() {
           <div className="flex gap-12 sm:gap-16">
             {/* Quick Links */}
             <div className="space-y-3">
-              <h3 className="text-xs font-bold text-foreground uppercase tracking-wider">
-                Explore
+              <h3 className="text-xs font-extrabold text-foreground uppercase tracking-wider">
+                Quick Navigation
               </h3>
               <ul className="space-y-2 text-xs">
-                {QUICK_LINKS.map((link) => (
+                {quickLinks.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-muted-foreground hover:text-cyan-600 transition-colors"
+                      className="text-muted-foreground hover:text-cyan-600 transition-colors font-medium"
                     >
                       {link.label}
                     </Link>
@@ -75,34 +111,40 @@ export function Footer() {
               </ul>
             </div>
 
-            {/* Legal Links */}
+            {/* Legal / Contact Links */}
             <div className="space-y-3">
-              <h3 className="text-xs font-bold text-foreground uppercase tracking-wider">
-                Legal
+              <h3 className="text-xs font-extrabold text-foreground uppercase tracking-wider">
+                Platform
               </h3>
               <ul className="space-y-2 text-xs">
-                {LEGAL_LINKS.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="text-muted-foreground hover:text-cyan-600 transition-colors"
-                    >
-                      {link.label}
-                    </Link>
+                <li>
+                  <Link href="/properties" className="text-muted-foreground hover:text-cyan-600 transition-colors font-medium">
+                    All Listings
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/categories" className="text-muted-foreground hover:text-cyan-600 transition-colors font-medium">
+                    Property Categories
+                  </Link>
+                </li>
+                {user && (
+                  <li>
+                    <span className="text-[11px] font-bold text-cyan-600 uppercase tracking-wider">
+                      Role: {user.role}
+                    </span>
                   </li>
-                ))}
+                )}
               </ul>
             </div>
           </div>
 
         </div>
 
-        <Separator className="my-8" />
+        <Separator className="my-8 opacity-60" />
 
         {/* Bottom copyright */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
           <p>&copy; {new Date().getFullYear()} RentNest. All rights reserved.</p>
-          <p className="text-[11px]">Designed for modern home rentals.</p>
         </div>
       </div>
     </footer>

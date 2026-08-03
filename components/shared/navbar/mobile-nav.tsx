@@ -9,8 +9,7 @@ import {
   LogIn,
   UserPlus,
   LogOut,
-  User as UserIcon,
-  LayoutDashboard,
+  LayoutDashboard
 } from "lucide-react";
 import {
   Sheet,
@@ -23,8 +22,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { UserData } from "./user-dropdown";
 import { LogoutAction } from "@/app/(authGroup)/_actions/authAction";
+import { UserData, normalizeRole } from "@/lib/user-utils";
 
 interface MobileNavProps {
   pathname: string;
@@ -35,37 +34,36 @@ const PUBLIC_LINKS = [
   { label: "Home", href: "/" },
   { label: "Properties", href: "/properties" },
   { label: "Categories", href: "/categories" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
 ];
 
 const ROLE_NAV_LINKS: Record<string, { label: string; href: string }[]> = {
   tenant: [
     { label: "Home", href: "/" },
     { label: "Properties", href: "/properties" },
-    { label: "My Requests", href: "/tenant/requests" },
-    { label: "Payments", href: "/tenant/payments" },
+    { label: "Categories", href: "/categories" },
+    { label: "Dashboard", href: "/dashboard/tenant" },
   ],
   landlord: [
     { label: "Home", href: "/" },
     { label: "Properties", href: "/properties" },
-    { label: "My Listings", href: "/landlord/listings" },
-    { label: "Rental Requests", href: "/landlord/requests" },
-    { label: "Create Property", href: "/landlord/create" },
+    { label: "Dashboard", href: "/dashboard/landlord" },
+    { label: "My Properties", href: "/dashboard/landlord/properties" },
+    { label: "Rental Requests", href: "/dashboard/landlord/rental-request" },
+    { label: "Create Property", href: "/dashboard/landlord/create-properties" },
   ],
   admin: [
-    { label: "Dashboard", href: "/admin/dashboard" },
-    { label: "Users", href: "/admin/users" },
-    { label: "Properties", href: "/admin/properties" },
-    { label: "Rentals", href: "/admin/rentals" },
-    { label: "Categories", href: "/admin/categories" },
+    { label: "Home", href: "/" },
+    { label: "Dashboard", href: "/dashboard/admin" },
+    { label: "Users", href: "/dashboard/admin/users" },
+    { label: "Properties", href: "/dashboard/admin/properties" },
+    { label: "Requests", href: "/dashboard/admin/rental-requests" },
   ],
 };
 
 const ROLE_BADGE_META: Record<string, { label: string; className: string }> = {
   tenant: {
     label: "Tenant",
-    className: "bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-950/50 dark:text-blue-400",
+    className: "bg-cyan-100 text-cyan-700 border-cyan-200 dark:bg-cyan-950/50 dark:text-cyan-400",
   },
   landlord: {
     label: "Landlord",
@@ -73,7 +71,7 @@ const ROLE_BADGE_META: Record<string, { label: string; className: string }> = {
   },
   admin: {
     label: "Admin",
-    className: "bg-amber-100 text-amber-700 border-amber-200 dark:bg-amber-950/50 dark:text-amber-400",
+    className: "bg-purple-100 text-purple-700 border-purple-200 dark:bg-purple-950/50 dark:text-purple-400",
   },
 };
 
@@ -91,9 +89,17 @@ export function MobileNav({ pathname, user }: MobileNavProps) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
-  const roleKey = user?.role?.toLowerCase() || "";
-  const navLinks = user && ROLE_NAV_LINKS[roleKey] ? ROLE_NAV_LINKS[roleKey] : PUBLIC_LINKS;
+  const isUserLoggedIn = Boolean(user && (user.id || user.email || user.name));
+  const roleKey = isUserLoggedIn ? normalizeRole(user?.role) : "";
+  const navLinks = isUserLoggedIn && ROLE_NAV_LINKS[roleKey] ? ROLE_NAV_LINKS[roleKey] : PUBLIC_LINKS;
   const roleMeta = roleKey ? ROLE_BADGE_META[roleKey] : null;
+
+  const dashboardHref =
+    roleKey === "admin"
+      ? "/dashboard/admin"
+      : roleKey === "landlord"
+      ? "/dashboard/landlord"
+      : "/dashboard/tenant";
 
   const handleLogout = async () => {
     setOpen(false);
@@ -115,21 +121,21 @@ export function MobileNav({ pathname, user }: MobileNavProps) {
         </Button>
       </SheetTrigger>
 
-      <SheetContent side="left" className="w-72 p-0 flex flex-col">
+      <SheetContent side="left" className="w-72 bg-white p-0 flex flex-col">
         {/* Header */}
         <SheetHeader className="px-5 pt-5 pb-3">
           <SheetTitle className="flex items-center gap-2 text-left">
-            <Home className="size-5 text-primary" aria-hidden="true" />
+            <Home className="size-5 text-cyan-600" aria-hidden="true" />
             <span className="text-xl font-bold tracking-tight text-foreground">
-              Rent<span className="text-primary">Nest</span>
+              Rent<span className="text-cyan-600">Nest</span>
             </span>
           </SheetTitle>
         </SheetHeader>
 
         {/* User Card if logged in */}
-        {user ? (
-          <div className="px-5 py-3 bg-muted/40 border-y border-border/40 flex items-center gap-3">
-            <Avatar className="size-10 border border-border">
+        {isUserLoggedIn && user ? (
+          <div className="px-5 py-3 bg-slate-50 border-y border-slate-200 flex items-center gap-3">
+            <Avatar className="size-10 border border-slate-200">
               {user.profilePhoto ? (
                 <img
                   src={user.profilePhoto}
@@ -137,14 +143,14 @@ export function MobileNav({ pathname, user }: MobileNavProps) {
                   className="size-full object-cover rounded-full"
                 />
               ) : (
-                <AvatarFallback className="bg-primary text-primary-foreground text-xs font-semibold">
+                <AvatarFallback className="bg-cyan-600 text-white text-xs font-bold">
                   {getInitials(user.name)}
                 </AvatarFallback>
               )}
             </Avatar>
             <div className="flex flex-col min-w-0 flex-1">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-bold text-foreground truncate">
+                <span className="text-sm font-bold text-slate-900 truncate">
                   {user.name}
                 </span>
                 {roleMeta && (
@@ -153,7 +159,7 @@ export function MobileNav({ pathname, user }: MobileNavProps) {
                   </Badge>
                 )}
               </div>
-              <span className="text-xs text-muted-foreground truncate">
+              <span className="text-xs text-slate-500 truncate">
                 {user.email}
               </span>
             </div>
@@ -171,10 +177,10 @@ export function MobileNav({ pathname, user }: MobileNavProps) {
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className={`flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                className={`flex items-center px-3 py-2.5 rounded-lg text-xs font-semibold transition-colors ${
                   isActive
-                    ? "bg-primary/10 text-primary font-bold"
-                    : "text-foreground/80 hover:bg-muted hover:text-foreground"
+                    ? "bg-cyan-500/10 text-cyan-600 font-bold"
+                    : "text-slate-700 hover:bg-slate-100 hover:text-slate-900"
                 }`}
               >
                 {link.label}
@@ -184,34 +190,34 @@ export function MobileNav({ pathname, user }: MobileNavProps) {
         </nav>
 
         {/* Action Buttons Footer */}
-        <div className="px-4 py-4 border-t border-border bg-card">
-          {user ? (
+        <div className="px-4 py-4 border-t border-slate-200 bg-white">
+          {isUserLoggedIn ? (
             <div className="flex flex-col gap-2">
-              <Button variant="outline" size="sm" className="w-full justify-start gap-2" asChild>
-                <Link href="/profile" onClick={() => setOpen(false)}>
-                  <UserIcon className="size-4" />
-                  Profile
+              <Button variant="outline" size="sm" className="w-full justify-start gap-2 text-xs font-semibold" asChild>
+                <Link href={dashboardHref} onClick={() => setOpen(false)}>
+                  <LayoutDashboard className="size-4 text-cyan-600" />
+                  Dashboard Workspace
                 </Link>
               </Button>
               <Button
                 variant="destructive"
                 size="sm"
-                className="w-full justify-start gap-2"
+                className="w-full justify-start gap-2 text-xs font-bold"
                 onClick={handleLogout}
               >
                 <LogOut className="size-4" />
-                Logout
+                Sign Out
               </Button>
             </div>
           ) : (
             <div className="flex flex-col gap-2">
-              <Button variant="outline" className="w-full" asChild>
+              <Button variant="outline" className="w-full text-xs font-semibold" asChild>
                 <Link href="/login" onClick={() => setOpen(false)}>
                   <LogIn className="size-4 mr-2" />
                   Login
                 </Link>
               </Button>
-              <Button className="w-full bg-cyan-600 hover:bg-cyan-700 text-white" asChild>
+              <Button className="w-full bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-bold" asChild>
                 <Link href="/register" onClick={() => setOpen(false)}>
                   <UserPlus className="size-4 mr-2" />
                   Register

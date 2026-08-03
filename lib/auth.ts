@@ -1,48 +1,49 @@
-"use server"
+"use server";
 
-import { cookies } from 'next/headers';
+import { cookies } from "next/headers";
+import { jwtUtils } from "@/utils/jwt";
+import type { JwtPayload } from "jsonwebtoken";
 
-type UserResponse = {
-    success: boolean;
-    statusCode: number;
-    message: string;
-    data: {
-        id: string;
-        name: string;
-        email: string;
-        phone: string;
-        profilePhoto: string | null;
-        role: string;
-        status: string;
-        stripeCustomerId: string | null;
-        hasCompletedPayment: boolean;
-        createdAt: string;
-        updatedAt: string;
+export type UserResponse = {
+    id: string;
+    name: string;
+    email: string;
+    phone?: string;
+    profilePhoto?: string | null;
+    role: string;
+};
+
+const getCurrentUser = async (): Promise<{ data: UserResponse } | null> => {
+    const cookieStore = await cookies();
+    const accessToken =
+        cookieStore.get("accessToken")?.value ||
+        cookieStore.get("token")?.value;
+
+    if (!accessToken) return null;
+
+    // Decode the JWT directly — same as the proxy.ts middleware does.
+    // This avoids a network round-trip and works reliably during SSR.
+    const decoded = jwtUtils.verifyToken(
+        accessToken,
+        process.env.JWT_SECRET as string
+    );
+
+    if (!decoded.success || !decoded.data) return null;
+
+    const payload = decoded.data as JwtPayload;
+
+    if (!payload.id && !payload.email && !payload.userId) return null;
+
+    return {
+        data: {
+            id: String(payload.id || payload.userId || ""),
+            name: String(payload.name || payload.username || "User"),
+            email: String(payload.email || ""),
+            phone: payload.phone ? String(payload.phone) : undefined,
+            profilePhoto: payload.profilePhoto || null,
+            role: String(payload.role || "TENANT"),
+        },
     };
 };
 
-const getCurrentUser = async (): Promise<UserResponse | null> => {
-    const cookieStore = await cookies();
-
-    const token = cookieStore.get("accessToken")?.value;
-
-    if (!token) return null;
-
-    const res = await fetch(`${process.env.BACKEND_APP_URL}/api/auth/me`, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-        },
-        cache: "no-cache",
-    });
-
-    const result: UserResponse = await res.json();
-
-    // console.log(result, "user info from the auth.ts")
-
-    return result;
-}
-
-export default getCurrentUser
-
-
+export default getCurrentUser;
