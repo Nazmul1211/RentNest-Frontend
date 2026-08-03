@@ -1,4 +1,5 @@
-import React from "react";
+"use server"
+
 import Link from "next/link";
 import { ArrowRight, Layers } from "lucide-react";
 import CategoryCard, { categoryType } from "./CategoryCard";
@@ -39,6 +40,7 @@ export default async function CategorySection() {
       }
     ];
   }
+
 
   return (
     <section className="py-20 bg-muted/20 border-t border-border/40 relative">

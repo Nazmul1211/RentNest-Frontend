@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { Check, Zap, DollarSign, Calculator, HelpCircle, Shield, ArrowRight } from "lucide-react";
+import { Check, Zap, Calculator, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardDescription } from "@/components/ui/card";
 
 export default function PricingSection() {
   // Rent calculator state (default 30,000 BDT)
@@ -182,11 +182,10 @@ export default function PricingSection() {
                   <button
                     key={preset}
                     onClick={() => setRentAmount(preset)}
-                    className={`px-2.5 py-1 rounded-md text-xs font-semibold transition-colors cursor-pointer ${
-                      rentAmount === preset
+                    className={`px-2.5 py-1 rounded-md text-xs font-semibold transition-colors cursor-pointer ${rentAmount === preset
                         ? "bg-primary text-primary-foreground"
                         : "bg-muted text-muted-foreground hover:bg-muted/80"
-                    }`}
+                      }`}
                   >
                     ৳{(preset / 1000).toFixed(0)}k
                   </button>

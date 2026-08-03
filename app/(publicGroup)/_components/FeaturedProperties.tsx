@@ -1,6 +1,7 @@
-import React from "react";
+"use server"
+
 import Link from "next/link";
-import { ArrowRight, Sparkles, Building } from "lucide-react";
+import { ArrowRight, Building } from "lucide-react";
 import PropertyCard, { Property } from "./PropertyCard";
 
 export default async function FeaturedProperties() {
@@ -13,7 +14,7 @@ export default async function FeaturedProperties() {
         revalidate: 60 * 60, // cache for 1 hour
       },
     });
-    
+
     if (res.ok) {
       const result = await res.json();
       const properties: Property[] = result.data || [];

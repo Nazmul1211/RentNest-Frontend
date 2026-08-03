@@ -231,7 +231,7 @@ export default function LandlordRentalRequestCard({ req }: LandlordRentalRequest
 
             {/* Action Confirmation Modal */}
             <Dialog open={openModal} onOpenChange={setOpenModal}>
-                <DialogContent className="sm:max-w-md">
+                <DialogContent className="sm:max-w-md bg-white">
                     <DialogHeader>
                         <DialogTitle>
                             {actionType === "APPROVED" ? "Approve Rental Request" : "Reject Rental Request"}
@@ -261,7 +261,7 @@ export default function LandlordRentalRequestCard({ req }: LandlordRentalRequest
                             variant="outline"
                             onClick={() => setOpenModal(false)}
                             disabled={isSubmitting}
-                            className="text-xs font-semibold"
+                            className="text-xs font-semibold mr-2"
                         >
                             Cancel
                         </Button>

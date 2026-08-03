@@ -1,4 +1,3 @@
-import React from "react";
 import HeroSection from "./_components/HeroSection";
 import CategorySection from "./_components/CategorySection";
 import FeaturedProperties from "./_components/FeaturedProperties";
