@@ -1,3 +1,5 @@
+"use server";
+
 import Link from "next/link";
 import { Calendar, DollarSign, Clock, AlertCircle, FileText, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -5,6 +7,7 @@ import { GetAllTenantRentalRequest, RentalRequest } from "../_action/TenantActio
 import HandleMakeRentalRequestByOnClick from "./HandleMakeRentalRequestByOnClick";
 import PaymentDetailsModal from "./PaymentDetailsModal";
 import GetStatusBadge from "./GetStatusBadge";
+import CreateReviewModal from "./CreateReviewModal";
 
 const formatDate = (dateStr: string) => {
     if (!dateStr) return "N/A";
@@ -16,7 +19,7 @@ const formatDate = (dateStr: string) => {
         day: "numeric",
         year: "numeric",
     });
-}
+};
 
 const GetTenantRentalRequest = async () => {
     const rentalRequests: RentalRequest[] = await GetAllTenantRentalRequest();
@@ -126,8 +129,18 @@ const GetTenantRentalRequest = async () => {
 
 
                     {/* Actions & Property Link */}
-                    <div className="flex items-center justify-between pt-3">
-                        <PaymentDetailsModal payments={req.payments} />
+                    <div className="flex flex-wrap items-center justify-between gap-2 pt-3">
+                        <div className="flex items-center gap-2">
+                            <PaymentDetailsModal payments={req.payments} />
+                            {(req.status === "PAID" || req.status === "COMPLETED") && (
+                                <CreateReviewModal
+                                    rentalRequestId={req.id}
+                                    tenantId={req.tenantId}
+                                    propertyTitle={req.property?.title}
+                                />
+                            )}
+                        </div>
+
                         <Button variant="ghost" size="sm" className="text-xs font-semibold text-cyan-600 hover:text-cyan-700 p-0 h-auto" asChild>
                             <Link href={`/properties/${req.propertyId}`}>
                                 View Property Details <ArrowRight className="size-3 ml-1" />
@@ -138,7 +151,6 @@ const GetTenantRentalRequest = async () => {
             ))}
         </div>
     );
-}
-
+};
 
 export default GetTenantRentalRequest;
