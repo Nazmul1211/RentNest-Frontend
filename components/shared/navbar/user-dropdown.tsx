@@ -174,12 +174,20 @@ export function UserDropdown({ user }: UserDropdownProps) {
           )}
 
           {roleKey === "tenant" && (
-            <DropdownMenuItem asChild>
-              <Link href="/properties" className="cursor-pointer flex items-center gap-2 px-2.5 py-2 text-xs font-semibold rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
-                <Building2 className="size-4 text-cyan-600" />
-                <span>Browse Properties</span>
-              </Link>
-            </DropdownMenuItem>
+            <>
+              <DropdownMenuItem asChild>
+                <Link href="/dashboard/tenant/requests" className="cursor-pointer flex items-center gap-2 px-2.5 py-2 text-xs font-semibold rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+                  <ClipboardList className="size-4 text-cyan-600" />
+                  <span>My Rental Requests</span>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/properties" className="cursor-pointer flex items-center gap-2 px-2.5 py-2 text-xs font-semibold rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+                  <Building2 className="size-4 text-cyan-600" />
+                  <span>Browse Properties</span>
+                </Link>
+              </DropdownMenuItem>
+            </>
           )}
         </DropdownMenuGroup>
 
