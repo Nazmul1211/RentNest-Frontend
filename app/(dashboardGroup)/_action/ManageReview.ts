@@ -1,12 +1,18 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { revalidatePath } from "next/cache";
 
 export type payloadType = {
     rentalRequestId: string;
     rating: number;
     comment: string;
     tenantId: string;
+};
+
+export type updatePayloadType = {
+    rating?: number;
+    comment?: string;
 };
 
 
@@ -45,6 +51,9 @@ export const CreateReview = async (payload: payloadType) => {
 
         const result = await res.json();
 
+        revalidatePath("/dashboard/tenant/requests");
+        revalidatePath("/dashboard/tenant");
+
         return result?.data;
 
 
@@ -60,7 +69,9 @@ export const CreateReview = async (payload: payloadType) => {
 
 
 
-export const GetReview = async (propertyId?: string) => {
+export const GetReview = async (id: string) => {
+
+    // console.log("GetReview server hits");
 
     try {
         const res = await fetch(`${process.env.BACKEND_APP_URL}/api/reviews`, {
@@ -68,7 +79,6 @@ export const GetReview = async (propertyId?: string) => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ propertyId }),
             cache: "no-store",
         });
 
@@ -78,13 +88,111 @@ export const GetReview = async (propertyId?: string) => {
 
         const result = await res.json();
 
+        // console.log(result?.data, "result from get review action");
+
         return result?.data;
 
     } catch (error: any) {
         console.error("Error fetching reviews:", error);
+        return [];
+    }
+};
+
+
+
+
+export const UpdateReview = async (reviewId: string, payload: updatePayloadType) => {
+
+    const cookieStore = await cookies();
+    const token = cookieStore.get("accessToken")?.value;
+
+    if (!token) {
         return {
             success: false,
-            message: error?.message || "An error occurred while fetching reviews.",
+            message: "Unauthorized Access: You are not logged in!",
+        };
+    }
+
+    try {
+        const res = await fetch(`${process.env.BACKEND_APP_URL}/api/reviews/${reviewId}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(payload),
+            cache: "no-store",
+        });
+
+        if (!res.ok) {
+            const result = await res.json();
+            return {
+                success: false,
+                message: result?.message || "Failed to update review.",
+            };
+        }
+
+        const result = await res.json();
+
+        revalidatePath("/dashboard/tenant/requests");
+        revalidatePath("/dashboard/tenant");
+
+        return result?.data;
+
+    } catch (error: any) {
+        console.error("Error updating review:", error);
+        return {
+            success: false,
+            message: error?.message || "An error occurred while updating the review.",
+        };
+    }
+};
+
+
+
+
+export const DeleteReview = async (reviewId: string) => {
+
+    const cookieStore = await cookies();
+    const token = cookieStore.get("accessToken")?.value;
+
+    if (!token) {
+        return {
+            success: false,
+            message: "Unauthorized Access: You are not logged in!",
+        };
+    }
+
+    try {
+        const res = await fetch(`${process.env.BACKEND_APP_URL}/api/reviews/${reviewId}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            cache: "no-store",
+        });
+
+        if (!res.ok) {
+            const result = await res.json();
+            return {
+                success: false,
+                message: result?.message || "Failed to delete review.",
+            };
+        }
+
+        const result = await res.json();
+
+        revalidatePath("/dashboard/tenant/requests");
+        revalidatePath("/dashboard/tenant");
+
+        return result?.data;
+
+    } catch (error: any) {
+        console.error("Error deleting review:", error);
+        return {
+            success: false,
+            message: error?.message || "An error occurred while deleting the review.",
         };
     }
 };
