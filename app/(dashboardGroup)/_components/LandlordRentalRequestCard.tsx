@@ -30,6 +30,7 @@ import { LandlordRentalRequest, UpdateRentalRequestStatus } from "../_action/Lan
 import GetStatusBadge from "./GetStatusBadge";
 
 
+
 interface LandlordRentalRequestCardProps {
     req: LandlordRentalRequest;
 }
@@ -46,7 +47,10 @@ const formatDate = (dateStr: string) => {
     });
 };
 
+
+
 export default function LandlordRentalRequestCard({ req }: LandlordRentalRequestCardProps) {
+
     const [openModal, setOpenModal] = useState(false);
     const [actionType, setActionType] = useState<"APPROVED" | "REJECTED" | null>(null);
     const [landlordNote, setLandlordNote] = useState("");
@@ -56,11 +60,13 @@ export default function LandlordRentalRequestCard({ req }: LandlordRentalRequest
     const propertyTitle = propertyInfo?.title || `Property ID: ${req.propertyId}`;
     const propertyLocation = propertyInfo?.area && propertyInfo?.city ? `${propertyInfo.area}, ${propertyInfo.city}` : null;
 
+
     const handleOpenActionModal = (type: "APPROVED" | "REJECTED") => {
         setActionType(type);
         setLandlordNote("");
         setOpenModal(true);
     };
+
 
     const handleConfirmStatusUpdate = async () => {
         if (!actionType) return;
@@ -89,6 +95,8 @@ export default function LandlordRentalRequestCard({ req }: LandlordRentalRequest
             setIsSubmitting(false);
         }
     };
+
+
 
     return (
         <div className="p-5 rounded-2xl border border-border/50 bg-card hover:border-cyan-500/30 transition-all shadow-xs space-y-4">
