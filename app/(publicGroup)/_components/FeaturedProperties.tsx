@@ -1,42 +1,46 @@
-"use server"
 
 import Link from "next/link";
 import { ArrowRight, Building } from "lucide-react";
 import PropertyCard, { Property } from "./PropertyCard";
+import { GetProperties } from "../_actions/GetProperties";
 
 export default async function FeaturedProperties() {
   let featured: Property[] = [];
 
   try {
-    const res = await fetch(`${process.env.BACKEND_APP_URL}/api/properties`, {
-      cache: "force-cache",
-      next: {
-        revalidate: 60 * 60, // cache for 1 hour
-      },
-    });
+    const properties: Property[] = await GetProperties();
 
-    if (res.ok) {
-      const result = await res.json();
-      const properties: Property[] = result.data || [];
-      // Take the top 3 available & unpaid properties as featured
+    if (Array.isArray(properties)) {
       featured = properties
         .filter((p) => {
-          if (p.isAvailable === false) return false;
+          if (!p) return false;
+          if (p.isAvailable === false || p.status === "RENTED" || p.status === "BOOKED") {
+            return false;
+          }
+
+          const forbiddenStatuses = ["APPROVED", "PAID", "COMPLETED"];
+
           if (Array.isArray(p.rentalRequests)) {
             return !p.rentalRequests.some((req: any) => {
-              const s = req?.status?.toUpperCase();
-              return s === "PAID" || s === "COMPLETED";
+              const status = req?.status?.toUpperCase();
+              return forbiddenStatuses.includes(status);
             });
           }
+
+          if (p.rentalRequests && typeof p.rentalRequests === "object") {
+            const status = (p.rentalRequests as any)?.status?.toUpperCase();
+            return !forbiddenStatuses.includes(status);
+          }
+
           return true;
         })
         .slice(0, 3);
     }
   } catch (error) {
-    console.error("Error fetching featured properties:", error);
+    console.error("Error fetching featured properties from database:", error);
   }
 
-  if (featured.length === 0) {
+  if (!featured || featured.length === 0) {
     return null;
   }
 
