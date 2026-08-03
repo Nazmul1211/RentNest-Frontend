@@ -17,7 +17,6 @@ import {
     ArrowRight,
     Loader2
 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
@@ -28,57 +27,12 @@ import {
     DialogFooter
 } from "@/components/ui/dialog";
 import { LandlordRentalRequest, UpdateRentalRequestStatus } from "../_action/LandlordAction";
+import GetStatusBadge from "./GetStatusBadge";
 
 
 interface LandlordRentalRequestCardProps {
     req: LandlordRentalRequest;
 }
-
-
-
-const getStatusBadge = (status: string) => {
-    switch (status) {
-        case "PENDING":
-            return (
-                <Badge variant="outline" className="bg-amber-500/10 text-amber-600 border-amber-500/30 flex items-center gap-1 px-2.5 py-1">
-                    <Clock className="size-3.5" />
-                    <span>Pending Approval</span>
-                </Badge>
-            );
-
-        case "APPROVED":
-            return (
-                <Badge variant="outline" className="bg-emerald-500/10 text-emerald-600 border-emerald-500/30 flex items-center gap-1 px-2.5 py-1">
-                    <CheckCircle2 className="size-3.5" />
-                    <span>Approved</span>
-                </Badge>
-            );
-
-        case "REJECTED":
-            return (
-                <Badge variant="outline" className="bg-rose-500/10 text-rose-600 border-rose-500/30 flex items-center gap-1 px-2.5 py-1">
-                    <XCircle className="size-3.5" />
-                    <span>Rejected</span>
-                </Badge>
-            );
-
-        case "PAID":
-        case "COMPLETED":
-            return (
-                <Badge variant="outline" className="bg-cyan-500/10 text-cyan-600 border-cyan-500/30 flex items-center gap-1 px-2.5 py-1">
-                    <CheckCircle2 className="size-3.5" />
-                    <span>{status}</span>
-                </Badge>
-            );
-
-        default:
-            return (
-                <Badge variant="outline" className="bg-muted text-muted-foreground px-2.5 py-1">
-                    {status}
-                </Badge>
-            );
-    }
-};
 
 const formatDate = (dateStr: string) => {
     if (!dateStr) return "N/A";
@@ -155,7 +109,9 @@ export default function LandlordRentalRequestCard({ req }: LandlordRentalRequest
                     )}
                 </div>
 
-                <div>{getStatusBadge(req.status)}</div>
+                <div>
+                    <GetStatusBadge status={req.status} />
+                </div>
             </div>
 
             {/* Tenant Info Bar */}

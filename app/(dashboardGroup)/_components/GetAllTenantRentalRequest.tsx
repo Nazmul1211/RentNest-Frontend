@@ -1,60 +1,12 @@
 "use server"
 
 import Link from "next/link";
-import { Calendar, DollarSign, Clock, CheckCircle2, XCircle, AlertCircle, FileText, ArrowRight } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Calendar, DollarSign, Clock, AlertCircle, FileText, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RentalRequest } from "../_action/TenantAction";
 import PaymentDetailsModal from "./PaymentDetailsModal";
 import { GetAllTenantRentalRequests } from "../_action/AdminAction";
-
-
-
-const getStatusBadge = (status: string) => {
-
-    switch (status) {
-        case "PENDING":
-            return (
-                <Badge variant="outline" className="bg-amber-500/10 text-amber-600 border-amber-500/30 flex items-center gap-1">
-                    <Clock className="size-3" />
-                    <span>Pending Approval</span>
-                </Badge>
-
-            );
-
-        case "APPROVED":
-            return (
-                <Badge variant="outline" className="bg-emerald-500/10 text-emerald-600 border-emerald-500/30 flex items-center gap-1">
-                    <CheckCircle2 className="size-3" />
-                    <span>Approved</span>
-                </Badge>
-            );
-
-        case "REJECTED":
-            return (
-                <Badge variant="outline" className="bg-rose-500/10 text-rose-600 border-rose-500/30 flex items-center gap-1">
-                    <XCircle className="size-3" />
-                    <span>Rejected</span>
-                </Badge>
-            );
-
-        case "PAID":
-        case "COMPLETED":
-            return (
-                <Badge variant="outline" className="bg-cyan-500/10 text-cyan-600 border-cyan-500/30 flex items-center gap-1">
-                    <CheckCircle2 className="size-3" />
-                    <span>{status}</span>
-                </Badge>
-            );
-
-        default:
-            return (
-                <Badge variant="outline" className="bg-muted text-muted-foreground">
-                    {status}
-                </Badge>
-            );
-    }
-}
+import GetStatusBadge from "./GetStatusBadge";
 
 const formatDate = (dateStr: string) => {
     if (!dateStr) return "N/A";
@@ -68,13 +20,8 @@ const formatDate = (dateStr: string) => {
     });
 }
 
-
-
-
 const GetAllTenantRentalRequest = async () => {
-
     const rentalRequests: RentalRequest[] = await GetAllTenantRentalRequests();
-
 
     if (!rentalRequests || rentalRequests.length === 0) {
         return (
@@ -106,7 +53,7 @@ const GetAllTenantRentalRequest = async () => {
                     <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-border/40">
                         <div className="space-y-0.5">
                             <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">
-                                Request #{req.id} • Tenant ID: {req.tenantId}
+                                Request #{req.id?.slice(0, 8)}... • Tenant ID: {req.tenantId?.slice(0, 8)}...
                             </span>
                             <h4 className="text-base font-bold text-foreground">
                                 {req.property?.title || `Property ID: ${req.propertyId}`}
@@ -114,9 +61,7 @@ const GetAllTenantRentalRequest = async () => {
                         </div>
 
                         <div className="flex gap-4 items-center">
-                            {
-                                getStatusBadge(req.status)
-                            }
+                            <GetStatusBadge status={req.status} />
                         </div>
 
                     </div>

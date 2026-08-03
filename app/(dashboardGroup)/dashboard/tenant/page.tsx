@@ -42,8 +42,8 @@ const TenantDashboardPage = async () => {
             <h3 className="text-xl font-bold text-foreground">Tenant Features</h3>
             <p className="text-xs text-muted-foreground">Select an option below to manage your applications, explore listings, or view categories.</p>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
 
             {/* Feature: My Rental Requests */}
             <div className="bg-card rounded-2xl border border-border/50 p-6 space-y-4 flex flex-col justify-between hover:border-cyan-500/40 hover:shadow-xs transition-all">
@@ -102,6 +102,7 @@ const TenantDashboardPage = async () => {
             </div>
 
           </div>
+
 
           {/* Quick Rental Requests List */}
           <div className="bg-card rounded-2xl mt-16 space-y-4 shadow-xs">
