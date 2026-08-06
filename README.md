@@ -4,6 +4,10 @@ RentNest is a modern, full-stack rental property management platform built with 
 
 ---
 
+## Backend Repository
+
+The backend for this frontend is available at: **@Nazmul1211/RentNest**
+
 ## Table of Contents
 
 - Overview
