@@ -2,6 +2,15 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/* Keep the homepage focused on the hero while preserving normal page scrolling. */
+html:has(.rentnest-hero) {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html:has(.rentnest-hero)::-webkit-scrollbar {
+  display: none;
+}
 
 :root {
   --background: #f3f6f8;

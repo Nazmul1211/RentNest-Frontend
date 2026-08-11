@@ -35,6 +35,7 @@ const PUBLIC_LINKS = [
   { label: "Home", href: "/" },
   { label: "Properties", href: "/properties" },
   { label: "Categories", href: "/categories" },
+  { label: "About Us", href: "/about" },
 ];
 
 const ROLE_NAV_LINKS: Record<string, { label: string; href: string }[]> = {
@@ -42,11 +43,14 @@ const ROLE_NAV_LINKS: Record<string, { label: string; href: string }[]> = {
     { label: "Home", href: "/" },
     { label: "Properties", href: "/properties" },
     { label: "Categories", href: "/categories" },
+    { label: "About Us", href: "/about" },
     { label: "Dashboard", href: "/dashboard/tenant" },
+    { label: "My Requests", href: "/dashboard/tenant/requests" },
   ],
   landlord: [
     { label: "Home", href: "/" },
     { label: "Properties", href: "/properties" },
+    { label: "Categories", href: "/categories" },
     { label: "Dashboard", href: "/dashboard/landlord" },
     { label: "My Properties", href: "/dashboard/landlord/properties" },
     { label: "Rental Requests", href: "/dashboard/landlord/rental-request" },
@@ -58,6 +62,8 @@ const ROLE_NAV_LINKS: Record<string, { label: string; href: string }[]> = {
     { label: "Users", href: "/dashboard/admin/users" },
     { label: "Properties", href: "/dashboard/admin/properties" },
     { label: "Requests", href: "/dashboard/admin/rental-requests" },
+    { label: "Categories", href: "/categories" },
+    { label: "About Us", href: "/about" },
   ],
 };
 
