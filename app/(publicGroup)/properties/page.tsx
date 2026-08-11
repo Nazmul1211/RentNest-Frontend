@@ -109,10 +109,10 @@ const PropertiesPage = async ({ searchParams }: { searchParams: Promise<SearchPa
 
 
     return (
-        <div className="min-h-screen bg-linear-to-b from-background to-muted/20 px-4 sm:px-6 lg:px-8 py-12 mt-16 max-w-7xl mx-auto">
+        <div className="min-h-screen bg-linear-to-b from-background to-muted/20 px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 lg:pt-24 pb-8 sm:pb-12 max-w-7xl mx-auto">
 
             {/* Page Header */}
-            <div className="mb-10 text-left space-y-2">
+            <div className="mb-4 sm:mb-8 text-left space-y-1.5">
                 <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
                     Available Listings
                 </h1>
@@ -126,7 +126,7 @@ const PropertiesPage = async ({ searchParams }: { searchParams: Promise<SearchPa
             {/* Main layout grid */}
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
                 {/* Sidebar Filters */}
-                <aside className="lg:col-span-1 sticky top-24 z-20">
+                <aside className="lg:col-span-1 lg:sticky lg:top-24 z-20">
                     <PropertyFilters categories={categories} />
                 </aside>
 

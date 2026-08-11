@@ -9,9 +9,9 @@ const CategoryPage = async () => {
     // console.log(categories, "this categories is from categories page");
 
     return (
-        <div className="min-h-screen bg-linear-to-b from-background to-muted/20 px-4 sm:px-6 lg:px-8 py-12 mt-16 max-w-7xl mx-auto">
+        <div className="min-h-screen bg-linear-to-b from-background to-muted/20 px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 lg:pt-24 pb-8 sm:pb-12 max-w-7xl mx-auto">
             {/* Page Header */}
-            <div className="mb-12 text-center max-w-2xl mx-auto space-y-3">
+            <div className="mb-4 sm:mb-8 text-center max-w-2xl mx-auto space-y-2">
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/10 text-teal-600 text-xs font-bold uppercase tracking-wider">
                     <Layers className="size-3.5" />
                     <span>Property Types</span>

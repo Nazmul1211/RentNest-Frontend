@@ -90,7 +90,7 @@ export default async function PropertyDetailPage({
       : null;
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-background to-muted/20 px-4 sm:px-6 lg:px-8 py-12 mt-16 max-w-7xl mx-auto">
+    <div className="min-h-screen bg-linear-to-b from-background to-muted/20 px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 lg:pt-24 pb-8 sm:pb-12 max-w-7xl mx-auto">
       {/* Back button */}
       <div className="mb-6">
         <Link
