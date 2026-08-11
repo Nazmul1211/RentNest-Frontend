@@ -128,12 +128,12 @@ export function MobileNav({ pathname, user }: MobileNavProps) {
         </Button>
       </SheetTrigger>
 
-      <SheetContent side="left" className="w-80 max-w-[85vw] bg-white dark:bg-[#182630] text-slate-900 dark:text-slate-100 border-r border-slate-200 dark:border-slate-800 p-0 flex flex-col shadow-2xl opacity-100">
+      <SheetContent side="left" className="w-80 max-w-[85vw] bg-white dark:bg-[#121f28] text-slate-900 dark:text-slate-100 border-r border-slate-200 dark:border-slate-800/80 p-0 flex flex-col shadow-2xl opacity-100">
         {/* Header */}
-        <SheetHeader className="px-5 pt-5 pb-3 border-b border-slate-200/80 dark:border-slate-800 bg-white dark:bg-[#182630]">
+        <SheetHeader className="px-5 pt-5 pb-3 border-b border-slate-200 dark:border-slate-800/80 bg-white dark:bg-[#121f28]">
           <SheetTitle className="flex items-center gap-2 text-left">
             <Home className="size-5 text-teal-600 dark:text-teal-400" aria-hidden="true" />
-            <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+            <span className="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white">
               Rent<span className="text-teal-600 dark:text-teal-400">Nest</span>
             </span>
           </SheetTitle>
@@ -141,8 +141,8 @@ export function MobileNav({ pathname, user }: MobileNavProps) {
 
         {/* User Card if logged in */}
         {isUserLoggedIn && user ? (
-          <div className="px-5 py-3.5 bg-slate-50 dark:bg-[#22333f] border-b border-slate-200 dark:border-slate-800 flex items-center gap-3">
-            <Avatar className="size-10 border border-slate-200 dark:border-slate-700">
+          <div className="px-5 py-3.5 bg-slate-100/90 dark:bg-[#1a2b38] border-b border-slate-200 dark:border-slate-800/80 flex items-center gap-3">
+            <Avatar className="size-10 border-2 border-teal-500/40 shadow-xs shrink-0">
               {user.profilePhoto ? (
                 <img
                   src={user.profilePhoto}
@@ -157,7 +157,7 @@ export function MobileNav({ pathname, user }: MobileNavProps) {
             </Avatar>
             <div className="flex flex-col min-w-0 flex-1">
               <div className="flex items-center justify-between gap-1">
-                <span className="text-sm font-bold text-slate-900 dark:text-slate-100 truncate">
+                <span className="text-sm font-extrabold text-slate-900 dark:text-white truncate">
                   {user.name}
                 </span>
                 {roleMeta && (
@@ -166,7 +166,7 @@ export function MobileNav({ pathname, user }: MobileNavProps) {
                   </Badge>
                 )}
               </div>
-              <span className="text-xs text-slate-500 dark:text-slate-400 truncate">
+              <span className="text-xs text-slate-600 dark:text-slate-300 font-semibold truncate">
                 {user.email}
               </span>
             </div>
@@ -176,7 +176,10 @@ export function MobileNav({ pathname, user }: MobileNavProps) {
         )}
 
         {/* Navigation Links */}
-        <nav className="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto bg-white dark:bg-[#182630]">
+        <nav className="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto bg-white dark:bg-[#121f28]">
+          <p className="px-3 text-[10px] font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
+            Navigation Menu
+          </p>
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
@@ -184,10 +187,10 @@ export function MobileNav({ pathname, user }: MobileNavProps) {
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className={`flex items-center px-3.5 py-2.5 rounded-lg text-xs font-semibold transition-all ${
+                className={`flex items-center px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${
                   isActive
-                    ? "bg-teal-500/10 text-teal-600 dark:text-teal-400 font-bold border-l-4 border-teal-600"
-                    : "text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#22333f] hover:text-slate-900 dark:hover:text-white"
+                    ? "bg-teal-600 text-white shadow-xs"
+                    : "text-slate-900 dark:text-slate-100 hover:bg-teal-500/10 hover:text-teal-600 dark:hover:text-teal-400"
                 }`}
               >
                 {link.label}
@@ -197,14 +200,14 @@ export function MobileNav({ pathname, user }: MobileNavProps) {
         </nav>
 
         {/* Action Buttons Footer */}
-        <div className="px-5 py-4 border-t border-slate-200/80 dark:border-slate-800 bg-slate-50 dark:bg-[#1d2d39]">
+        <div className="px-5 py-4 border-t border-slate-200 dark:border-slate-800/80 bg-slate-100/90 dark:bg-[#1a2b38]">
           <div className="mb-3 flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Theme</span>
+            <span className="text-xs font-extrabold text-slate-800 dark:text-slate-200">Theme</span>
             <ThemeToggle />
           </div>
           {isUserLoggedIn ? (
             <div className="flex flex-col gap-2">
-              <Button variant="outline" size="sm" className="w-full justify-start gap-2 text-xs font-semibold border-slate-200 dark:border-slate-700 bg-white dark:bg-[#22333f]" asChild>
+              <Button variant="outline" size="sm" className="w-full justify-start gap-2 text-xs font-bold text-slate-900 dark:text-slate-100 border-slate-300 dark:border-slate-700 bg-white dark:bg-[#203646] hover:bg-slate-200 dark:hover:bg-[#284254]" asChild>
                 <Link href={dashboardHref} onClick={() => setOpen(false)}>
                   <LayoutDashboard className="size-4 text-teal-600 dark:text-teal-400" />
                   Dashboard Workspace
@@ -213,7 +216,7 @@ export function MobileNav({ pathname, user }: MobileNavProps) {
               <Button
                 variant="destructive"
                 size="sm"
-                className="w-full justify-start gap-2 text-xs font-bold"
+                className="w-full justify-start gap-2 text-xs font-bold shadow-xs"
                 onClick={handleLogout}
               >
                 <LogOut className="size-4" />
@@ -222,9 +225,9 @@ export function MobileNav({ pathname, user }: MobileNavProps) {
             </div>
           ) : (
             <div className="flex flex-col gap-2">
-              <Button variant="outline" className="w-full text-xs font-semibold border-slate-200 dark:border-slate-700 bg-white dark:bg-[#22333f]" asChild>
+              <Button variant="outline" className="w-full text-xs font-bold text-slate-900 dark:text-slate-100 border-slate-300 dark:border-slate-700 bg-white dark:bg-[#203646] hover:bg-slate-200 dark:hover:bg-[#284254]" asChild>
                 <Link href="/login" onClick={() => setOpen(false)}>
-                  <LogIn className="size-4 mr-2" />
+                  <LogIn className="size-4 mr-2 text-teal-600 dark:text-teal-400" />
                   Login
                 </Link>
               </Button>

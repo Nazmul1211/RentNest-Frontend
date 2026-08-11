@@ -9,7 +9,8 @@ import {
   Building2,
   PlusCircle,
   ClipboardList,
-  Users
+  Users,
+  User
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -124,6 +125,12 @@ export function UserDropdown({ user }: UserDropdownProps) {
             <Link href={dashboardHref} className="cursor-pointer flex items-center gap-2 px-2.5 py-2 text-xs font-semibold rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
               <LayoutDashboard className="size-4 text-teal-600" />
               <span>Dashboard Workspace</span>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href="/dashboard/profile" className="cursor-pointer flex items-center gap-2 px-2.5 py-2 text-xs font-semibold rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+              <User className="size-4 text-teal-600" />
+              <span>My Profile & Settings</span>
             </Link>
           </DropdownMenuItem>
 
