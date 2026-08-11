@@ -126,14 +126,14 @@ const PropertiesPage = async ({ searchParams }: { searchParams: Promise<SearchPa
 
 
             {/* Main layout grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
+            <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[240px_minmax(0,1fr)]">
                 {/* Sidebar Filters */}
-                <aside className="lg:col-span-1 lg:sticky lg:top-24 z-20">
+                <aside className="z-20 lg:sticky lg:top-24">
                     <PropertyFilters categories={categories} />
                 </aside>
 
                 {/* Listings Grid */}
-                <main className="lg:col-span-3 space-y-6">
+                <main className="space-y-6">
                     <div className="flex items-center justify-between text-xs text-muted-foreground pb-2 border-b border-border/40">
                         <span>
                             Showing <strong className="text-foreground">{paginatedProperties.length}</strong> of{" "}
@@ -148,7 +148,7 @@ const PropertiesPage = async ({ searchParams }: { searchParams: Promise<SearchPa
 
                     {paginatedProperties.length > 0 ? (
                         <>
-                            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                                 {paginatedProperties.map((property) => (
                                     <div key={property.id} className="h-full">
                                         <PropertyCard property={property} />

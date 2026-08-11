@@ -16,9 +16,21 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Property } from "../../_components/PropertyCard";
 import RentanSubmissionModal from "../../_components/RentanSubmissionModal";
-import { GetSingleProperty } from "../../_actions/GetProperties";
+import PropertyGallery from "../../_components/PropertyGallery";
+import PropertyCard from "../../_components/PropertyCard";
+import { GetProperties, GetSingleProperty } from "../../_actions/GetProperties";
 import { GetCategories } from "../../_actions/GetCategories";
 import { GetReview } from "@/app/(dashboardGroup)/_action/ManageReview";
+
+interface ReviewRecord {
+  id?: string;
+  propertyId?: string;
+  rentalRequestId?: string;
+  rentalRequest?: { propertyId?: string };
+  rating?: number;
+  comment?: string;
+  tenant?: { name?: string };
+}
 
 export default async function PropertyDetailPage({
   params,
@@ -28,10 +40,11 @@ export default async function PropertyDetailPage({
   const { id } = await params;
 
   // 1. Fetch Property, Categories, and Reviews in parallel
-  const [propertyData, categoriesData, reviewsData] = await Promise.all([
+  const [propertyData, categoriesData, reviewsData, allProperties] = await Promise.all([
     GetSingleProperty(id),
     GetCategories(),
     GetReview(id),
+    GetProperties(),
   ]);
 
   const property: Property | null = propertyData;
@@ -42,11 +55,22 @@ export default async function PropertyDetailPage({
 
   // Find Category Name dynamically
   const matchedCategory = Array.isArray(categoriesData)
-    ? categoriesData.find((c: any) => c.id === property.categoryId)
+    ? (categoriesData as { id: string; name?: string }[]).find((c) => c.id === property.categoryId)
     : null;
   const categoryName = matchedCategory?.name || "Property";
 
-  const mainImage = property.images && property.images.length > 0 ? property.images[0] : "";
+  const relatedProperties: Property[] = Array.isArray(allProperties)
+    ? allProperties
+      .filter((item: Property) =>
+        item.id !== property.id &&
+        item.categoryId === property.categoryId &&
+        item.isAvailable !== false &&
+        item.status !== "RENTED" &&
+        item.status !== "BOOKED"
+      )
+      .slice(0, 3)
+    : [];
+
   const formattedRent = Number(property.rentAmount).toLocaleString();
   const formattedDeposit = Number(property.securityDeposit).toLocaleString();
 
@@ -62,19 +86,20 @@ export default async function PropertyDetailPage({
     property.status === "RENTED" ||
     property.status === "BOOKED" ||
     (Array.isArray(property.rentalRequests)
-      ? property.rentalRequests.some((req: any) => {
+      ? property.rentalRequests.some((req) => {
         const s = req?.status?.toUpperCase();
         return s === "PAID" || s === "COMPLETED";
       })
       : (() => {
-        const s = (property.rentalRequests as any)?.status?.toUpperCase();
+        const request = property.rentalRequests as unknown as { status?: string };
+        const s = request.status?.toUpperCase();
         return s === "PAID" || s === "COMPLETED";
       })());
 
   // Filter reviews for this property
-  const propertyReviews = Array.isArray(reviewsData)
-    ? reviewsData.filter(
-      (r: any) =>
+  const propertyReviews: ReviewRecord[] = Array.isArray(reviewsData)
+    ? (reviewsData as ReviewRecord[]).filter(
+      (r) =>
         r.propertyId === id ||
         r.rentalRequest?.propertyId === id ||
         r.rentalRequestId === id
@@ -84,7 +109,7 @@ export default async function PropertyDetailPage({
   const averageRating =
     propertyReviews.length > 0
       ? (
-        propertyReviews.reduce((acc: number, cur: any) => acc + (cur.rating || 5), 0) /
+        propertyReviews.reduce((acc, cur) => acc + (cur.rating || 5), 0) /
         propertyReviews.length
       ).toFixed(1)
       : null;
@@ -106,13 +131,9 @@ export default async function PropertyDetailPage({
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left column: Image & Details */}
         <div className="lg:col-span-2 space-y-8">
-          {/* Main Image */}
-          <div className="relative aspect-video w-full rounded-2xl overflow-hidden border border-border/40 bg-muted shadow-sm">
-            <img
-              src={mainImage}
-              alt={property.title}
-              className="w-full h-full object-cover"
-            />
+          {/* Property Image Gallery */}
+          <div className="relative">
+            <PropertyGallery images={property.images} title={property.title} />
             <div className="absolute top-4 left-4 z-10 flex gap-2">
               <Badge
                 variant={property.isAvailable ? "default" : "destructive"}
@@ -213,7 +234,7 @@ export default async function PropertyDetailPage({
               </div>
             ) : (
               <div className="space-y-3">
-                {propertyReviews.map((rev: any, index: number) => (
+                {propertyReviews.map((rev, index) => (
                   <div
                     key={rev.id || index}
                     className="p-4 rounded-xl border border-border/40 bg-card space-y-2 text-xs"
@@ -307,6 +328,25 @@ export default async function PropertyDetailPage({
           </div>
         </div>
       </div>
+
+      {relatedProperties.length > 0 && (
+        <section className="mt-16 border-t border-border/40 pt-12">
+          <div className="mb-8 space-y-2">
+            <p className="text-xs font-bold uppercase tracking-wider text-primary">Continue exploring</p>
+            <h2 className="text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">
+              Similar homes you may like
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              More available {categoryName.toLowerCase()} listings with comparable features.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {relatedProperties.map((relatedProperty) => (
+              <PropertyCard key={relatedProperty.id} property={relatedProperty} />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }
