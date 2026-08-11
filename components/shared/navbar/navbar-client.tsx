@@ -19,7 +19,8 @@ const PUBLIC_LINKS: NavLink[] = [
   { label: "Home", href: "/" },
   { label: "Properties", href: "/properties" },
   { label: "Categories", href: "/categories" },
-  { label: "About Us", href: "/about" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const ROLE_NAV_LINKS: Record<string, NavLink[]> = {

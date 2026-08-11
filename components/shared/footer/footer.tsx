@@ -91,11 +91,11 @@ export function Footer({ user }: FooterProps) {
           </div>
 
           {/* Navigation Links Columns */}
-          <div className="flex gap-12 sm:gap-16">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 sm:gap-12">
             {/* Quick Links */}
             <div className="space-y-3">
               <h3 className="text-xs font-extrabold text-foreground uppercase tracking-wider">
-                Quick Navigation
+                Quick Links
               </h3>
               <ul className="space-y-2 text-xs">
                 {quickLinks.map((link) => (
@@ -111,10 +111,39 @@ export function Footer({ user }: FooterProps) {
               </ul>
             </div>
 
-            {/* Legal / Contact Links */}
+            {/* Company Section */}
             <div className="space-y-3">
               <h3 className="text-xs font-extrabold text-foreground uppercase tracking-wider">
-                Platform
+                Company
+              </h3>
+              <ul className="space-y-2 text-xs">
+                <li>
+                  <Link href="/about" className="text-muted-foreground hover:text-teal-600 transition-colors font-medium">
+                    About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/blog" className="text-muted-foreground hover:text-teal-600 transition-colors font-medium">
+                    Blog & Insights
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/contact" className="text-muted-foreground hover:text-teal-600 transition-colors font-medium">
+                    Contact Us
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/support" className="text-muted-foreground hover:text-teal-600 transition-colors font-medium">
+                    Help & Support
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Platform & Legal */}
+            <div className="space-y-3">
+              <h3 className="text-xs font-extrabold text-foreground uppercase tracking-wider">
+                Resources
               </h3>
               <ul className="space-y-2 text-xs">
                 <li>
@@ -124,16 +153,14 @@ export function Footer({ user }: FooterProps) {
                 </li>
                 <li>
                   <Link href="/categories" className="text-muted-foreground hover:text-teal-600 transition-colors font-medium">
-                    Property Categories
+                    Categories
                   </Link>
                 </li>
-                {user && (
-                  <li>
-                    <span className="text-[11px] font-bold text-teal-600 uppercase tracking-wider">
-                      Role: {user.role}
-                    </span>
-                  </li>
-                )}
+                <li>
+                  <Link href="/terms" className="text-muted-foreground hover:text-teal-600 transition-colors font-medium">
+                    Terms & Privacy
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
@@ -142,9 +169,20 @@ export function Footer({ user }: FooterProps) {
 
         <Separator className="my-8 opacity-60" />
 
-        {/* Bottom copyright */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
+        {/* Bottom copyright and legal quicklinks */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
           <p>&copy; {new Date().getFullYear()} RentNest. All rights reserved.</p>
+          <div className="flex items-center gap-4 text-[11px] font-medium">
+            <Link href="/about" className="hover:text-teal-600 transition-colors">About</Link>
+            <span>•</span>
+            <Link href="/contact" className="hover:text-teal-600 transition-colors">Contact</Link>
+            <span>•</span>
+            <Link href="/blog" className="hover:text-teal-600 transition-colors">Blog</Link>
+            <span>•</span>
+            <Link href="/support" className="hover:text-teal-600 transition-colors">Support</Link>
+            <span>•</span>
+            <Link href="/terms" className="hover:text-teal-600 transition-colors">Terms & Privacy</Link>
+          </div>
         </div>
       </div>
     </footer>
