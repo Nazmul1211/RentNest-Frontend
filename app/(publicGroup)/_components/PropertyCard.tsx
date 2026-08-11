@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import { Bed, Bath, Ruler, MapPin, ArrowRight } from "lucide-react";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Bed, Bath, Ruler, MapPin, ArrowRight, CalendarDays } from "lucide-react";
+import { Card, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 export interface Property {
@@ -51,9 +51,13 @@ export default function PropertyCard({ property }: PropertyCardProps) {
     : "Property";
 
   const formattedRent = Number(property.rentAmount).toLocaleString();
+  const availableDate = new Date(property.availableFrom);
+  const availabilityLabel = !Number.isNaN(availableDate.getTime())
+    ? `Available ${availableDate.toLocaleDateString("en-US", { month: "short", day: "numeric" })}`
+    : "Available now";
 
   return (
-    <Card className="group relative flex flex-col h-full bg-card overflow-hidden rounded-2xl border border-border/30 ring-0 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-primary/5 hover:border-primary/30 pt-0">
+    <Card className="group relative flex h-full min-h-[480px] flex-col overflow-hidden rounded-xl border border-border/35 bg-card pt-0 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/35 hover:shadow-lg hover:shadow-primary/5">
       
       {/* Property Image Container */}
       <div className="relative aspect-16/10 w-full overflow-hidden bg-muted">
@@ -68,7 +72,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
         <div className="absolute top-3 left-3 z-10 flex gap-2">
           <Badge
             variant={property.isAvailable ? "default" : "destructive"}
-            className={`font-semibold shadow-xs text-[11px] px-2.5 py-0.5 rounded-lg ${
+          className={`rounded-md px-2.5 py-0.5 text-[11px] font-semibold shadow-xs ${
               property.isAvailable
                 ? "bg-emerald-500/90 hover:bg-emerald-500 text-white border-0"
                 : ""
@@ -76,26 +80,30 @@ export default function PropertyCard({ property }: PropertyCardProps) {
           >
             {property.isAvailable ? "Available" : "Rented"}
           </Badge>
-          <Badge variant="secondary" className="font-semibold text-[11px] px-2.5 py-0.5 rounded-lg shadow-xs backdrop-blur-md bg-background/80 border border-border/30">
+          <Badge variant="secondary" className="rounded-md border-0 bg-background/85 px-2.5 py-0.5 text-[11px] font-semibold shadow-xs backdrop-blur-md">
             {categoryName}
           </Badge>
         </div>
 
         {/* Rent Tag Overlay */}
-        <div className="absolute bottom-3 right-3 z-10 bg-primary text-primary-foreground px-3 py-1.5 rounded-xl text-sm font-bold shadow-md backdrop-blur-xs flex items-baseline gap-1">
+        <div className="absolute bottom-3 right-3 z-10 flex items-baseline gap-1 rounded-lg bg-primary px-3 py-1.5 text-sm font-bold text-primary-foreground shadow-md backdrop-blur-xs">
           ৳{formattedRent} <span className="text-[11px] font-normal opacity-85">/ month</span>
         </div>
       </div>
 
       {/* Property Info Content */}
-      <div className="flex-1 flex flex-col justify-between p-5 space-y-4">
+      <div className="flex flex-1 flex-col justify-between space-y-4 p-5">
         <div className="space-y-2">
           {/* Location */}
-          <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-medium">
+          <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
             <MapPin className="size-3.5 text-primary shrink-0" />
             <span className="line-clamp-1">
               {property.area}, {property.city}
             </span>
+          </div>
+          <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+            <CalendarDays className="size-3.5 shrink-0 text-primary" />
+            <span>{availabilityLabel}</span>
           </div>
 
           {/* Title */}
@@ -110,18 +118,18 @@ export default function PropertyCard({ property }: PropertyCardProps) {
         </div>
 
         {/* Specs Grid */}
-        <div className="pt-3 border-t border-border/20 grid grid-cols-3 gap-2 text-center text-xs text-muted-foreground">
-          <div className="flex flex-col items-center py-2 px-1 rounded-xl bg-muted/30 border border-border/20">
+        <div className="grid grid-cols-3 divide-x divide-border/35 border-t border-border/35 pt-3 text-center text-xs text-muted-foreground">
+          <div className="flex flex-col items-center px-1 py-1.5">
             <Bed className="size-4 text-primary mb-1" />
             <span className="font-bold text-foreground">{property.bedrooms}</span>
             <span className="text-[10px] text-muted-foreground">Beds</span>
           </div>
-          <div className="flex flex-col items-center py-2 px-1 rounded-xl bg-muted/30 border border-border/20">
+          <div className="flex flex-col items-center px-1 py-1.5">
             <Bath className="size-4 text-primary mb-1" />
             <span className="font-bold text-foreground">{property.bathrooms}</span>
             <span className="text-[10px] text-muted-foreground">Baths</span>
           </div>
-          <div className="flex flex-col items-center py-2 px-1 rounded-xl bg-muted/30 border border-border/20">
+          <div className="flex flex-col items-center px-1 py-1.5">
             <Ruler className="size-4 text-primary mb-1" />
             <span className="font-bold text-foreground">{property.sizeSqft}</span>
             <span className="text-[10px] text-muted-foreground">Sqft</span>
@@ -130,10 +138,10 @@ export default function PropertyCard({ property }: PropertyCardProps) {
       </div>
 
       {/* Card Footer */}
-      <CardFooter className="p-5 pt-0">
+      <CardFooter className="border-t border-border/35 bg-card p-5 pt-4">
         <Link
           href={`/properties/${property.id}`}
-          className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-muted/60 text-foreground text-xs font-bold hover:bg-primary hover:text-primary-foreground transition-all duration-300 group/btn"
+          className="group/btn flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-xs font-bold text-primary-foreground shadow-sm transition-all duration-300 hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
           View Details
           <ArrowRight className="size-3.5 transition-transform duration-300 group-hover/btn:translate-x-1" />

@@ -4,6 +4,43 @@ import { ArrowRight, Building } from "lucide-react";
 import PropertyCard, { Property } from "./PropertyCard";
 import { GetProperties } from "../_actions/GetProperties";
 
+function PropertyCardSkeleton() {
+  return (
+    <div className="min-h-[480px] animate-pulse overflow-hidden rounded-xl border border-border/35 bg-card shadow-sm">
+      <div className="aspect-16/10 bg-muted/70" />
+      <div className="space-y-4 p-5">
+        <div className="h-3 w-2/5 rounded bg-muted" />
+        <div className="h-5 w-4/5 rounded bg-muted" />
+        <div className="space-y-2">
+          <div className="h-3 rounded bg-muted" />
+          <div className="h-3 w-3/4 rounded bg-muted" />
+        </div>
+        <div className="grid grid-cols-3 divide-x divide-border/35 border-y border-border/35 py-3">
+          {[0, 1, 2].map((item) => <div key={item} className="mx-auto h-8 w-10 rounded bg-muted" />)}
+        </div>
+        <div className="h-10 rounded-lg bg-muted" />
+      </div>
+    </div>
+  );
+}
+
+export function FeaturedPropertiesSkeleton() {
+  return (
+    <section className="bg-background py-16 sm:py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-10 space-y-3">
+          <div className="h-5 w-32 animate-pulse rounded bg-muted" />
+          <div className="h-9 w-2/3 max-w-xl animate-pulse rounded bg-muted" />
+          <div className="h-5 w-full max-w-2xl animate-pulse rounded bg-muted" />
+        </div>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+          {[0, 1, 2].map((item) => <PropertyCardSkeleton key={item} />)}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default async function FeaturedProperties() {
   let featured: Property[] = [];
 
@@ -21,15 +58,16 @@ export default async function FeaturedProperties() {
           const forbiddenStatuses = ["APPROVED", "PAID", "COMPLETED"];
 
           if (Array.isArray(p.rentalRequests)) {
-            return !p.rentalRequests.some((req: any) => {
+            return !p.rentalRequests.some((req) => {
               const status = req?.status?.toUpperCase();
               return forbiddenStatuses.includes(status);
             });
           }
 
           if (p.rentalRequests && typeof p.rentalRequests === "object") {
-            const status = (p.rentalRequests as any)?.status?.toUpperCase();
-            return !forbiddenStatuses.includes(status);
+            const request = p.rentalRequests as unknown as { status?: string };
+            const status = request.status?.toUpperCase();
+            return status ? !forbiddenStatuses.includes(status) : true;
           }
 
           return true;
@@ -45,7 +83,7 @@ export default async function FeaturedProperties() {
   }
 
   return (
-    <section className="py-20 bg-background border-t border-border/40 relative">
+    <section className="bg-background py-16 sm:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Title block */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 text-left gap-4">
@@ -72,7 +110,7 @@ export default async function FeaturedProperties() {
         </div>
 
         {/* Grid wrapper */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
           {featured.map((property) => (
             <div key={property.id} className="h-full">
               <PropertyCard property={property} />

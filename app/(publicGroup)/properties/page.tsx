@@ -28,13 +28,14 @@ const PropertiesPage = async ({ searchParams }: { searchParams: Promise<SearchPa
         if (!p) return false;
         if (p.isAvailable === false || p.status === "RENTED" || p.status === "BOOKED") return true;
         if (Array.isArray(p.rentalRequests)) {
-            return p.rentalRequests.some((req: any) => {
+            return p.rentalRequests.some((req) => {
                 const s = req?.status?.toUpperCase();
                 return s === "PAID" || s === "COMPLETED";
             });
         }
         if (p.rentalRequests && typeof p.rentalRequests === "object") {
-            const s = (p.rentalRequests as any)?.status?.toUpperCase();
+            const request = p.rentalRequests as unknown as { status?: string };
+            const s = request.status?.toUpperCase();
             return s === "PAID" || s === "COMPLETED";
         }
         return false;
@@ -109,7 +110,8 @@ const PropertiesPage = async ({ searchParams }: { searchParams: Promise<SearchPa
 
 
     return (
-        <div className="min-h-screen bg-linear-to-b from-background to-muted/20 px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 lg:pt-24 pb-8 sm:pb-12 max-w-7xl mx-auto">
+        <div className="min-h-screen bg-muted/20">
+            <div className="mx-auto max-w-7xl px-4 pb-16 pt-18 sm:px-6 sm:pb-20 sm:pt-20 lg:px-8 lg:pt-24">
 
             {/* Page Header */}
             <div className="mb-4 sm:mb-8 text-left space-y-1.5">
@@ -146,7 +148,7 @@ const PropertiesPage = async ({ searchParams }: { searchParams: Promise<SearchPa
 
                     {paginatedProperties.length > 0 ? (
                         <>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                                 {paginatedProperties.map((property) => (
                                     <div key={property.id} className="h-full">
                                         <PropertyCard property={property} />
@@ -177,6 +179,7 @@ const PropertiesPage = async ({ searchParams }: { searchParams: Promise<SearchPa
                         </div>
                     )}
                 </main>
+            </div>
             </div>
         </div>
     );

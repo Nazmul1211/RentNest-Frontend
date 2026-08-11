@@ -64,11 +64,11 @@ export default function ValuePropsSection() {
         </div>
 
         {/* 3-Step Process Cards */}
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-10">
           {activeTab === "tenants" ? (
             <>
               {/* Tenant Step 1 */}
-              <div className="p-8 rounded-2xl bg-card border border-border/60 hover:border-primary/40 transition-all duration-300 shadow-xs hover:shadow-md relative space-y-4">
+              <div className="relative space-y-4 border-t-2 border-border/50 px-1 pt-6 transition-colors duration-300 hover:border-primary">
                 <div className="flex items-center justify-between">
                   <div className="size-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-bold">
                     <Search className="size-6" />
@@ -85,7 +85,7 @@ export default function ValuePropsSection() {
               </div>
 
               {/* Tenant Step 2 */}
-              <div className="p-8 rounded-2xl bg-card border border-border/60 hover:border-primary/40 transition-all duration-300 shadow-xs hover:shadow-md relative space-y-4">
+              <div className="relative space-y-4 border-t-2 border-border/50 px-1 pt-6 transition-colors duration-300 hover:border-primary">
                 <div className="flex items-center justify-between">
                   <div className="size-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-bold">
                     <MessageSquare className="size-6" />
@@ -102,7 +102,7 @@ export default function ValuePropsSection() {
               </div>
 
               {/* Tenant Step 3 */}
-              <div className="p-8 rounded-2xl bg-card border border-border/60 hover:border-primary/40 transition-all duration-300 shadow-xs hover:shadow-md relative space-y-4">
+              <div className="relative space-y-4 border-t-2 border-border/50 px-1 pt-6 transition-colors duration-300 hover:border-primary">
                 <div className="flex items-center justify-between">
                   <div className="size-12 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold">
                     <KeyRound className="size-6" />
@@ -121,7 +121,7 @@ export default function ValuePropsSection() {
           ) : (
             <>
               {/* Landlord Step 1 */}
-              <div className="p-8 rounded-2xl bg-card border border-border/60 hover:border-primary/40 transition-all duration-300 shadow-xs hover:shadow-md relative space-y-4">
+              <div className="relative space-y-4 border-t-2 border-border/50 px-1 pt-6 transition-colors duration-300 hover:border-primary">
                 <div className="flex items-center justify-between">
                   <div className="size-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-bold">
                     <FilePlus className="size-6" />
@@ -138,7 +138,7 @@ export default function ValuePropsSection() {
               </div>
 
               {/* Landlord Step 2 */}
-              <div className="p-8 rounded-2xl bg-card border border-border/60 hover:border-primary/40 transition-all duration-300 shadow-xs hover:shadow-md relative space-y-4">
+              <div className="relative space-y-4 border-t-2 border-border/50 px-1 pt-6 transition-colors duration-300 hover:border-primary">
                 <div className="flex items-center justify-between">
                   <div className="size-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-bold">
                     <UserCheck className="size-6" />
@@ -155,7 +155,7 @@ export default function ValuePropsSection() {
               </div>
 
               {/* Landlord Step 3 */}
-              <div className="p-8 rounded-2xl bg-card border border-border/60 hover:border-primary/40 transition-all duration-300 shadow-xs hover:shadow-md relative space-y-4">
+              <div className="relative space-y-4 border-t-2 border-border/50 px-1 pt-6 transition-colors duration-300 hover:border-primary">
                 <div className="flex items-center justify-between">
                   <div className="size-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-bold">
                     <Percent className="size-6" />
@@ -175,7 +175,7 @@ export default function ValuePropsSection() {
         </div>
 
         {/* High-End Bottom Banner */}
-        <div className="mt-16 rounded-3xl bg-foreground text-background dark:bg-card dark:text-foreground border border-border p-8 sm:p-12 shadow-2xl relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-8">
+        <div className="relative mt-16 flex flex-col items-center justify-between gap-8 overflow-hidden rounded-xl bg-foreground p-8 text-background shadow-xl sm:p-12 lg:flex-row dark:bg-card dark:text-foreground">
           <div className="space-y-3 max-w-xl text-center lg:text-left">
             <span className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-primary">
               <Building2 className="size-4" /> Ready to get started?

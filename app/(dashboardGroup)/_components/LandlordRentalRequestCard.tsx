@@ -99,7 +99,7 @@ export default function LandlordRentalRequestCard({ req }: LandlordRentalRequest
 
 
     return (
-        <div className="p-5 rounded-2xl border border-border/50 bg-card hover:border-teal-500/30 transition-all shadow-xs space-y-4">
+        <div className="space-y-4 rounded-xl border border-border bg-card p-5 shadow-sm ring-1 ring-foreground/5 transition-all hover:border-primary/45 hover:shadow-md">
             {/* Top Header */}
             <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-border/40">
                 <div className="space-y-1">

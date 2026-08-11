@@ -264,7 +264,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                     <Button
                         variant="destructive"
                         size="sm"
-                        className="text-xs font-semibold gap-1 h-8 px-3 bg-rose-600 hover:bg-rose-700 text-white"
+                        className="h-8 gap-1 bg-[#b4232d] px-3 text-xs font-semibold text-white shadow-sm hover:bg-[#8f1d26] focus-visible:ring-2 focus-visible:ring-[#b4232d]/30 dark:bg-destructive dark:hover:bg-destructive/90"
                         onClick={() => setOpenDeleteModal(true)}
                     >
                         <Trash2 className="size-3.5" /> Delete
@@ -282,7 +282,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                             <Edit3 className="size-5" /> Edit Property Details
                         </DialogTitle>
                         <DialogDescription className="text-slate-600 dark:text-slate-400">
-                            Update the listing details for <span className="font-bold text-slate-900 dark:text-slate-100">"{property.title}"</span>.
+                            Update the listing details for <span className="font-bold text-slate-900 dark:text-slate-100">&ldquo;{property.title}&rdquo;</span>.
                         </DialogDescription>
                     </DialogHeader>
 
@@ -533,7 +533,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                             <Trash2 className="size-5" /> Delete Property Confirmation
                         </DialogTitle>
                         <DialogDescription className="text-slate-600 dark:text-slate-400">
-                            Are you sure you want to delete <span className="font-bold text-slate-900 dark:text-slate-100">"{property.title}"</span>? This operation cannot be undone.
+                            Are you sure you want to delete <span className="font-bold text-slate-900 dark:text-slate-100">&ldquo;{property.title}&rdquo;</span>? This operation cannot be undone.
                         </DialogDescription>
                     </DialogHeader>
 
@@ -549,8 +549,8 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                         </Button>
                         <Button
                             type="button"
-                            variant="destructive"
-                            className="bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold"
+                        variant="destructive"
+                        className="bg-[#b4232d] text-xs font-semibold text-white shadow-sm hover:bg-[#8f1d26] focus-visible:ring-2 focus-visible:ring-[#b4232d]/30 dark:bg-destructive dark:hover:bg-destructive/90"
                             onClick={handleDeleteProperties}
                             disabled={isDeleting}
                         >

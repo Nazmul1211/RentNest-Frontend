@@ -9,10 +9,11 @@ const CategoryPage = async () => {
     // console.log(categories, "this categories is from categories page");
 
     return (
-        <div className="min-h-screen bg-linear-to-b from-background to-muted/20 px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 lg:pt-24 pb-8 sm:pb-12 max-w-7xl mx-auto">
+        <div className="min-h-screen bg-muted/20">
+            <div className="mx-auto max-w-7xl px-4 pb-16 pt-18 sm:px-6 sm:pb-20 sm:pt-20 lg:px-8 lg:pt-24">
             {/* Page Header */}
             <div className="mb-4 sm:mb-8 text-center max-w-2xl mx-auto space-y-2">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/10 text-teal-600 text-xs font-bold uppercase tracking-wider">
+                <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-primary">
                     <Layers className="size-3.5" />
                     <span>Property Types</span>
                 </div>
@@ -34,7 +35,7 @@ const CategoryPage = async () => {
             ) : (
                 /* Empty State */
                 <div className="flex flex-col items-center justify-center py-20 px-4 text-center border border-dashed border-border rounded-2xl bg-card/50 max-w-md mx-auto">
-                    <div className="size-16 rounded-2xl bg-teal-500/10 flex items-center justify-center mb-4 text-teal-600">
+                    <div className="mb-4 flex size-16 items-center justify-center rounded-xl bg-primary/10 text-primary">
                         <Grid3X3 className="size-8" />
                     </div>
                     <h3 className="text-lg font-bold text-foreground mb-1">
@@ -45,6 +46,7 @@ const CategoryPage = async () => {
                     </p>
                 </div>
             )}
+            </div>
         </div>
     );
 }

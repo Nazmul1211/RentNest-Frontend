@@ -15,7 +15,7 @@ export default function PricingSection() {
   const presetRents = [15000, 30000, 50000, 100000];
 
   return (
-    <section className="py-20 bg-muted/20 border-t border-border/40 relative">
+    <section className="relative bg-muted/20 py-16 sm:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
@@ -28,14 +28,14 @@ export default function PricingSection() {
             <span className="text-primary">Zero monthly subscriptions.</span>
           </h2>
           <p className="text-base text-muted-foreground leading-relaxed">
-            We believe you shouldn't pay recurring fees just to hold a listing. Our pricing is strictly based on the actual rent of the property — you pay a small one-time fee only when a tenant signs.
+            We believe you shouldn&apos;t pay recurring fees just to hold a listing. Our pricing is strictly based on the actual rent of the property — you pay a small one-time fee only when a tenant signs.
           </p>
         </div>
 
         {/* Pricing Cards Grid */}
         <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {/* Tenant Pricing Card */}
-          <Card className="flex flex-col justify-between bg-card border-border/60 hover:border-border transition-all duration-300 shadow-sm hover:shadow-md relative overflow-hidden">
+          <Card className="relative flex flex-col justify-between overflow-hidden rounded-xl border-border/35 bg-card shadow-sm transition-all duration-300 hover:shadow-md">
             <CardHeader className="p-6 sm:p-8 border-b border-border/30 bg-muted/10">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">For Tenants</span>
@@ -90,7 +90,7 @@ export default function PricingSection() {
           </Card>
 
           {/* Landlord Pricing Card */}
-          <Card className="flex flex-col justify-between bg-card border-primary/40 hover:border-primary/70 transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-primary/5 relative overflow-hidden">
+          <Card className="relative flex flex-col justify-between overflow-hidden rounded-xl border-primary/35 bg-card shadow-md transition-all duration-300 hover:border-primary/60 hover:shadow-xl hover:shadow-primary/5">
             <div className="absolute top-0 right-0 bg-primary text-primary-foreground text-[10px] font-extrabold uppercase px-3 py-1 rounded-bl-xl tracking-wider">
               Pay Only When Rented
             </div>
@@ -101,7 +101,7 @@ export default function PricingSection() {
               </div>
               <div className="mt-4 flex items-baseline gap-1.5">
                 <span className="text-4xl font-black text-foreground">2%</span>
-                <span className="text-sm font-medium text-muted-foreground">of 1st month's rent (One-time)</span>
+                <span className="text-sm font-medium text-muted-foreground">of 1st month&apos;s rent (One-time)</span>
               </div>
               <CardDescription className="mt-2 text-xs sm:text-sm text-muted-foreground">
                 No monthly subscription fees. You pay only when a rental request is approved and finalized.
@@ -132,7 +132,7 @@ export default function PricingSection() {
                   <span className="flex items-center justify-center size-5 rounded-full bg-primary/10 text-primary shrink-0">
                     <Check className="size-3.5" />
                   </span>
-                  <span>Zero risk — if your property isn't rented, you pay $0</span>
+                  <span>Zero risk — if your property isn&apos;t rented, you pay $0</span>
                 </li>
               </ul>
             </CardContent>
@@ -149,7 +149,7 @@ export default function PricingSection() {
         </div>
 
         {/* Rent Fee Estimator Widget */}
-        <div className="mt-14 max-w-3xl mx-auto p-6 sm:p-8 rounded-2xl bg-card border border-border/60 shadow-lg">
+        <div className="mx-auto mt-14 max-w-3xl rounded-xl bg-card p-6 shadow-md ring-1 ring-border/35 sm:p-8">
           <div className="flex items-center gap-2 mb-4">
             <div className="p-2 rounded-lg bg-primary/10 text-primary">
               <Calculator className="size-5" />
@@ -194,7 +194,7 @@ export default function PricingSection() {
             </div>
 
             {/* Fee Result Box */}
-            <div className="p-4 rounded-xl bg-muted/40 border border-border/40 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+            <div className="grid grid-cols-1 gap-4 rounded-xl bg-muted/40 p-4 text-center sm:grid-cols-3">
               <div className="p-2">
                 <span className="text-xs text-muted-foreground block mb-1">Monthly Subscription</span>
                 <span className="text-lg font-bold text-emerald-600 dark:text-emerald-400">৳0 / month</span>

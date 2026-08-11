@@ -18,23 +18,23 @@ const CATEGORY_IMAGES: Record<string, string> = {
   penthouse: "https://images.unsplash.com/photo-1567496898669-ee935f5f647a?auto=format&fit=crop&w=800&q=80",
 };
 
-const getCategoryIcon = (name: string) => {
+function CategoryIcon({ name }: { name: string }) {
   const lower = name.toLowerCase();
-  if (lower.includes("penthouse")) return Crown;
-  if (lower.includes("house")) return Home;
-  return Building2;
-};
+
+  if (lower.includes("penthouse")) return <Crown className="size-5" />;
+  if (lower.includes("house")) return <Home className="size-5" />;
+  return <Building2 className="size-5" />;
+}
 
 const CategoryCard = ({ category }: { category: categoryType }) => {
   const { name, id, description, isActive } = category;
 
-  const Icon = getCategoryIcon(name);
   const bgImage = CATEGORY_IMAGES[name.toLowerCase()] || CATEGORY_IMAGES.apartment;
 
   return (
     <Link
       href={`/properties?categoryId=${id}`}
-      className="group relative flex flex-col h-full bg-card rounded-2xl overflow-hidden border border-border/30 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-primary/5 hover:border-primary/30"
+      className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border/35 bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/35 hover:shadow-lg hover:shadow-primary/5"
     >
       {/* Background Image with refined overlay gradient */}
       <div className="relative aspect-16/10 w-full overflow-hidden bg-muted">
@@ -47,8 +47,8 @@ const CategoryCard = ({ category }: { category: categoryType }) => {
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
 
         {/* Floating Icon badge */}
-        <div className="absolute top-3.5 left-3.5 size-10 rounded-xl bg-background/90 backdrop-blur-md border border-border/40 flex items-center justify-center shadow-xs text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
-          <Icon className="size-5" />
+        <div className="absolute top-3.5 left-3.5 flex size-10 items-center justify-center rounded-lg bg-background/90 text-primary shadow-xs backdrop-blur-md transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
+          <CategoryIcon name={name} />
         </div>
 
         {/* Active badge */}
@@ -72,7 +72,7 @@ const CategoryCard = ({ category }: { category: categoryType }) => {
         </div>
 
         {/* Action Link */}
-        <div className="pt-3 border-t border-border/20 flex items-center justify-between text-xs font-bold text-primary group-hover:text-primary/90">
+        <div className="flex items-center justify-between border-t border-border/35 pt-3 text-xs font-bold text-primary group-hover:text-primary/90">
           <span>Explore {name}s</span>
           <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
         </div>

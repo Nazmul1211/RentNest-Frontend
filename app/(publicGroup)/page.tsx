@@ -1,7 +1,11 @@
+import { Suspense } from "react";
 import HeroSection from "./_components/HeroSection";
 import CategorySection from "./_components/CategorySection";
-import FeaturedProperties from "./_components/FeaturedProperties";
+import FeaturedProperties, { FeaturedPropertiesSkeleton } from "./_components/FeaturedProperties";
+import HomeFaqSection from "./_components/HomeFaqSection";
 import PricingSection from "./_components/PricingSection";
+import RentalClaritySection from "./_components/RentalClaritySection";
+import RoleWorkspaceSection from "./_components/RoleWorkspaceSection";
 import ValuePropsSection from "./_components/ValuePropsSection";
 
 export default function HomePage() {
@@ -14,13 +18,24 @@ export default function HomePage() {
       <CategorySection />
 
       {/*Featured Listings Section*/}
-      <FeaturedProperties />
+      <Suspense fallback={<FeaturedPropertiesSkeleton />}>
+        <FeaturedProperties />
+      </Suspense>
+
+      {/*Rental Transparency Section*/}
+      <RentalClaritySection />
+
+      {/*Role-Based Workspaces Section*/}
+      <RoleWorkspaceSection />
 
       {/*Rent-Based Pricing(Zero Subscription) Section*/}
       <PricingSection />
 
       {/*Why RentNest & Conversion CTA Section*/}
       <ValuePropsSection />
+
+      {/*Frequently Asked Questions*/}
+      <HomeFaqSection />
     </main>
   );
 }

@@ -164,7 +164,7 @@ export default function CreatePropertiesPage() {
         {/* Minimalist Form Container */}
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="bg-card rounded-2xl p-6 sm:p-8 shadow-xs border border-border/30 space-y-8 text-xs"
+          className="space-y-8 rounded-xl border border-border bg-card p-6 text-xs shadow-md ring-1 ring-foreground/5 sm:p-8"
         >
           {/* Section 1: Property Category */}
           <div className="space-y-3">
