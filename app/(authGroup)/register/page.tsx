@@ -24,7 +24,7 @@ const RegisterPage = () => {
           Already have an account?{" "}
           <Link
             href="/login"
-            className="font-medium text-cyan-600 hover:underline"
+            className="font-medium text-teal-600 hover:underline"
           >
             Sign in
           </Link>

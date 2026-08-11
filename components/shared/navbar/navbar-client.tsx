@@ -7,6 +7,7 @@ import { Home, LogIn, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MobileNav } from "./mobile-nav";
 import { UserDropdown } from "./user-dropdown";
+import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { UserData, normalizeRole } from "@/lib/user-utils";
 
 export interface NavLink {
@@ -64,9 +65,9 @@ export function NavbarClient({ user }: NavbarClientProps) {
           className="flex items-center gap-2 font-bold text-xl tracking-tight shrink-0"
           aria-label="RentNest home"
         >
-          <Home className="size-5 text-cyan-600" aria-hidden="true" />
+          <Home className="size-5 text-teal-600" aria-hidden="true" />
           <span className="text-foreground">
-            Rent<span className="text-cyan-600">Nest</span>
+            Rent<span className="text-teal-600">Nest</span>
           </span>
         </Link>
 
@@ -78,8 +79,8 @@ export function NavbarClient({ user }: NavbarClientProps) {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-xs font-semibold transition-colors hover:text-cyan-600 ${
-                  isActive ? "text-cyan-600 font-bold" : "text-foreground/80"
+                className={`text-xs font-semibold transition-colors hover:text-teal-600 ${
+                  isActive ? "text-teal-600 font-bold" : "text-foreground/80"
                 }`}
               >
                 {link.label}
@@ -90,6 +91,7 @@ export function NavbarClient({ user }: NavbarClientProps) {
 
         {/* Right Side */}
         <div className="flex items-center gap-3">
+          <ThemeToggle />
           {isUserLoggedIn ? (
             /* Logged in User Profile Dropdown */
             <div className="flex items-center gap-2">
@@ -104,7 +106,7 @@ export function NavbarClient({ user }: NavbarClientProps) {
                   Login
                 </Link>
               </Button>
-              <Button size="sm" className="bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-bold" asChild>
+              <Button size="sm" className="bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold" asChild>
                 <Link href="/register">
                   <UserPlus className="size-4 mr-1.5" />
                   Register

@@ -111,7 +111,7 @@ const RentanSubmissionModal = ({ property, triggerText = " Contact Landlord / Re
             <DialogTrigger asChild>
                 <Button
                     variant={buttonVariant}
-                    className="w-full h-10 font-bold border-cyan-600/30 text-cyan-600 hover:bg-cyan-600/10 hover:text-cyan-700"
+                    className="w-full h-10 font-bold border-teal-600/30 text-teal-600 hover:bg-teal-600/10 hover:text-teal-700"
                     disabled={property.isAvailable === false}
                 >
                     {triggerText}
@@ -134,7 +134,7 @@ const RentanSubmissionModal = ({ property, triggerText = " Contact Landlord / Re
                     <div className="grid grid-cols-2 gap-3">
                         <div className="space-y-1.5">
                             <Label htmlFor="moveInDate" className="text-xs font-semibold flex items-center gap-1.5">
-                                <Calendar className="size-3.5 text-cyan-600" />
+                                <Calendar className="size-3.5 text-teal-600" />
                                 Move-in Date
                             </Label>
                             <Input
@@ -149,7 +149,7 @@ const RentanSubmissionModal = ({ property, triggerText = " Contact Landlord / Re
 
                         <div className="space-y-1.5">
                             <Label htmlFor="moveOutDate" className="text-xs font-semibold flex items-center gap-1.5">
-                                <Calendar className="size-3.5 text-cyan-600" />
+                                <Calendar className="size-3.5 text-teal-600" />
                                 Move-out Date
                             </Label>
                             <Input
@@ -168,17 +168,17 @@ const RentanSubmissionModal = ({ property, triggerText = " Contact Landlord / Re
                     <div className="p-3 bg-muted/50 rounded-lg border border-border/40 text-xs space-y-2">
                         <div className="flex justify-between items-center text-muted-foreground">
                             <span className="flex items-center gap-1">
-                                <Calculator className="size-3.5 text-cyan-600" /> Duration:
+                                <Calculator className="size-3.5 text-teal-600" /> Duration:
                             </span>
                             <span className="font-semibold text-foreground">{totalMonths} month(s)</span>
                         </div>
                         <div className="flex justify-between items-center text-muted-foreground">
                             <span className="flex items-center gap-1">
-                                <DollarSign className="size-3.5 text-cyan-600" /> Monthly Rent:
+                                <DollarSign className="size-3.5 text-teal-600" /> Monthly Rent:
                             </span>
                             <span className="font-semibold text-foreground">৳{Number(monthlyRent).toLocaleString()}</span>
                         </div>
-                        <div className="flex justify-between items-center text-xs font-bold pt-1.5 border-t border-border/40 text-cyan-600">
+                        <div className="flex justify-between items-center text-xs font-bold pt-1.5 border-t border-border/40 text-teal-600">
                             <span>Estimated Total:</span>
                             <span>৳{Number(totalAmount).toLocaleString()}</span>
                         </div>
@@ -188,7 +188,7 @@ const RentanSubmissionModal = ({ property, triggerText = " Contact Landlord / Re
                     {/* Tenant Message */}
                     <div className="space-y-1.5">
                         <Label htmlFor="tenantMessage" className="text-xs font-semibold flex items-center gap-1.5">
-                            <MessageSquare className="size-3.5 text-cyan-600" />
+                            <MessageSquare className="size-3.5 text-teal-600" />
                             Message for Landlord (Optional)
                         </Label>
                         <textarea
@@ -211,7 +211,7 @@ const RentanSubmissionModal = ({ property, triggerText = " Contact Landlord / Re
                         <Button
                             type="submit"
                             size="sm"
-                            className="bg-cyan-600 hover:bg-cyan-700 text-white font-bold"
+                            className="bg-teal-600 hover:bg-teal-700 text-white font-bold"
                             disabled={isPending}
                         >
                             {isPending ? (

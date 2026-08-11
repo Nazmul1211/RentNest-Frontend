@@ -121,8 +121,8 @@ export default function PropertyFilters({ categories }: PropertyFiltersProps) {
             <Badge
               variant={!activeCategory ? "default" : "outline"}
               className={`cursor-pointer font-medium transition-all py-1 px-3 ${!activeCategory
-                ? "bg-cyan-600 text-white border-cyan-600 hover:bg-cyan-700"
-                : "hover:bg-cyan-500/10 hover:text-cyan-600"
+                ? "bg-teal-600 text-white border-teal-600 hover:bg-teal-700"
+                : "hover:bg-teal-500/10 hover:text-teal-600"
                 }`}
               onClick={() => updateUrlParam("categoryId", null)}
             >
@@ -135,8 +135,8 @@ export default function PropertyFilters({ categories }: PropertyFiltersProps) {
                   key={cat.id}
                   variant={isActive ? "default" : "outline"}
                   className={`cursor-pointer font-medium transition-all py-1 px-3 ${isActive
-                    ? "bg-cyan-600 text-white border-cyan-600 hover:bg-cyan-700"
-                    : "hover:bg-cyan-500/10 hover:text-cyan-600"
+                    ? "bg-teal-600 text-white border-teal-600 hover:bg-teal-700"
+                    : "hover:bg-teal-500/10 hover:text-teal-600"
                     }`}
                   onClick={() => updateUrlParam("categoryId", cat.id)}
                 >
@@ -186,8 +186,8 @@ export default function PropertyFilters({ categories }: PropertyFiltersProps) {
                   type="button"
                   onClick={() => updateUrlParam("bedrooms", num || null)}
                   className={`w-full py-1.5 px-2 rounded-lg text-xs font-medium border text-center transition-all ${isSelected
-                    ? "bg-cyan-600 border-cyan-600 text-white font-semibold shadow-xs"
-                    : "bg-background border-border hover:bg-cyan-500/10 hover:text-cyan-600 text-muted-foreground"
+                    ? "bg-teal-600 border-teal-600 text-white font-semibold shadow-xs"
+                    : "bg-background border-border hover:bg-teal-500/10 hover:text-teal-600 text-muted-foreground"
                     }`}
                 >
                   {label}
@@ -216,7 +216,7 @@ export default function PropertyFilters({ categories }: PropertyFiltersProps) {
         </div>
 
         {/* Apply Button */}
-        <Button type="submit" className="w-full h-9 text-xs font-semibold mt-2 bg-cyan-600 hover:bg-cyan-700 text-white shadow-xs">
+        <Button type="submit" className="w-full h-9 text-xs font-semibold mt-2 bg-teal-600 hover:bg-teal-700 text-white shadow-xs">
           Apply Filters
         </Button>
       </form>

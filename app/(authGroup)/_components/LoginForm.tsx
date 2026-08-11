@@ -86,7 +86,7 @@ const LoginForm = () => {
             <button
               type="button"
               onClick={() => setShowPassword((visible) => !visible)}
-              className="absolute top-1/2 right-2 -translate-y-1/2 rounded p-1 text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
+              className="absolute top-1/2 right-2 -translate-y-1/2 rounded p-1 text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500"
               aria-label={showPassword ? "Hide password" : "Show password"}
               aria-pressed={showPassword}
             >
@@ -102,7 +102,7 @@ const LoginForm = () => {
 
         <Button
           type="submit"
-          className="w-full bg-cyan-500 hover:bg-cyan-600 cursor-pointer"
+          className="w-full bg-teal-500 hover:bg-teal-600 cursor-pointer"
           disabled={!isValid || pending}
         >
           {pending ? "Signing in..." : "Sign in"}

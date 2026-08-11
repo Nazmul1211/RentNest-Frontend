@@ -167,7 +167,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
 
 
     return (
-        <div className="p-4 rounded-2xl border border-border/50 bg-card hover:border-cyan-500/30 transition-all shadow-xs space-y-4 flex flex-col justify-between">
+        <div className="p-4 rounded-2xl border border-border/50 bg-card hover:border-teal-500/30 transition-all shadow-xs space-y-4 flex flex-col justify-between">
             <div className="space-y-3">
                 {/* Image & Availability Overlay */}
                 <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-muted">
@@ -201,12 +201,12 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                                 ID: {property.id?.slice(0, 8)}...
                             </span>
                             {categoryName && (
-                                <Badge variant="secondary" className="text-[9px] px-1.5 py-0 font-semibold bg-cyan-500/10 text-cyan-700 border border-cyan-500/20 truncate">
+                                <Badge variant="secondary" className="text-[9px] px-1.5 py-0 font-semibold bg-teal-500/10 text-teal-700 border border-teal-500/20 truncate">
                                     {categoryName}
                                 </Badge>
                             )}
                         </div>
-                        <span className="text-sm font-extrabold text-cyan-600 shrink-0">
+                        <span className="text-sm font-extrabold text-teal-600 shrink-0">
                             ৳{formattedRent} <span className="text-[10px] font-normal text-muted-foreground">/ mo</span>
                         </span>
                     </div>
@@ -217,7 +217,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
 
                     {(property.area || property.city) && (
                         <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                            <MapPin className="size-3.5 text-cyan-600 shrink-0" />
+                            <MapPin className="size-3.5 text-teal-600 shrink-0" />
                             <span className="line-clamp-1">
                                 {property.area ? `${property.area}, ` : ""}{property.city || ""}
                             </span>
@@ -227,14 +227,14 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                     {/* Quick Specs */}
                     <div className="flex items-center gap-3 pt-2 text-[11px] text-muted-foreground">
                         <span className="flex items-center gap-1">
-                            <Bed className="size-3.5 text-cyan-600" /> {property.bedrooms || 0} Beds
+                            <Bed className="size-3.5 text-teal-600" /> {property.bedrooms || 0} Beds
                         </span>
                         <span className="flex items-center gap-1">
-                            <Bath className="size-3.5 text-cyan-600" /> {property.bathrooms || 0} Baths
+                            <Bath className="size-3.5 text-teal-600" /> {property.bathrooms || 0} Baths
                         </span>
                         {property.sizeSqft && (
                             <span className="flex items-center gap-1">
-                                <Ruler className="size-3.5 text-cyan-600" /> {property.sizeSqft} sqft
+                                <Ruler className="size-3.5 text-teal-600" /> {property.sizeSqft} sqft
                             </span>
                         )}
                     </div>
@@ -245,7 +245,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
 
             {/* Action Buttons */}
             <div className="flex items-center justify-between pt-3 border-t border-border/10 gap-2">
-                <Button variant="ghost" size="sm" className="text-xs font-semibold text-cyan-600 hover:text-cyan-700 p-0 h-auto" asChild>
+                <Button variant="ghost" size="sm" className="text-xs font-semibold text-teal-600 hover:text-teal-700 p-0 h-auto" asChild>
                     <Link href={`/properties/${property.id}`} className="flex items-center gap-1">
                         <Eye className="size-3.5" /> View
                     </Link>
@@ -258,7 +258,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                         className="text-xs font-semibold gap-1 h-8 px-3"
                         onClick={() => setOpenEditModal(true)}
                     >
-                        <Edit3 className="size-3.5 text-cyan-600" /> Edit
+                        <Edit3 className="size-3.5 text-teal-600" /> Edit
                     </Button>
 
                     <Button
@@ -278,7 +278,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
             <Dialog open={openEditModal} onOpenChange={setOpenEditModal}>
                 <DialogContent className="sm:max-w-xl bg-white max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
-                        <DialogTitle className="text-cyan-700 flex items-center gap-2">
+                        <DialogTitle className="text-teal-700 flex items-center gap-2">
                             <Edit3 className="size-5" /> Edit Property Details
                         </DialogTitle>
                         <DialogDescription>
@@ -295,7 +295,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                                 required
-                                className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-cyan-500/50 outline-none"
+                                className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-teal-500/50 outline-none"
                             />
                         </div>
 
@@ -303,16 +303,16 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                         <div className="space-y-1.5 p-3 bg-muted/20 rounded-xl border border-border/40">
                             <div className="flex items-center justify-between">
                                 <label className="font-bold text-foreground flex items-center gap-1.5 text-xs">
-                                    <Layers className="size-4 text-cyan-600" /> Category
+                                    <Layers className="size-4 text-teal-600" /> Category
                                 </label>
                                 <span className="text-[11px] text-muted-foreground">
-                                    Current Category: <strong className="text-cyan-700">{categoryName}</strong>
+                                    Current Category: <strong className="text-teal-700">{categoryName}</strong>
                                 </span>
                             </div>
 
                             {isLoadingCategories ? (
                                 <div className="flex items-center gap-2 text-[11px] text-muted-foreground py-2">
-                                    <Loader2 className="size-3.5 animate-spin text-cyan-600" /> Fetching categories...
+                                    <Loader2 className="size-3.5 animate-spin text-teal-600" /> Fetching categories...
                                 </div>
                             ) : categoriesList.length === 0 ? (
                                 <p className="text-[11px] text-muted-foreground py-1">No categories available.</p>
@@ -324,7 +324,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                                             <label
                                                 key={cat.id}
                                                 className={`flex items-center gap-2 p-2 rounded-lg border cursor-pointer transition-all ${isChecked
-                                                    ? "border-cyan-600 bg-cyan-500/10 text-cyan-800 font-bold shadow-xs"
+                                                    ? "border-teal-600 bg-teal-500/10 text-teal-800 font-bold shadow-xs"
                                                     : "border-border/60 hover:bg-muted/50 text-foreground"
                                                     }`}
                                             >
@@ -334,7 +334,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                                                     value={cat.id}
                                                     checked={isChecked}
                                                     onChange={() => setSelectedCategoryId(cat.id)}
-                                                    className="size-3.5 text-cyan-600 focus:ring-cyan-500"
+                                                    className="size-3.5 text-teal-600 focus:ring-teal-500"
                                                 />
                                                 <span className="text-[11px] truncate capitalize">{cat.name || cat.title}</span>
                                             </label>
@@ -352,7 +352,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                                 rows={3}
-                                className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-cyan-500/50 outline-none"
+                                className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-teal-500/50 outline-none"
                             />
                         </div>
 
@@ -365,7 +365,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                                     value={rentAmount}
                                     onChange={(e) => setRentAmount(e.target.value)}
                                     required
-                                    className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-cyan-500/50 outline-none"
+                                    className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-teal-500/50 outline-none"
                                 />
                             </div>
 
@@ -375,7 +375,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                                     type="number"
                                     value={securityDeposit}
                                     onChange={(e) => setSecurityDeposit(e.target.value)}
-                                    className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-cyan-500/50 outline-none"
+                                    className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-teal-500/50 outline-none"
                                 />
                             </div>
                         </div>
@@ -388,7 +388,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                                     type="text"
                                     value={address}
                                     onChange={(e) => setAddress(e.target.value)}
-                                    className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-cyan-500/50 outline-none"
+                                    className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-teal-500/50 outline-none"
                                 />
                             </div>
                             <div className="space-y-1">
@@ -397,7 +397,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                                     type="text"
                                     value={area}
                                     onChange={(e) => setArea(e.target.value)}
-                                    className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-cyan-500/50 outline-none"
+                                    className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-teal-500/50 outline-none"
                                 />
                             </div>
                             <div className="space-y-1">
@@ -406,7 +406,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                                     type="text"
                                     value={city}
                                     onChange={(e) => setCity(e.target.value)}
-                                    className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-cyan-500/50 outline-none"
+                                    className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-teal-500/50 outline-none"
                                 />
                             </div>
                         </div>
@@ -419,7 +419,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                                     type="number"
                                     value={bedrooms}
                                     onChange={(e) => setBedrooms(Number(e.target.value))}
-                                    className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-cyan-500/50 outline-none"
+                                    className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-teal-500/50 outline-none"
                                 />
                             </div>
                             <div className="space-y-1">
@@ -428,7 +428,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                                     type="number"
                                     value={bathrooms}
                                     onChange={(e) => setBathrooms(Number(e.target.value))}
-                                    className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-cyan-500/50 outline-none"
+                                    className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-teal-500/50 outline-none"
                                 />
                             </div>
                             <div className="space-y-1">
@@ -437,7 +437,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                                     type="number"
                                     value={sizeSqft}
                                     onChange={(e) => setSizeSqft(e.target.value)}
-                                    className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-cyan-500/50 outline-none"
+                                    className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-teal-500/50 outline-none"
                                 />
                             </div>
                         </div>
@@ -445,28 +445,28 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                         {/* Amenities */}
                         <div className="space-y-1">
                             <label className="font-bold text-foreground flex items-center gap-1">
-                                <Sparkles className="size-3.5 text-cyan-600" /> Amenities <span className="font-normal text-muted-foreground">(comma separated)</span>
+                                <Sparkles className="size-3.5 text-teal-600" /> Amenities <span className="font-normal text-muted-foreground">(comma separated)</span>
                             </label>
                             <input
                                 type="text"
                                 value={amenitiesText}
                                 onChange={(e) => setAmenitiesText(e.target.value)}
                                 placeholder="WiFi, Lift, Generator, Parking, 24/7 Security"
-                                className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-cyan-500/50 outline-none"
+                                className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-teal-500/50 outline-none"
                             />
                         </div>
 
                         {/* Image URLs */}
                         <div className="space-y-1">
                             <label className="font-bold text-foreground flex items-center gap-1">
-                                <ImageIcon className="size-3.5 text-cyan-600" /> Image URLs <span className="font-normal text-muted-foreground">(one URL per line)</span>
+                                <ImageIcon className="size-3.5 text-teal-600" /> Image URLs <span className="font-normal text-muted-foreground">(one URL per line)</span>
                             </label>
                             <textarea
                                 value={imagesText}
                                 onChange={(e) => setImagesText(e.target.value)}
                                 rows={3}
                                 placeholder="https://images.unsplash.com/photo-1..."
-                                className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-cyan-500/50 outline-none font-mono text-[11px]"
+                                className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-teal-500/50 outline-none font-mono text-[11px]"
                             />
                         </div>
 
@@ -477,7 +477,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                                 type="date"
                                 value={availableFrom}
                                 onChange={(e) => setAvailableFrom(e.target.value)}
-                                className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-cyan-500/50 outline-none"
+                                className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-teal-500/50 outline-none"
                             />
                         </div>
 
@@ -488,7 +488,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                                 id={`available-${property.id}`}
                                 checked={isAvailable}
                                 onChange={(e) => setIsAvailable(e.target.checked)}
-                                className="size-4 text-cyan-600 rounded focus:ring-cyan-500"
+                                className="size-4 text-teal-600 rounded focus:ring-teal-500"
                             />
                             <label htmlFor={`available-${property.id}`} className="font-bold text-foreground cursor-pointer">
                                 Mark as Available for Rent
@@ -507,7 +507,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                             </Button>
                             <Button
                                 type="submit"
-                                className="bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-semibold"
+                                className="bg-teal-600 hover:bg-teal-700 text-white text-xs font-semibold"
                                 disabled={isUpdating}
                             >
                                 {isUpdating ? (

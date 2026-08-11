@@ -99,7 +99,7 @@ export default function LandlordRentalRequestCard({ req }: LandlordRentalRequest
 
 
     return (
-        <div className="p-5 rounded-2xl border border-border/50 bg-card hover:border-cyan-500/30 transition-all shadow-xs space-y-4">
+        <div className="p-5 rounded-2xl border border-border/50 bg-card hover:border-teal-500/30 transition-all shadow-xs space-y-4">
             {/* Top Header */}
             <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-border/40">
                 <div className="space-y-1">
@@ -111,7 +111,7 @@ export default function LandlordRentalRequestCard({ req }: LandlordRentalRequest
                     </h4>
                     {propertyLocation && (
                         <p className="text-xs text-muted-foreground flex items-center gap-1">
-                            <MapPin className="size-3.5 text-cyan-600" />
+                            <MapPin className="size-3.5 text-teal-600" />
                             {propertyLocation}
                         </p>
                     )}
@@ -125,20 +125,20 @@ export default function LandlordRentalRequestCard({ req }: LandlordRentalRequest
             {/* Tenant Info Bar */}
             <div className="p-3 bg-muted/30 rounded-xl flex flex-wrap items-center justify-between gap-3 text-xs">
                 <div className="flex items-center gap-2">
-                    <div className="size-8 rounded-full bg-cyan-500/10 text-cyan-600 flex items-center justify-center font-bold shrink-0">
+                    <div className="size-8 rounded-full bg-teal-500/10 text-teal-600 flex items-center justify-center font-bold shrink-0">
                         <User className="size-4" />
                     </div>
                     <div>
                         <p className="font-bold text-foreground">{req.tenant?.name || "Tenant"}</p>
                         <p className="text-[11px] text-muted-foreground flex items-center gap-1">
-                            <Mail className="size-3 text-cyan-600" /> {req.tenant?.email || "N/A"}
+                            <Mail className="size-3 text-teal-600" /> {req.tenant?.email || "N/A"}
                         </p>
                     </div>
                 </div>
 
                 {req.tenant?.phone && (
                     <div className="text-[11px] text-muted-foreground flex items-center gap-1">
-                        <Phone className="size-3 text-cyan-600" /> {req.tenant.phone}
+                        <Phone className="size-3 text-teal-600" /> {req.tenant.phone}
                     </div>
                 )}
             </div>
@@ -148,7 +148,7 @@ export default function LandlordRentalRequestCard({ req }: LandlordRentalRequest
                 {/* Lease Duration */}
                 <div className="space-y-1 bg-muted/20 p-3 rounded-xl border border-border/30">
                     <span className="text-muted-foreground flex items-center gap-1 font-medium text-[11px]">
-                        <Calendar className="size-3.5 text-cyan-600" /> Lease Duration
+                        <Calendar className="size-3.5 text-teal-600" /> Lease Duration
                     </span>
                     <p className="font-semibold text-foreground">
                         {formatDate(req.moveInDate)} &rarr; {formatDate(req.moveOutDate)}
@@ -159,12 +159,12 @@ export default function LandlordRentalRequestCard({ req }: LandlordRentalRequest
                 {/* Financial Details */}
                 <div className="space-y-1 bg-muted/20 p-3 rounded-xl border border-border/30">
                     <span className="text-muted-foreground flex items-center gap-1 font-medium text-[11px]">
-                        <DollarSign className="size-3.5 text-cyan-600" /> Rent & Total
+                        <DollarSign className="size-3.5 text-teal-600" /> Rent & Total
                     </span>
                     <p className="font-semibold text-foreground">
                         ৳{Number(req.monthlyRent).toLocaleString()} / mo
                     </p>
-                    <p className="text-[11px] text-cyan-600 font-bold">
+                    <p className="text-[11px] text-teal-600 font-bold">
                         Total: ৳{Number(req.totalAmount).toLocaleString()}
                     </p>
                 </div>
@@ -172,7 +172,7 @@ export default function LandlordRentalRequestCard({ req }: LandlordRentalRequest
                 {/* Submission Date */}
                 <div className="space-y-1 bg-muted/20 p-3 rounded-xl border border-border/30">
                     <span className="text-muted-foreground flex items-center gap-1 font-medium text-[11px]">
-                        <Clock className="size-3.5 text-cyan-600" /> Submitted On
+                        <Clock className="size-3.5 text-teal-600" /> Submitted On
                     </span>
                     <p className="font-semibold text-foreground">{formatDate(req.createdAt)}</p>
                     <p className="text-[11px] text-muted-foreground">Current Status: <span className="font-bold">{req.status}</span></p>
@@ -198,7 +198,7 @@ export default function LandlordRentalRequestCard({ req }: LandlordRentalRequest
 
             {/* Card Footer: Action Buttons */}
             <div className="flex flex-wrap items-center justify-between gap-3">
-                <Button variant="ghost" size="sm" className="text-xs font-semibold text-cyan-600 hover:text-cyan-700 p-0 h-auto" asChild>
+                <Button variant="ghost" size="sm" className="text-xs font-semibold text-teal-600 hover:text-teal-700 p-0 h-auto" asChild>
                     <Link href={`/properties/${req.propertyId}`}>
                         View Property Details <ArrowRight className="size-3.5 ml-1" />
                     </Link>
@@ -251,7 +251,7 @@ export default function LandlordRentalRequestCard({ req }: LandlordRentalRequest
                             value={landlordNote}
                             onChange={(e) => setLandlordNote(e.target.value)}
                             placeholder="Add any instructions, terms, or reasons for the tenant..."
-                            className="w-full min-h-[80px] p-3 text-xs rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
+                            className="w-full min-h-[80px] p-3 text-xs rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-teal-500/50"
                         />
                     </div>
 

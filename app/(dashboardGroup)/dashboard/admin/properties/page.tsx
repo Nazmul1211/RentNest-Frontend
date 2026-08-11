@@ -16,14 +16,14 @@ export default function AdminPropertiesPage() {
             variant="ghost"
             size="sm"
             asChild
-            className="text-xs font-semibold text-muted-foreground hover:text-cyan-600 mb-1 -ml-2"
+            className="text-xs font-semibold text-muted-foreground hover:text-teal-600 mb-1 -ml-2"
           >
             <Link href="/dashboard/admin" className="flex items-center gap-1">
               <ArrowLeft className="size-4" /> Back to Admin Dashboard
             </Link>
           </Button>
           <h2 className="text-2xl font-extrabold text-foreground flex items-center gap-2">
-            <Building2 className="size-6 text-cyan-600" /> All Landlord Properties
+            <Building2 className="size-6 text-teal-600" /> All Landlord Properties
           </h2>
           <p className="text-xs sm:text-sm text-muted-foreground">
             Overview of all property listings published by landlords across RentNest.

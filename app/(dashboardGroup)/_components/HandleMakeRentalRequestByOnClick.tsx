@@ -11,7 +11,7 @@ const HandleMakeRentalRequestByOnClick = ({ req }: { req: any }) => {
         <div>
             {
                 req?.status === "APPROVED" && req?.status !== "PAID" && req?.status !== "COMPLETED" &&
-                <button onClick={handlePayment} className="bg-cyan-500 hover:bg-cyan-600 cursor-pointer text-sm font-medium py-1 px-3 rounded-lg">Pay Now</button>
+                <button onClick={handlePayment} className="bg-teal-500 hover:bg-teal-600 cursor-pointer text-sm font-medium py-1 px-3 rounded-lg">Pay Now</button>
 
             }
         </div>

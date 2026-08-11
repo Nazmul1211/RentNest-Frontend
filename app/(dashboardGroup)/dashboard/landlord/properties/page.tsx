@@ -28,7 +28,7 @@ const PropertiesPage = async () => {
                             <ArrowLeft className="size-3.5 mr-1" /> Back
                         </Link>
                     </Button>
-                    <Button size="sm" className="bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-semibold gap-1" asChild>
+                    <Button size="sm" className="bg-teal-600 hover:bg-teal-700 text-white text-xs font-semibold gap-1" asChild>
                         <Link href="/dashboard/landlord/create-properties">
                             <PlusCircle className="size-3.5" /> Create Property
                         </Link>
@@ -40,7 +40,7 @@ const PropertiesPage = async () => {
             {/* Content Section */}
             {!properties || properties.length === 0 ? (
                 <div className="flex flex-col items-center justify-center p-12 border border-dashed border-border rounded-2xl bg-card/40 text-center space-y-3">
-                    <div className="size-12 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-600">
+                    <div className="size-12 rounded-full bg-teal-500/10 flex items-center justify-center text-teal-600">
                         <Building2 className="size-6" />
                     </div>
                     <div className="space-y-1">
@@ -49,7 +49,7 @@ const PropertiesPage = async () => {
                             You haven't listed any properties yet. Start by publishing your first rental property!
                         </p>
                     </div>
-                    <Button size="sm" className="bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-semibold gap-1" asChild>
+                    <Button size="sm" className="bg-teal-600 hover:bg-teal-700 text-white text-xs font-semibold gap-1" asChild>
                         <Link href="/dashboard/landlord/create-properties">
                             <PlusCircle className="size-3.5" /> Create Your First Property
                         </Link>

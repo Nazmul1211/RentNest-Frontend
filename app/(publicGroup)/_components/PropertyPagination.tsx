@@ -68,7 +68,7 @@ export default function PropertyPagination({
           size="sm"
           disabled={currentPage <= 1}
           onClick={() => handlePageChange(currentPage - 1)}
-          className="h-8 px-2 text-xs hover:bg-cyan-500/10 hover:text-cyan-600 disabled:opacity-40"
+          className="h-8 px-2 text-xs hover:bg-teal-500/10 hover:text-teal-600 disabled:opacity-40"
         >
           <ChevronLeft className="size-3.5 mr-1" />
           Previous
@@ -96,8 +96,8 @@ export default function PropertyPagination({
                 onClick={() => handlePageChange(p)}
                 className={`size-8 rounded-lg text-xs font-semibold transition-all border ${
                   isCurrent
-                    ? "bg-cyan-600 text-white border-cyan-600 shadow-xs"
-                    : "bg-background border-border text-muted-foreground hover:bg-cyan-500/10 hover:text-cyan-600 hover:border-cyan-600/30"
+                    ? "bg-teal-600 text-white border-teal-600 shadow-xs"
+                    : "bg-background border-border text-muted-foreground hover:bg-teal-500/10 hover:text-teal-600 hover:border-teal-600/30"
                 }`}
               >
                 {p}
@@ -112,7 +112,7 @@ export default function PropertyPagination({
           size="sm"
           disabled={currentPage >= totalPages}
           onClick={() => handlePageChange(currentPage + 1)}
-          className="h-8 px-2 text-xs hover:bg-cyan-500/10 hover:text-cyan-600 disabled:opacity-40"
+          className="h-8 px-2 text-xs hover:bg-teal-500/10 hover:text-teal-600 disabled:opacity-40"
         >
           Next
           <ChevronRight className="size-3.5 ml-1" />

@@ -26,7 +26,7 @@ const GetAllTenantRentalRequest = async () => {
     if (!rentalRequests || rentalRequests.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center p-8 border border-dashed border-border rounded-xl bg-card/40 text-center space-y-3">
-                <div className="size-12 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-600">
+                <div className="size-12 rounded-full bg-teal-500/10 flex items-center justify-center text-teal-600">
                     <FileText className="size-6" />
                 </div>
                 <div className="space-y-1">
@@ -47,7 +47,7 @@ const GetAllTenantRentalRequest = async () => {
 
                 <div
                     key={req.id}
-                    className="p-5 rounded-xl border border-border/50 bg-card hover:border-cyan-500/30 transition-all shadow-xs space-y-4"
+                    className="p-5 rounded-xl border border-border/50 bg-card hover:border-teal-500/30 transition-all shadow-xs space-y-4"
                 >
                     {/* Top Header */}
                     <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-border/40">
@@ -71,7 +71,7 @@ const GetAllTenantRentalRequest = async () => {
                         {/* Move Dates */}
                         <div className="space-y-1 bg-muted/30 p-2.5 rounded-lg">
                             <span className="text-muted-foreground flex items-center gap-1 font-medium">
-                                <Calendar className="size-3.5 text-cyan-600" /> Lease Duration
+                                <Calendar className="size-3.5 text-teal-600" /> Lease Duration
                             </span>
                             <p className="font-semibold text-foreground">
                                 {formatDate(req.moveInDate)} &rarr; {formatDate(req.moveOutDate)}
@@ -82,12 +82,12 @@ const GetAllTenantRentalRequest = async () => {
                         {/* Financial Details */}
                         <div className="space-y-1 bg-muted/30 p-2.5 rounded-lg">
                             <span className="text-muted-foreground flex items-center gap-1 font-medium">
-                                <DollarSign className="size-3.5 text-cyan-600" /> Rent & Total
+                                <DollarSign className="size-3.5 text-teal-600" /> Rent & Total
                             </span>
                             <p className="font-semibold text-foreground">
                                 ৳{Number(req.monthlyRent).toLocaleString()} / mo
                             </p>
-                            <p className="text-[11px] text-cyan-600 font-bold">
+                            <p className="text-[11px] text-teal-600 font-bold">
                                 Total: ৳{Number(req.totalAmount).toLocaleString()}
                             </p>
                         </div>
@@ -96,7 +96,7 @@ const GetAllTenantRentalRequest = async () => {
                         {/* Application Date */}
                         <div className="space-y-1 bg-muted/30 p-2.5 rounded-lg">
                             <span className="text-muted-foreground flex items-center gap-1 font-medium">
-                                <Clock className="size-3.5 text-cyan-600" /> Submitted On
+                                <Clock className="size-3.5 text-teal-600" /> Submitted On
                             </span>
                             <p className="font-semibold text-foreground">{formatDate(req.createdAt)}</p>
                             <p className="text-[11px] text-muted-foreground">Status: {req.status}</p>
@@ -126,7 +126,7 @@ const GetAllTenantRentalRequest = async () => {
                     {/* Actions & Property Link */}
                     <div className="flex items-center justify-between pt-3">
                         <PaymentDetailsModal payments={req.payments} />
-                        <Button variant="ghost" size="sm" className="text-xs font-semibold text-cyan-600 hover:text-cyan-700 p-0 h-auto" asChild>
+                        <Button variant="ghost" size="sm" className="text-xs font-semibold text-teal-600 hover:text-teal-700 p-0 h-auto" asChild>
                             <Link href={`/properties/${req.propertyId}`}>
                                 View Property Details <ArrowRight className="size-3 ml-1" />
                             </Link>

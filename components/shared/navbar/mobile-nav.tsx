@@ -22,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { LogoutAction } from "@/app/(authGroup)/_actions/authAction";
 import { UserData, normalizeRole } from "@/lib/user-utils";
 
@@ -63,7 +64,7 @@ const ROLE_NAV_LINKS: Record<string, { label: string; href: string }[]> = {
 const ROLE_BADGE_META: Record<string, { label: string; className: string }> = {
   tenant: {
     label: "Tenant",
-    className: "bg-cyan-100 text-cyan-700 border-cyan-200 dark:bg-cyan-950/50 dark:text-cyan-400",
+    className: "bg-teal-100 text-teal-700 border-teal-200 dark:bg-teal-950/50 dark:text-teal-400",
   },
   landlord: {
     label: "Landlord",
@@ -71,7 +72,7 @@ const ROLE_BADGE_META: Record<string, { label: string; className: string }> = {
   },
   admin: {
     label: "Admin",
-    className: "bg-purple-100 text-purple-700 border-purple-200 dark:bg-purple-950/50 dark:text-purple-400",
+    className: "bg-amber-100 text-amber-700 border-amber-200 dark:bg-amber-950/50 dark:text-amber-400",
   },
 };
 
@@ -121,13 +122,13 @@ export function MobileNav({ pathname, user }: MobileNavProps) {
         </Button>
       </SheetTrigger>
 
-      <SheetContent side="left" className="w-72 bg-white p-0 flex flex-col">
+      <SheetContent side="left" className="w-72 bg-background p-0 flex flex-col">
         {/* Header */}
         <SheetHeader className="px-5 pt-5 pb-3">
           <SheetTitle className="flex items-center gap-2 text-left">
-            <Home className="size-5 text-cyan-600" aria-hidden="true" />
+            <Home className="size-5 text-teal-600" aria-hidden="true" />
             <span className="text-xl font-bold tracking-tight text-foreground">
-              Rent<span className="text-cyan-600">Nest</span>
+              Rent<span className="text-teal-600">Nest</span>
             </span>
           </SheetTitle>
         </SheetHeader>
@@ -143,7 +144,7 @@ export function MobileNav({ pathname, user }: MobileNavProps) {
                   className="size-full object-cover rounded-full"
                 />
               ) : (
-                <AvatarFallback className="bg-cyan-600 text-white text-xs font-bold">
+                <AvatarFallback className="bg-teal-600 text-white text-xs font-bold">
                   {getInitials(user.name)}
                 </AvatarFallback>
               )}
@@ -179,7 +180,7 @@ export function MobileNav({ pathname, user }: MobileNavProps) {
                 onClick={() => setOpen(false)}
                 className={`flex items-center px-3 py-2.5 rounded-lg text-xs font-semibold transition-colors ${
                   isActive
-                    ? "bg-cyan-500/10 text-cyan-600 font-bold"
+                    ? "bg-teal-500/10 text-teal-600 font-bold"
                     : "text-slate-700 hover:bg-slate-100 hover:text-slate-900"
                 }`}
               >
@@ -190,12 +191,15 @@ export function MobileNav({ pathname, user }: MobileNavProps) {
         </nav>
 
         {/* Action Buttons Footer */}
-        <div className="px-4 py-4 border-t border-slate-200 bg-white">
+        <div className="px-4 py-4 border-t border-border bg-background">
+          <div className="mb-2 flex justify-end">
+            <ThemeToggle />
+          </div>
           {isUserLoggedIn ? (
             <div className="flex flex-col gap-2">
               <Button variant="outline" size="sm" className="w-full justify-start gap-2 text-xs font-semibold" asChild>
                 <Link href={dashboardHref} onClick={() => setOpen(false)}>
-                  <LayoutDashboard className="size-4 text-cyan-600" />
+                  <LayoutDashboard className="size-4 text-teal-600" />
                   Dashboard Workspace
                 </Link>
               </Button>
@@ -217,7 +221,7 @@ export function MobileNav({ pathname, user }: MobileNavProps) {
                   Login
                 </Link>
               </Button>
-              <Button className="w-full bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-bold" asChild>
+              <Button className="w-full bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold" asChild>
                 <Link href="/register" onClick={() => setOpen(false)}>
                   <UserPlus className="size-4 mr-2" />
                   Register

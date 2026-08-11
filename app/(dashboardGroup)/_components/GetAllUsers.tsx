@@ -9,7 +9,7 @@ const getRoleBadge = (role: string) => {
     switch (role?.toUpperCase()) {
         case "ADMIN":
             return (
-                <Badge variant="outline" className="bg-purple-500/10 text-purple-600 border-purple-500/30 font-bold">
+                <Badge variant="outline" className="bg-amber-500/10 text-amber-600 border-amber-500/30 font-bold">
                     Admin
                 </Badge>
             );
@@ -21,7 +21,7 @@ const getRoleBadge = (role: string) => {
             );
         case "TENANT":
             return (
-                <Badge variant="outline" className="bg-cyan-500/10 text-cyan-600 border-cyan-500/30 font-bold">
+                <Badge variant="outline" className="bg-teal-500/10 text-teal-600 border-teal-500/30 font-bold">
                     Tenant
                 </Badge>
             );
@@ -53,7 +53,7 @@ const GetAllUsers = async () => {
     if (!users || users.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center p-8 border border-dashed border-border rounded-xl bg-card/40 text-center space-y-3">
-                <div className="size-12 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-600">
+                <div className="size-12 rounded-full bg-teal-500/10 flex items-center justify-center text-teal-600">
                     <Users className="size-6" />
                 </div>
                 <div className="space-y-1">
@@ -82,12 +82,12 @@ const GetAllUsers = async () => {
                     return (
                         <div
                             key={user.id}
-                            className="p-5 rounded-xl border border-border/50 bg-card hover:border-cyan-500/30 transition-all shadow-xs space-y-4"
+                            className="p-5 rounded-xl border border-border/50 bg-card hover:border-teal-500/30 transition-all shadow-xs space-y-4"
                         >
                             {/* Header with Avatar, Name, Role & Status */}
                             <div className="flex items-start justify-between gap-3 border-b border-border/40 pb-3">
                                 <div className="flex items-center gap-3">
-                                    <div className="size-10 rounded-full bg-cyan-500/15 flex items-center justify-center text-cyan-600 font-extrabold text-sm shrink-0 border border-cyan-500/30">
+                                    <div className="size-10 rounded-full bg-teal-500/15 flex items-center justify-center text-teal-600 font-extrabold text-sm shrink-0 border border-teal-500/30">
                                         {user.profilePhoto ? (
                                             <img
                                                 src={user.profilePhoto}
@@ -120,19 +120,19 @@ const GetAllUsers = async () => {
                             <div className="space-y-2 text-xs">
                                 <div>
                                     <div className="flex items-center gap-2 text-muted-foreground">
-                                        <Mail className="size-3.5 text-cyan-600 shrink-0" />
+                                        <Mail className="size-3.5 text-teal-600 shrink-0" />
                                         <span className="text-foreground font-medium truncate">{user.email}</span>
                                     </div>
 
                                     {user.phone && (
                                         <div className="flex items-center gap-2 text-muted-foreground">
-                                            <Phone className="size-3.5 text-cyan-600 shrink-0" />
+                                            <Phone className="size-3.5 text-teal-600 shrink-0" />
                                             <span className="text-foreground font-medium">{user.phone}</span>
                                         </div>
                                     )}
 
                                     <div className="flex items-center gap-2 text-muted-foreground pt-1 border-t border-border/20 text-[11px]">
-                                        <Calendar className="size-3.5 text-cyan-600 shrink-0" />
+                                        <Calendar className="size-3.5 text-teal-600 shrink-0" />
                                         <span>Joined: <strong className="text-foreground">{formatDate(user.createdAt)}</strong></span>
                                     </div>
                                 </div>

@@ -127,7 +127,7 @@ export default function HeroSection() {
                 <div className="size-8 rounded-full bg-emerald-500/20 border-2 border-background flex items-center justify-center text-[10px] font-bold text-emerald-600 dark:text-emerald-400">
                   NH
                 </div>
-                <div className="size-8 rounded-full bg-blue-500/20 border-2 border-background flex items-center justify-center text-[10px] font-bold text-blue-600 dark:text-blue-400">
+                <div className="size-8 rounded-full bg-teal-500/20 border-2 border-background flex items-center justify-center text-[10px] font-bold text-teal-600 dark:text-teal-400">
                   SK
                 </div>
               </div>

@@ -142,7 +142,7 @@ export default async function PropertyDetailPage({
             </div>
 
             <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-              <MapPin className="size-4 text-cyan-600" />
+              <MapPin className="size-4 text-teal-600" />
               <span>{property.address}, {property.area}, {property.city}, {property.country}</span>
             </div>
           </div>
@@ -150,17 +150,17 @@ export default async function PropertyDetailPage({
           {/* Quick Specs Cards */}
           <div className="grid grid-cols-3 gap-4">
             <div className="flex flex-col items-center p-4 rounded-xl border border-border/40 bg-card text-center">
-              <Bed className="size-5 text-cyan-600 mb-1.5" />
+              <Bed className="size-5 text-teal-600 mb-1.5" />
               <span className="text-base font-bold text-foreground">{property.bedrooms}</span>
               <span className="text-xs text-muted-foreground">Bedrooms</span>
             </div>
             <div className="flex flex-col items-center p-4 rounded-xl border border-border/40 bg-card text-center">
-              <Bath className="size-5 text-cyan-600 mb-1.5" />
+              <Bath className="size-5 text-teal-600 mb-1.5" />
               <span className="text-base font-bold text-foreground">{property.bathrooms}</span>
               <span className="text-xs text-muted-foreground">Bathrooms</span>
             </div>
             <div className="flex flex-col items-center p-4 rounded-xl border border-border/40 bg-card text-center">
-              <Ruler className="size-5 text-cyan-600 mb-1.5" />
+              <Ruler className="size-5 text-teal-600 mb-1.5" />
               <span className="text-base font-bold text-foreground">{property.sizeSqft}</span>
               <span className="text-xs text-muted-foreground">Sq. Ft.</span>
             </div>
@@ -194,11 +194,11 @@ export default async function PropertyDetailPage({
           <div className="space-y-4 pt-6 border-t border-border/40">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
-                <MessageSquare className="size-5 text-cyan-600" />
+                <MessageSquare className="size-5 text-teal-600" />
                 Verified Tenant Reviews
               </h2>
               {averageRating && (
-                <span className="text-xs font-semibold text-cyan-600">
+                <span className="text-xs font-semibold text-teal-600">
                   ★ {averageRating} average rating
                 </span>
               )}
@@ -220,7 +220,7 @@ export default async function PropertyDetailPage({
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <div className="size-7 rounded-full bg-cyan-500/10 text-cyan-600 font-bold flex items-center justify-center text-xs">
+                        <div className="size-7 rounded-full bg-teal-500/10 text-teal-600 font-bold flex items-center justify-center text-xs">
                           {rev.tenant?.name ? rev.tenant.name[0] : "T"}
                         </div>
                         <span className="font-bold text-foreground">
@@ -277,7 +277,7 @@ export default async function PropertyDetailPage({
               </div>
               <div className="flex justify-between items-center">
                 <span className="flex items-center gap-1">
-                  <CalendarDays className="size-3.5 text-cyan-600" />
+                  <CalendarDays className="size-3.5 text-teal-600" />
                   Available From
                 </span>
                 <strong className="text-foreground">{availableDate}</strong>
@@ -299,7 +299,7 @@ export default async function PropertyDetailPage({
 
             {/* Verification promise */}
             <div className="flex gap-2 p-3 bg-muted/30 rounded-lg text-[10px] leading-normal text-muted-foreground">
-              <ShieldCheck className="size-4 text-cyan-600 shrink-0 mt-0.5" />
+              <ShieldCheck className="size-4 text-teal-600 shrink-0 mt-0.5" />
               <span>
                 RentNest Security Promise: All listings are verified by our team. Never transfer money before visiting the property in person.
               </span>

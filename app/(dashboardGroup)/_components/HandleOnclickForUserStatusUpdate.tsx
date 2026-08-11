@@ -78,7 +78,7 @@ const HandleOnclickForUserStatusUpdate = ({
                                     id="status-select"
                                     value={status}
                                     onChange={(e) => setStatus(e.target.value as UserStatus)}
-                                    className="w-full text-xs bg-slate-50 border border-slate-300 text-slate-900 rounded-lg p-2.5 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none"
+                                    className="w-full text-xs bg-slate-50 border border-slate-300 text-slate-900 rounded-lg p-2.5 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
                                 >
                                     {STATUS_OPTIONS.map((opt) => (
                                         <option key={opt.value} value={opt.value}>
@@ -102,7 +102,7 @@ const HandleOnclickForUserStatusUpdate = ({
                                     type="submit"
                                     size="sm"
                                     disabled={loading}
-                                    className="text-xs bg-cyan-600 hover:bg-cyan-700 text-white font-bold"
+                                    className="text-xs bg-teal-600 hover:bg-teal-700 text-white font-bold"
                                 >
                                     {loading ? (
                                         <>

@@ -12,7 +12,7 @@ const CategoryPage = async () => {
         <div className="min-h-screen bg-linear-to-b from-background to-muted/20 px-4 sm:px-6 lg:px-8 py-12 mt-16 max-w-7xl mx-auto">
             {/* Page Header */}
             <div className="mb-12 text-center max-w-2xl mx-auto space-y-3">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-600 text-xs font-bold uppercase tracking-wider">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/10 text-teal-600 text-xs font-bold uppercase tracking-wider">
                     <Layers className="size-3.5" />
                     <span>Property Types</span>
                 </div>
@@ -34,7 +34,7 @@ const CategoryPage = async () => {
             ) : (
                 /* Empty State */
                 <div className="flex flex-col items-center justify-center py-20 px-4 text-center border border-dashed border-border rounded-2xl bg-card/50 max-w-md mx-auto">
-                    <div className="size-16 rounded-2xl bg-cyan-500/10 flex items-center justify-center mb-4 text-cyan-600">
+                    <div className="size-16 rounded-2xl bg-teal-500/10 flex items-center justify-center mb-4 text-teal-600">
                         <Grid3X3 className="size-8" />
                     </div>
                     <h3 className="text-lg font-bold text-foreground mb-1">

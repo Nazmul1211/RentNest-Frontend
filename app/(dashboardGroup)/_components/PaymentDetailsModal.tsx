@@ -49,7 +49,7 @@ export default function PaymentDetailsModal({ payments }: Props) {
                         variant="outline"
                         size="sm"
                         onClick={() => setIsOpen(true)}
-                        className="text-xs font-semibold border-cyan-500/40 text-cyan-600 hover:bg-cyan-500/10 cursor-pointer flex items-center gap-1.5"
+                        className="text-xs font-semibold border-teal-500/40 text-teal-600 hover:bg-teal-500/10 cursor-pointer flex items-center gap-1.5"
                     >
                         <Eye className="size-3.5" />
                         Payment Details
@@ -64,7 +64,7 @@ export default function PaymentDetailsModal({ payments }: Props) {
                         {/* Header */}
                         <div className="flex items-center justify-between border-b border-slate-200 pb-3">
                             <div className="flex items-center gap-2">
-                                <CreditCard className="size-5 text-cyan-600" />
+                                <CreditCard className="size-5 text-teal-600" />
                                 <h3 className="font-bold text-base text-slate-900">Payment Details</h3>
                             </div>
                             <button

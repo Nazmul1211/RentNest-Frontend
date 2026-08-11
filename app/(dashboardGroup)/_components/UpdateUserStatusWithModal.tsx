@@ -56,7 +56,7 @@ const UpdateUserStatusWithModal = ({ userId, currentStatus = "ACTIVE", userName 
                 variant="outline"
                 size="sm"
                 onClick={() => setIsOpen(true)}
-                className="text-[10px] h-7 px-2.5 font-bold border-cyan-500/40 text-cyan-600 hover:bg-cyan-500/10 cursor-pointer flex items-center gap-1"
+                className="text-[10px] h-7 px-2.5 font-bold border-teal-500/40 text-teal-600 hover:bg-teal-500/10 cursor-pointer flex items-center gap-1"
             >
                 <UserCheck className="size-3" />
                 Update Status
@@ -69,7 +69,7 @@ const UpdateUserStatusWithModal = ({ userId, currentStatus = "ACTIVE", userName 
                         {/* Modal Header */}
                         <div className="flex items-center justify-between border-b border-slate-200 pb-3">
                             <div className="flex items-center gap-2">
-                                <UserCheck className="size-5 text-cyan-600" />
+                                <UserCheck className="size-5 text-teal-600" />
                                 <div>
                                     <h3 className="font-bold text-base text-slate-900">Update User Status</h3>
                                     <p className="text-xs text-slate-500 line-clamp-1">{userName}</p>
@@ -94,7 +94,7 @@ const UpdateUserStatusWithModal = ({ userId, currentStatus = "ACTIVE", userName 
                                     id="user-status-select"
                                     value={status}
                                     onChange={(e) => setStatus(e.target.value)}
-                                    className="w-full text-xs bg-slate-50 border border-slate-300 text-slate-900 rounded-lg p-2.5 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none"
+                                    className="w-full text-xs bg-slate-50 border border-slate-300 text-slate-900 rounded-lg p-2.5 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
                                 >
                                     {STATUS_OPTIONS.map((opt) => (
                                         <option key={opt.value} value={opt.value}>
@@ -119,7 +119,7 @@ const UpdateUserStatusWithModal = ({ userId, currentStatus = "ACTIVE", userName 
                                     type="submit"
                                     size="sm"
                                     disabled={loading}
-                                    className="text-xs bg-cyan-600 hover:bg-cyan-700 text-white font-bold cursor-pointer"
+                                    className="text-xs bg-teal-600 hover:bg-teal-700 text-white font-bold cursor-pointer"
                                 >
                                     {loading ? (
                                         <>

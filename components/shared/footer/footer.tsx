@@ -66,9 +66,9 @@ export function Footer({ user }: FooterProps) {
               className="flex items-center gap-2 text-xl font-bold tracking-tight text-foreground w-fit"
               aria-label="RentNest home"
             >
-              <Home className="size-5 text-cyan-600" aria-hidden="true" />
+              <Home className="size-5 text-teal-600" aria-hidden="true" />
               <span>
-                Rent<span className="text-cyan-600">Nest</span>
+                Rent<span className="text-teal-600">Nest</span>
               </span>
             </Link>
 
@@ -78,13 +78,13 @@ export function Footer({ user }: FooterProps) {
 
             <div className="flex flex-col gap-1.5 pt-1 text-xs text-muted-foreground">
               <div className="flex items-center gap-2">
-                <Mail className="size-3.5 text-cyan-600" />
+                <Mail className="size-3.5 text-teal-600" />
                 <a href="mailto:support@rentnest.com" className="hover:text-foreground transition-colors">
                   support@rentnest.com
                 </a>
               </div>
               <div className="flex items-center gap-2">
-                <MapPin className="size-3.5 text-cyan-600" />
+                <MapPin className="size-3.5 text-teal-600" />
                 <span>Dhaka, Bangladesh</span>
               </div>
             </div>
@@ -102,7 +102,7 @@ export function Footer({ user }: FooterProps) {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-muted-foreground hover:text-cyan-600 transition-colors font-medium"
+                      className="text-muted-foreground hover:text-teal-600 transition-colors font-medium"
                     >
                       {link.label}
                     </Link>
@@ -118,18 +118,18 @@ export function Footer({ user }: FooterProps) {
               </h3>
               <ul className="space-y-2 text-xs">
                 <li>
-                  <Link href="/properties" className="text-muted-foreground hover:text-cyan-600 transition-colors font-medium">
+                  <Link href="/properties" className="text-muted-foreground hover:text-teal-600 transition-colors font-medium">
                     All Listings
                   </Link>
                 </li>
                 <li>
-                  <Link href="/categories" className="text-muted-foreground hover:text-cyan-600 transition-colors font-medium">
+                  <Link href="/categories" className="text-muted-foreground hover:text-teal-600 transition-colors font-medium">
                     Property Categories
                   </Link>
                 </li>
                 {user && (
                   <li>
-                    <span className="text-[11px] font-bold text-cyan-600 uppercase tracking-wider">
+                    <span className="text-[11px] font-bold text-teal-600 uppercase tracking-wider">
                       Role: {user.role}
                     </span>
                   </li>

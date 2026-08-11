@@ -15,14 +15,14 @@ export default function AdminUsersPage() {
             variant="ghost"
             size="sm"
             asChild
-            className="text-xs font-semibold text-muted-foreground hover:text-cyan-600 mb-1 -ml-2"
+            className="text-xs font-semibold text-muted-foreground hover:text-teal-600 mb-1 -ml-2"
           >
             <Link href="/dashboard/admin" className="flex items-center gap-1">
               <ArrowLeft className="size-4" /> Back to Admin Dashboard
             </Link>
           </Button>
           <h2 className="text-2xl font-extrabold text-foreground flex items-center gap-2">
-            <Users className="size-6 text-cyan-600" /> Platform User Management
+            <Users className="size-6 text-teal-600" /> Platform User Management
           </h2>
           <p className="text-xs sm:text-sm text-muted-foreground">
             View, inspect, and update roles or account status for all registered users.

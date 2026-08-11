@@ -21,7 +21,7 @@ const TenantRequestsPage = async () => {
               </Link>
             </Button>
             <h1 className="text-2xl font-extrabold tracking-tight text-foreground flex items-center gap-2">
-              <ClipboardList className="size-6 text-cyan-600" /> My Rental Requests
+              <ClipboardList className="size-6 text-teal-600" /> My Rental Requests
             </h1>
           </div>
           <p className="text-xs text-muted-foreground pl-10">
@@ -29,7 +29,7 @@ const TenantRequestsPage = async () => {
           </p>
         </div>
 
-        <Button size="sm" className="bg-cyan-600 hover:bg-cyan-700 text-white font-bold text-xs" asChild>
+        <Button size="sm" className="bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs" asChild>
           <Link href="/properties">
             Explore More Properties
           </Link>

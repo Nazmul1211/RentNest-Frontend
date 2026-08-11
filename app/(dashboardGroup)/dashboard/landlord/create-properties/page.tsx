@@ -147,14 +147,14 @@ export default function CreatePropertiesPage() {
             variant="ghost"
             size="sm"
             asChild
-            className="text-xs font-semibold text-muted-foreground hover:text-cyan-600 mb-1 -ml-2"
+            className="text-xs font-semibold text-muted-foreground hover:text-teal-600 mb-1 -ml-2"
           >
             <Link href="/dashboard/landlord" className="flex items-center gap-1">
               <ArrowLeft className="size-4" /> Back to Dashboard
             </Link>
           </Button>
           <h1 className="text-2xl font-bold tracking-tight text-foreground flex items-center gap-2">
-            <PlusCircle className="size-6 text-cyan-600" /> Create Property Listing
+            <PlusCircle className="size-6 text-teal-600" /> Create Property Listing
           </h1>
           <p className="text-xs text-muted-foreground mt-1">
             Fill out the details below to add a new property listing to RentNest.
@@ -168,13 +168,13 @@ export default function CreatePropertiesPage() {
         >
           {/* Section 1: Property Category */}
           <div className="space-y-3">
-            <h3 className="text-xs font-extrabold uppercase tracking-wider text-cyan-600 flex items-center gap-1.5">
+            <h3 className="text-xs font-extrabold uppercase tracking-wider text-teal-600 flex items-center gap-1.5">
               <Layers className="size-4" /> Category Selection
             </h3>
 
             {isLoadingCategories ? (
               <div className="flex items-center gap-2 text-xs text-muted-foreground py-2">
-                <Loader2 className="size-4 animate-spin text-cyan-600" /> Prefetching categories...
+                <Loader2 className="size-4 animate-spin text-teal-600" /> Prefetching categories...
               </div>
             ) : categories.length === 0 ? (
               <p className="text-xs text-muted-foreground py-1">No categories available.</p>
@@ -186,7 +186,7 @@ export default function CreatePropertiesPage() {
                     <label
                       key={cat.id}
                       className={`flex items-center gap-2.5 p-3 rounded-xl border cursor-pointer transition-all ${isSelected
-                          ? "border-cyan-600/80 bg-cyan-500/10 text-cyan-800 font-bold"
+                          ? "border-teal-600/80 bg-teal-500/10 text-teal-800 font-bold"
                           : "border-border/40 bg-muted/20 hover:bg-muted/40 text-foreground"
                         }`}
                     >
@@ -196,7 +196,7 @@ export default function CreatePropertiesPage() {
                         value={cat.id}
                         checked={isSelected}
                         onChange={() => setValue("categoryId", cat.id)}
-                        className="size-3.5 text-cyan-600 focus:ring-cyan-500"
+                        className="size-3.5 text-teal-600 focus:ring-teal-500"
                       />
                       <span className="text-xs capitalize">{cat.name || cat.title}</span>
                     </label>
@@ -211,7 +211,7 @@ export default function CreatePropertiesPage() {
 
           {/* Section 2: Basic Details */}
           <div className="space-y-4">
-            <h3 className="text-xs font-extrabold uppercase tracking-wider text-cyan-600 flex items-center gap-1.5">
+            <h3 className="text-xs font-extrabold uppercase tracking-wider text-teal-600 flex items-center gap-1.5">
               <Building2 className="size-4" /> Basic Details
             </h3>
 
@@ -221,7 +221,7 @@ export default function CreatePropertiesPage() {
                 type="text"
                 {...register("title")}
                 placeholder="e.g. Modern 2 Bedroom Apartment in Dhanmondi"
-                className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 outline-none transition-all"
+                className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 outline-none transition-all"
               />
               {errors.title && (
                 <p className="text-xs font-semibold text-rose-500">{errors.title.message}</p>
@@ -234,7 +234,7 @@ export default function CreatePropertiesPage() {
                 {...register("description")}
                 rows={3}
                 placeholder="Describe the property, nearby landmarks..."
-                className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 outline-none transition-all"
+                className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 outline-none transition-all"
               />
               {errors.description && (
                 <p className="text-xs font-semibold text-rose-500">{errors.description.message}</p>
@@ -244,7 +244,7 @@ export default function CreatePropertiesPage() {
 
           {/* Section 3: Pricing & Specs */}
           <div className="space-y-4">
-            <h3 className="text-xs font-extrabold uppercase tracking-wider text-cyan-600 flex items-center gap-1.5">
+            <h3 className="text-xs font-extrabold uppercase tracking-wider text-teal-600 flex items-center gap-1.5">
               <DollarSign className="size-4" /> Pricing & Specifications
             </h3>
 
@@ -255,7 +255,7 @@ export default function CreatePropertiesPage() {
                   type="number"
                   {...register("rentAmount", { valueAsNumber: true })}
                   placeholder="25000"
-                  className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 outline-none transition-all"
+                  className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 outline-none transition-all"
                 />
                 {errors.rentAmount && (
                   <p className="text-xs font-semibold text-rose-500">{errors.rentAmount.message}</p>
@@ -268,7 +268,7 @@ export default function CreatePropertiesPage() {
                   type="number"
                   {...register("securityDeposit", { valueAsNumber: true })}
                   placeholder="50000"
-                  className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 outline-none transition-all"
+                  className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 outline-none transition-all"
                 />
                 {errors.securityDeposit && (
                   <p className="text-xs font-semibold text-rose-500">{errors.securityDeposit.message}</p>
@@ -283,7 +283,7 @@ export default function CreatePropertiesPage() {
                   type="number"
                   {...register("bedrooms", { valueAsNumber: true })}
                   min={1}
-                  className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 outline-none transition-all"
+                  className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 outline-none transition-all"
                 />
                 {errors.bedrooms && (
                   <p className="text-xs font-semibold text-rose-500">{errors.bedrooms.message}</p>
@@ -296,7 +296,7 @@ export default function CreatePropertiesPage() {
                   type="number"
                   {...register("bathrooms", { valueAsNumber: true })}
                   min={1}
-                  className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 outline-none transition-all"
+                  className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 outline-none transition-all"
                 />
                 {errors.bathrooms && (
                   <p className="text-xs font-semibold text-rose-500">{errors.bathrooms.message}</p>
@@ -309,7 +309,7 @@ export default function CreatePropertiesPage() {
                   type="number"
                   {...register("sizeSqft", { valueAsNumber: true })}
                   placeholder="1200"
-                  className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 outline-none transition-all"
+                  className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 outline-none transition-all"
                 />
                 {errors.sizeSqft && (
                   <p className="text-xs font-semibold text-rose-500">{errors.sizeSqft.message}</p>
@@ -320,7 +320,7 @@ export default function CreatePropertiesPage() {
 
           {/* Section 4: Location Details */}
           <div className="space-y-4">
-            <h3 className="text-xs font-extrabold uppercase tracking-wider text-cyan-600 flex items-center gap-1.5">
+            <h3 className="text-xs font-extrabold uppercase tracking-wider text-teal-600 flex items-center gap-1.5">
               <MapPin className="size-4" /> Location Details
             </h3>
 
@@ -330,7 +330,7 @@ export default function CreatePropertiesPage() {
                 type="text"
                 {...register("address")}
                 placeholder="House 14, Road 12"
-                className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 outline-none transition-all"
+                className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 outline-none transition-all"
               />
               {errors.address && (
                 <p className="text-xs font-semibold text-rose-500">{errors.address.message}</p>
@@ -344,7 +344,7 @@ export default function CreatePropertiesPage() {
                   type="text"
                   {...register("area")}
                   placeholder="Dhanmondi"
-                  className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 outline-none transition-all"
+                  className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 outline-none transition-all"
                 />
                 {errors.area && (
                   <p className="text-xs font-semibold text-rose-500">{errors.area.message}</p>
@@ -357,7 +357,7 @@ export default function CreatePropertiesPage() {
                   type="text"
                   {...register("city")}
                   placeholder="Dhaka"
-                  className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 outline-none transition-all"
+                  className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 outline-none transition-all"
                 />
                 {errors.city && (
                   <p className="text-xs font-semibold text-rose-500">{errors.city.message}</p>
@@ -370,7 +370,7 @@ export default function CreatePropertiesPage() {
                   type="text"
                   {...register("postalCode")}
                   placeholder="1209"
-                  className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 outline-none transition-all"
+                  className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 outline-none transition-all"
                 />
                 {errors.postalCode && (
                   <p className="text-xs font-semibold text-rose-500">{errors.postalCode.message}</p>
@@ -383,7 +383,7 @@ export default function CreatePropertiesPage() {
                   type="text"
                   {...register("country")}
                   placeholder="Bangladesh"
-                  className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 outline-none transition-all"
+                  className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 outline-none transition-all"
                 />
                 {errors.country && (
                   <p className="text-xs font-semibold text-rose-500">{errors.country.message}</p>
@@ -394,7 +394,7 @@ export default function CreatePropertiesPage() {
 
           {/* Section 5: Amenities, Availability & Media */}
           <div className="space-y-4">
-            <h3 className="text-xs font-extrabold uppercase tracking-wider text-cyan-600 flex items-center gap-1.5">
+            <h3 className="text-xs font-extrabold uppercase tracking-wider text-teal-600 flex items-center gap-1.5">
               <Sparkles className="size-4" /> Amenities & Media
             </h3>
 
@@ -407,7 +407,7 @@ export default function CreatePropertiesPage() {
                   type="text"
                   {...register("amenities")}
                   placeholder="WiFi, Lift, Generator, Parking, 24/7 Security"
-                  className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 outline-none transition-all"
+                  className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 outline-none transition-all"
                 />
                 {errors.amenities && (
                   <p className="text-xs font-semibold text-rose-500">{errors.amenities.message}</p>
@@ -416,25 +416,25 @@ export default function CreatePropertiesPage() {
 
               <div className="space-y-1">
                 <label className="font-bold text-foreground flex items-center gap-1">
-                  <Calendar className="size-3.5 text-cyan-600" /> Available From Date
+                  <Calendar className="size-3.5 text-teal-600" /> Available From Date
                 </label>
                 <input
                   type="date"
                   {...register("availableFrom")}
-                  className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 outline-none transition-all"
+                  className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 outline-none transition-all"
                 />
               </div>
             </div>
 
             <div className="space-y-1">
               <label className="font-bold text-foreground flex items-center gap-1">
-                <ImageIcon className="size-3.5 text-cyan-600" /> Image URLs <span className="font-normal text-muted-foreground">(one URL per line) *</span>
+                <ImageIcon className="size-3.5 text-teal-600" /> Image URLs <span className="font-normal text-muted-foreground">(one URL per line) *</span>
               </label>
               <textarea
                 {...register("images")}
                 rows={3}
                 placeholder="https://images.unsplash.com/photo-1567496898669-ee935f5f647a"
-                className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 outline-none font-mono text-[11px] transition-all"
+                className="w-full p-2.5 rounded-xl border border-border/60 bg-background focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 outline-none font-mono text-[11px] transition-all"
               />
               {errors.images && (
                 <p className="text-xs font-semibold text-rose-500">{errors.images.message}</p>
@@ -456,7 +456,7 @@ export default function CreatePropertiesPage() {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-bold px-6 py-2.5 rounded-xl shadow-xs"
+              className="bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold px-6 py-2.5 rounded-xl shadow-xs"
             >
               {isSubmitting ? (
                 <>

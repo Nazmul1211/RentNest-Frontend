@@ -45,7 +45,7 @@ const ROLE_META: Record<
 > = {
   tenant: {
     label: "Tenant",
-    className: "bg-cyan-50 text-cyan-700 border-cyan-200 dark:bg-cyan-950/50 dark:text-cyan-400",
+    className: "bg-teal-50 text-teal-700 border-teal-200 dark:bg-teal-950/50 dark:text-teal-400",
   },
   landlord: {
     label: "Landlord",
@@ -53,7 +53,7 @@ const ROLE_META: Record<
   },
   admin: {
     label: "Admin",
-    className: "bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-950/50 dark:text-purple-400",
+    className: "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/50 dark:text-amber-400",
   },
 };
 
@@ -82,7 +82,7 @@ export function UserDropdown({ user }: UserDropdownProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="flex items-center gap-2 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 transition-all hover:opacity-90">
+        <button className="flex items-center gap-2 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-teal-500 transition-all hover:opacity-90">
           <Avatar className="size-9 cursor-pointer border border-border shadow-xs">
             {user.profilePhoto ? (
               <img
@@ -91,7 +91,7 @@ export function UserDropdown({ user }: UserDropdownProps) {
                 className="size-full object-cover rounded-full"
               />
             ) : (
-              <AvatarFallback className="bg-cyan-600 text-white text-xs font-bold">
+              <AvatarFallback className="bg-teal-600 text-white text-xs font-bold">
                 {getInitials(user.name)}
               </AvatarFallback>
             )}
@@ -122,7 +122,7 @@ export function UserDropdown({ user }: UserDropdownProps) {
         <DropdownMenuGroup className="space-y-0.5">
           <DropdownMenuItem asChild>
             <Link href={dashboardHref} className="cursor-pointer flex items-center gap-2 px-2.5 py-2 text-xs font-semibold rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
-              <LayoutDashboard className="size-4 text-cyan-600" />
+              <LayoutDashboard className="size-4 text-teal-600" />
               <span>Dashboard Workspace</span>
             </Link>
           </DropdownMenuItem>
@@ -131,19 +131,19 @@ export function UserDropdown({ user }: UserDropdownProps) {
             <>
               <DropdownMenuItem asChild>
                 <Link href="/dashboard/landlord/properties" className="cursor-pointer flex items-center gap-2 px-2.5 py-2 text-xs font-semibold rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
-                  <Building2 className="size-4 text-cyan-600" />
+                  <Building2 className="size-4 text-teal-600" />
                   <span>My Properties</span>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link href="/dashboard/landlord/rental-request" className="cursor-pointer flex items-center gap-2 px-2.5 py-2 text-xs font-semibold rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
-                  <ClipboardList className="size-4 text-cyan-600" />
+                  <ClipboardList className="size-4 text-teal-600" />
                   <span>Rental Requests</span>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link href="/dashboard/landlord/create-properties" className="cursor-pointer flex items-center gap-2 px-2.5 py-2 text-xs font-semibold rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
-                  <PlusCircle className="size-4 text-cyan-600" />
+                  <PlusCircle className="size-4 text-teal-600" />
                   <span>Create Property</span>
                 </Link>
               </DropdownMenuItem>
@@ -154,13 +154,13 @@ export function UserDropdown({ user }: UserDropdownProps) {
             <>
               <DropdownMenuItem asChild>
                 <Link href="/dashboard/admin/users" className="cursor-pointer flex items-center gap-2 px-2.5 py-2 text-xs font-semibold rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
-                  <Users className="size-4 text-purple-600" />
+                  <Users className="size-4 text-amber-600" />
                   <span>User Management</span>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link href="/dashboard/admin/properties" className="cursor-pointer flex items-center gap-2 px-2.5 py-2 text-xs font-semibold rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
-                  <Building2 className="size-4 text-cyan-600" />
+                  <Building2 className="size-4 text-teal-600" />
                   <span>All Properties</span>
                 </Link>
               </DropdownMenuItem>
@@ -177,13 +177,13 @@ export function UserDropdown({ user }: UserDropdownProps) {
             <>
               <DropdownMenuItem asChild>
                 <Link href="/dashboard/tenant/requests" className="cursor-pointer flex items-center gap-2 px-2.5 py-2 text-xs font-semibold rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
-                  <ClipboardList className="size-4 text-cyan-600" />
+                  <ClipboardList className="size-4 text-teal-600" />
                   <span>My Rental Requests</span>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link href="/properties" className="cursor-pointer flex items-center gap-2 px-2.5 py-2 text-xs font-semibold rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
-                  <Building2 className="size-4 text-cyan-600" />
+                  <Building2 className="size-4 text-teal-600" />
                   <span>Browse Properties</span>
                 </Link>
               </DropdownMenuItem>

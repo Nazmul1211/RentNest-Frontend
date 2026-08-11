@@ -31,7 +31,7 @@ const PropertiesRentalRequest = async () => {
             {/* Requests List or Empty State */}
             {!rentalRequests || rentalRequests.length === 0 ? (
                 <div className="flex flex-col items-center justify-center p-12 border border-dashed border-border rounded-2xl bg-card/40 text-center space-y-3">
-                    <div className="size-12 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-600">
+                    <div className="size-12 rounded-full bg-teal-500/10 flex items-center justify-center text-teal-600">
                         <FileText className="size-6" />
                     </div>
                     <div className="space-y-1">

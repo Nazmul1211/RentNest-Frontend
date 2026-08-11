@@ -137,7 +137,7 @@ export default function CreateReviewModal({
                         size="sm"
                         variant="outline"
                         onClick={() => setIsOpen(true)}
-                        className="text-xs h-8 px-2.5 font-bold gap-1 border-cyan-500/40 text-cyan-600 hover:bg-cyan-500/10 cursor-pointer"
+                        className="text-xs h-8 px-2.5 font-bold gap-1 border-teal-500/40 text-teal-600 hover:bg-teal-500/10 cursor-pointer"
                     >
                         <Edit3 className="size-3.5" />
                         Edit Review
@@ -169,7 +169,7 @@ export default function CreateReviewModal({
                 <DialogContent className="w-[92vw] max-w-md bg-white p-5 sm:p-6 rounded-2xl">
                     <DialogHeader className="text-left space-y-1">
                         <DialogTitle className="flex items-center gap-2 text-base font-bold text-slate-900">
-                            <MessageSquarePlus className="size-5 text-cyan-600" />
+                            <MessageSquarePlus className="size-5 text-teal-600" />
                             {isEditing ? "Edit Your Property Review" : "Leave a Property Review"}
                         </DialogTitle>
                         <DialogDescription className="text-xs text-slate-500 line-clamp-1">
@@ -223,7 +223,7 @@ export default function CreateReviewModal({
                                 value={comment}
                                 onChange={(e) => setComment(e.target.value)}
                                 placeholder="Describe the condition of the home, landlord communication, amenities, and location..."
-                                className="w-full min-h-[100px] p-3 text-xs rounded-xl border border-slate-300 bg-slate-50 text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 leading-relaxed"
+                                className="w-full min-h-[100px] p-3 text-xs rounded-xl border border-slate-300 bg-slate-50 text-slate-900 focus:outline-none focus:ring-2 focus:ring-teal-500/50 leading-relaxed"
                                 required
                             />
                         </div>
@@ -243,7 +243,7 @@ export default function CreateReviewModal({
                                 <Button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    className="bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-bold gap-1 cursor-pointer"
+                                    className="bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold gap-1 cursor-pointer"
                                 >
                                     {isSubmitting ? (
                                         <>

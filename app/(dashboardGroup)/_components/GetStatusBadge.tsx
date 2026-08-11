@@ -38,7 +38,7 @@ export const getStatusBadge = (status: string, className?: string) => {
         case "PAID":
         case "COMPLETED":
             return (
-                <Badge variant="outline" className={`bg-cyan-500/10 text-cyan-600 border-cyan-500/30 flex items-center gap-1 px-2.5 py-1 font-bold ${className || ""}`}>
+                <Badge variant="outline" className={`bg-teal-500/10 text-teal-600 border-teal-500/30 flex items-center gap-1 px-2.5 py-1 font-bold ${className || ""}`}>
                     <CheckCircle2 className="size-3.5" />
                     <span>{upperStatus}</span>
                 </Badge>
