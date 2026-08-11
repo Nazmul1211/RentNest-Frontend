@@ -186,7 +186,7 @@ export default function CreatePropertiesPage() {
                     <label
                       key={cat.id}
                       className={`flex items-center gap-2.5 p-3 rounded-xl border cursor-pointer transition-all ${isSelected
-                          ? "border-teal-600/80 bg-teal-500/10 text-teal-800 font-bold"
+                          ? "border-teal-600/80 dark:border-teal-500 bg-teal-500/10 dark:bg-teal-500/20 text-teal-800 dark:text-teal-300 font-bold"
                           : "border-border/40 bg-muted/20 hover:bg-muted/40 text-foreground"
                         }`}
                     >

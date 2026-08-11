@@ -14,6 +14,7 @@ export default async function CategorySection() {
     console.error("Error loading categories for homepage:", error);
   }
 
+
   if (!categories || categories.length === 0) {
     // Fallback static categories if backend API is offline during SSR
     categories = [

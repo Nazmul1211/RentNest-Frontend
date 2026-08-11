@@ -166,13 +166,13 @@ export default function CreateReviewModal({
             )}
 
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
-                <DialogContent className="w-[92vw] max-w-md bg-white p-5 sm:p-6 rounded-2xl">
+                <DialogContent className="w-[92vw] max-w-md bg-white dark:bg-[#182630] text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-slate-800 shadow-2xl p-5 sm:p-6 rounded-2xl">
                     <DialogHeader className="text-left space-y-1">
-                        <DialogTitle className="flex items-center gap-2 text-base font-bold text-slate-900">
-                            <MessageSquarePlus className="size-5 text-teal-600" />
+                        <DialogTitle className="flex items-center gap-2 text-base font-bold text-slate-900 dark:text-slate-100">
+                            <MessageSquarePlus className="size-5 text-teal-600 dark:text-teal-400" />
                             {isEditing ? "Edit Your Property Review" : "Leave a Property Review"}
                         </DialogTitle>
-                        <DialogDescription className="text-xs text-slate-500 line-clamp-1">
+                        <DialogDescription className="text-xs text-slate-600 dark:text-slate-400 line-clamp-1">
                             {propertyTitle ? `Feedback for "${propertyTitle}"` : "Share your honest feedback about this rental property."}
                         </DialogDescription>
                     </DialogHeader>
@@ -180,7 +180,7 @@ export default function CreateReviewModal({
                     <form onSubmit={handleSubmit} className="space-y-4 my-2">
                         {/* Interactive Star Rating */}
                         <div className="space-y-1.5">
-                            <label className="text-xs font-bold text-slate-800 block">
+                            <label className="text-xs font-bold text-slate-800 dark:text-slate-200 block">
                                 Overall Rating
                             </label>
                             <div className="flex items-center gap-1">
@@ -201,13 +201,13 @@ export default function CreateReviewModal({
                                             <Star
                                                 className={`size-6 transition-transform ${isFilled
                                                     ? "fill-amber-400 text-amber-400 scale-110"
-                                                    : "text-slate-300"
+                                                    : "text-slate-300 dark:text-slate-600"
                                                     }`}
                                             />
                                         </button>
                                     );
                                 })}
-                                <span className="text-xs font-bold text-slate-600 ml-2">
+                                <span className="text-xs font-bold text-slate-600 dark:text-slate-400 ml-2">
                                     {rating} / 5
                                 </span>
                             </div>
@@ -215,7 +215,7 @@ export default function CreateReviewModal({
 
                         {/* Comment Textarea */}
                         <div className="space-y-1.5">
-                            <label htmlFor="review-comment" className="text-xs font-bold text-slate-800 block">
+                            <label htmlFor="review-comment" className="text-xs font-bold text-slate-800 dark:text-slate-200 block">
                                 Your Feedback & Experience
                             </label>
                             <textarea
@@ -223,20 +223,20 @@ export default function CreateReviewModal({
                                 value={comment}
                                 onChange={(e) => setComment(e.target.value)}
                                 placeholder="Describe the condition of the home, landlord communication, amenities, and location..."
-                                className="w-full min-h-[100px] p-3 text-xs rounded-xl border border-slate-300 bg-slate-50 text-slate-900 focus:outline-none focus:ring-2 focus:ring-teal-500/50 leading-relaxed"
+                                className="w-full min-h-[100px] p-3 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#22333f] text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500 leading-relaxed"
                                 required
                             />
                         </div>
 
                         {/* Modal Footer: Cancel and Save Changes ONLY */}
-                        <DialogFooter className="gap-2 sm:gap-0 pt-2 border-t border-slate-100 flex items-center justify-end">
+                        <DialogFooter className="gap-2 sm:gap-0 pt-2 border-t border-slate-200 dark:border-slate-800 flex items-center justify-end">
                             <div className="flex items-center gap-2">
                                 <Button
                                     type="button"
                                     variant="outline"
                                     onClick={() => setIsOpen(false)}
                                     disabled={isSubmitting}
-                                    className="text-xs font-semibold cursor-pointer"
+                                    className="text-xs font-semibold cursor-pointer border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300"
                                 >
                                     Cancel
                                 </Button>

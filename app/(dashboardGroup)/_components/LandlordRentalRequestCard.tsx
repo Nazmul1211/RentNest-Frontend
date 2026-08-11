@@ -231,12 +231,12 @@ export default function LandlordRentalRequestCard({ req }: LandlordRentalRequest
 
             {/* Action Confirmation Modal */}
             <Dialog open={openModal} onOpenChange={setOpenModal}>
-                <DialogContent className="sm:max-w-md bg-white">
+                <DialogContent className="sm:max-w-md bg-white dark:bg-[#182630] text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-slate-800 shadow-2xl">
                     <DialogHeader>
-                        <DialogTitle>
+                        <DialogTitle className="text-slate-900 dark:text-slate-100 font-bold">
                             {actionType === "APPROVED" ? "Approve Rental Request" : "Reject Rental Request"}
                         </DialogTitle>
-                        <DialogDescription>
+                        <DialogDescription className="text-slate-600 dark:text-slate-400 text-xs">
                             {actionType === "APPROVED"
                                 ? "Are you sure you want to approve this tenant request? The tenant will be notified to proceed with payment."
                                 : "Are you sure you want to reject this tenant request? You can provide a reason below."}
@@ -244,14 +244,14 @@ export default function LandlordRentalRequestCard({ req }: LandlordRentalRequest
                     </DialogHeader>
 
                     <div className="space-y-2 my-2">
-                        <label className="text-xs font-bold text-foreground">
-                            Landlord Note <span className="font-normal text-muted-foreground">(Optional)</span>
+                        <label className="text-xs font-bold text-slate-800 dark:text-slate-200">
+                            Landlord Note <span className="font-normal text-slate-500 dark:text-slate-400">(Optional)</span>
                         </label>
                         <textarea
                             value={landlordNote}
                             onChange={(e) => setLandlordNote(e.target.value)}
                             placeholder="Add any instructions, terms, or reasons for the tenant..."
-                            className="w-full min-h-[80px] p-3 text-xs rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                            className="w-full min-h-[80px] p-3 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#22333f] text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
                         />
                     </div>
 
@@ -261,7 +261,7 @@ export default function LandlordRentalRequestCard({ req }: LandlordRentalRequest
                             variant="outline"
                             onClick={() => setOpenModal(false)}
                             disabled={isSubmitting}
-                            className="text-xs font-semibold mr-2"
+                            className="text-xs font-semibold mr-2 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300"
                         >
                             Cancel
                         </Button>

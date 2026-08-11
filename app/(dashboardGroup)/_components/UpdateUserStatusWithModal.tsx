@@ -64,21 +64,21 @@ const UpdateUserStatusWithModal = ({ userId, currentStatus = "ACTIVE", userName 
 
             {isOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
-                    <div className="bg-white border border-slate-200 rounded-xl shadow-2xl w-full max-w-sm p-6 relative space-y-4 text-slate-900 animate-in fade-in zoom-in-95">
+                    <div className="bg-white dark:bg-[#182630] border border-slate-200 dark:border-slate-800 rounded-xl shadow-2xl w-full max-w-sm p-6 relative space-y-4 text-slate-900 dark:text-slate-100 animate-in fade-in zoom-in-95">
 
                         {/* Modal Header */}
-                        <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+                        <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
                             <div className="flex items-center gap-2">
-                                <UserCheck className="size-5 text-teal-600" />
+                                <UserCheck className="size-5 text-teal-600 dark:text-teal-400" />
                                 <div>
-                                    <h3 className="font-bold text-base text-slate-900">Update User Status</h3>
-                                    <p className="text-xs text-slate-500 line-clamp-1">{userName}</p>
+                                    <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">Update User Status</h3>
+                                    <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-1">{userName}</p>
                                 </div>
                             </div>
                             <button
                                 type="button"
                                 onClick={() => setIsOpen(false)}
-                                className="text-slate-400 hover:text-slate-700 cursor-pointer p-1 rounded-lg hover:bg-slate-100 transition-colors"
+                                className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 cursor-pointer p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                             >
                                 <X className="size-4" />
                             </button>
@@ -87,17 +87,17 @@ const UpdateUserStatusWithModal = ({ userId, currentStatus = "ACTIVE", userName 
                         {/* Modal Form */}
                         <form onSubmit={handleSave} className="space-y-4">
                             <div className="space-y-1.5">
-                                <label htmlFor="user-status-select" className="text-xs font-semibold text-slate-700 block">
+                                <label htmlFor="user-status-select" className="text-xs font-semibold text-slate-700 dark:text-slate-300 block">
                                     Select New Status
                                 </label>
                                 <select
                                     id="user-status-select"
                                     value={status}
                                     onChange={(e) => setStatus(e.target.value)}
-                                    className="w-full text-xs bg-slate-50 border border-slate-300 text-slate-900 rounded-lg p-2.5 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
+                                    className="w-full text-xs bg-slate-50 dark:bg-[#22333f] border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-lg p-2.5 focus:ring-2 focus:ring-teal-500 outline-none"
                                 >
                                     {STATUS_OPTIONS.map((opt) => (
-                                        <option key={opt.value} value={opt.value}>
+                                        <option key={opt.value} value={opt.value} className="bg-white dark:bg-[#182630] text-slate-900 dark:text-slate-100">
                                             {opt.label} ({opt.value})
                                         </option>
                                     ))}
@@ -105,13 +105,13 @@ const UpdateUserStatusWithModal = ({ userId, currentStatus = "ACTIVE", userName 
                             </div>
 
                             {/* Modal Footer */}
-                            <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+                            <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-200 dark:border-slate-800">
                                 <Button
                                     type="button"
                                     variant="outline"
                                     size="sm"
                                     onClick={() => setIsOpen(false)}
-                                    className="text-xs border-slate-300 text-slate-700 cursor-pointer"
+                                    className="text-xs cursor-pointer border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300"
                                 >
                                     Cancel
                                 </Button>

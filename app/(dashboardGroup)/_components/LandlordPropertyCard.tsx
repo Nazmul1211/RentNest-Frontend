@@ -276,46 +276,46 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
 
             {/* Edit Property Modal */}
             <Dialog open={openEditModal} onOpenChange={setOpenEditModal}>
-                <DialogContent className="sm:max-w-xl bg-white max-h-[90vh] overflow-y-auto">
+                <DialogContent className="sm:max-w-xl bg-white dark:bg-[#182630] text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-slate-800 max-h-[90vh] overflow-y-auto shadow-2xl">
                     <DialogHeader>
-                        <DialogTitle className="text-teal-700 flex items-center gap-2">
+                        <DialogTitle className="text-teal-700 dark:text-teal-400 flex items-center gap-2">
                             <Edit3 className="size-5" /> Edit Property Details
                         </DialogTitle>
-                        <DialogDescription>
-                            Update the listing details for <span className="font-bold text-foreground">"{property.title}"</span>.
+                        <DialogDescription className="text-slate-600 dark:text-slate-400">
+                            Update the listing details for <span className="font-bold text-slate-900 dark:text-slate-100">"{property.title}"</span>.
                         </DialogDescription>
                     </DialogHeader>
 
                     <form onSubmit={handleUpdateProperties} className="space-y-4 my-2 text-xs">
                         {/* Title */}
                         <div className="space-y-1">
-                            <label className="font-bold text-foreground">Property Title</label>
+                            <label className="font-bold text-slate-800 dark:text-slate-200">Property Title</label>
                             <input
                                 type="text"
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                                 required
-                                className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-teal-500/50 outline-none"
+                                className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#22333f] text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-teal-500 outline-none"
                             />
                         </div>
 
                         {/* Category Selection */}
-                        <div className="space-y-1.5 p-3 bg-muted/20 rounded-xl border border-border/40">
+                        <div className="space-y-1.5 p-3 bg-slate-100/70 dark:bg-slate-900/60 rounded-xl border border-slate-200 dark:border-slate-800">
                             <div className="flex items-center justify-between">
-                                <label className="font-bold text-foreground flex items-center gap-1.5 text-xs">
-                                    <Layers className="size-4 text-teal-600" /> Category
+                                <label className="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5 text-xs">
+                                    <Layers className="size-4 text-teal-600 dark:text-teal-400" /> Category
                                 </label>
-                                <span className="text-[11px] text-muted-foreground">
-                                    Current Category: <strong className="text-teal-700">{categoryName}</strong>
+                                <span className="text-[11px] text-slate-500 dark:text-slate-400">
+                                    Current Category: <strong className="text-teal-700 dark:text-teal-400">{categoryName}</strong>
                                 </span>
                             </div>
 
                             {isLoadingCategories ? (
-                                <div className="flex items-center gap-2 text-[11px] text-muted-foreground py-2">
-                                    <Loader2 className="size-3.5 animate-spin text-teal-600" /> Fetching categories...
+                                <div className="flex items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400 py-2">
+                                    <Loader2 className="size-3.5 animate-spin text-teal-600 dark:text-teal-400" /> Fetching categories...
                                 </div>
                             ) : categoriesList.length === 0 ? (
-                                <p className="text-[11px] text-muted-foreground py-1">No categories available.</p>
+                                <p className="text-[11px] text-slate-500 dark:text-slate-400 py-1">No categories available.</p>
                             ) : (
                                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1">
                                     {categoriesList.map((cat) => {
@@ -324,8 +324,8 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                                             <label
                                                 key={cat.id}
                                                 className={`flex items-center gap-2 p-2 rounded-lg border cursor-pointer transition-all ${isChecked
-                                                    ? "border-teal-600 bg-teal-500/10 text-teal-800 font-bold shadow-xs"
-                                                    : "border-border/60 hover:bg-muted/50 text-foreground"
+                                                    ? "border-teal-600 dark:border-teal-500 bg-teal-500/10 dark:bg-teal-500/20 text-teal-800 dark:text-teal-300 font-bold shadow-xs"
+                                                    : "border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200"
                                                     }`}
                                             >
                                                 <input
@@ -347,35 +347,35 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
 
                         {/* Description */}
                         <div className="space-y-1">
-                            <label className="font-bold text-foreground">Description</label>
+                            <label className="font-bold text-slate-800 dark:text-slate-200">Description</label>
                             <textarea
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                                 rows={3}
-                                className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-teal-500/50 outline-none"
+                                className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#22333f] text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-teal-500 outline-none"
                             />
                         </div>
 
                         {/* Rent & Security Deposit */}
                         <div className="grid grid-cols-2 gap-3">
                             <div className="space-y-1">
-                                <label className="font-bold text-foreground">Rent Amount (৳/mo)</label>
+                                <label className="font-bold text-slate-800 dark:text-slate-200">Rent Amount (৳/mo)</label>
                                 <input
                                     type="number"
                                     value={rentAmount}
                                     onChange={(e) => setRentAmount(e.target.value)}
                                     required
-                                    className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-teal-500/50 outline-none"
+                                    className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#22333f] text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-teal-500 outline-none"
                                 />
                             </div>
 
                             <div className="space-y-1">
-                                <label className="font-bold text-foreground">Security Deposit (৳)</label>
+                                <label className="font-bold text-slate-800 dark:text-slate-200">Security Deposit (৳)</label>
                                 <input
                                     type="number"
                                     value={securityDeposit}
                                     onChange={(e) => setSecurityDeposit(e.target.value)}
-                                    className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-teal-500/50 outline-none"
+                                    className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#22333f] text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-teal-500 outline-none"
                                 />
                             </div>
                         </div>
@@ -383,30 +383,30 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                         {/* Address, City, Area */}
                         <div className="grid grid-cols-3 gap-3">
                             <div className="space-y-1">
-                                <label className="font-bold text-foreground">Address</label>
+                                <label className="font-bold text-slate-800 dark:text-slate-200">Address</label>
                                 <input
                                     type="text"
                                     value={address}
                                     onChange={(e) => setAddress(e.target.value)}
-                                    className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-teal-500/50 outline-none"
+                                    className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#22333f] text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-teal-500 outline-none"
                                 />
                             </div>
                             <div className="space-y-1">
-                                <label className="font-bold text-foreground">Area</label>
+                                <label className="font-bold text-slate-800 dark:text-slate-200">Area</label>
                                 <input
                                     type="text"
                                     value={area}
                                     onChange={(e) => setArea(e.target.value)}
-                                    className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-teal-500/50 outline-none"
+                                    className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#22333f] text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-teal-500 outline-none"
                                 />
                             </div>
                             <div className="space-y-1">
-                                <label className="font-bold text-foreground">City</label>
+                                <label className="font-bold text-slate-800 dark:text-slate-200">City</label>
                                 <input
                                     type="text"
                                     value={city}
                                     onChange={(e) => setCity(e.target.value)}
-                                    className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-teal-500/50 outline-none"
+                                    className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#22333f] text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-teal-500 outline-none"
                                 />
                             </div>
                         </div>
@@ -414,70 +414,70 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                         {/* Bedrooms, Bathrooms, Sqft */}
                         <div className="grid grid-cols-3 gap-3">
                             <div className="space-y-1">
-                                <label className="font-bold text-foreground">Bedrooms</label>
+                                <label className="font-bold text-slate-800 dark:text-slate-200">Bedrooms</label>
                                 <input
                                     type="number"
                                     value={bedrooms}
                                     onChange={(e) => setBedrooms(Number(e.target.value))}
-                                    className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-teal-500/50 outline-none"
+                                    className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#22333f] text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-teal-500 outline-none"
                                 />
                             </div>
                             <div className="space-y-1">
-                                <label className="font-bold text-foreground">Bathrooms</label>
+                                <label className="font-bold text-slate-800 dark:text-slate-200">Bathrooms</label>
                                 <input
                                     type="number"
                                     value={bathrooms}
                                     onChange={(e) => setBathrooms(Number(e.target.value))}
-                                    className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-teal-500/50 outline-none"
+                                    className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#22333f] text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-teal-500 outline-none"
                                 />
                             </div>
                             <div className="space-y-1">
-                                <label className="font-bold text-foreground">Size (sqft)</label>
+                                <label className="font-bold text-slate-800 dark:text-slate-200">Size (sqft)</label>
                                 <input
                                     type="number"
                                     value={sizeSqft}
                                     onChange={(e) => setSizeSqft(e.target.value)}
-                                    className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-teal-500/50 outline-none"
+                                    className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#22333f] text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-teal-500 outline-none"
                                 />
                             </div>
                         </div>
 
                         {/* Amenities */}
                         <div className="space-y-1">
-                            <label className="font-bold text-foreground flex items-center gap-1">
-                                <Sparkles className="size-3.5 text-teal-600" /> Amenities <span className="font-normal text-muted-foreground">(comma separated)</span>
+                            <label className="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1">
+                                <Sparkles className="size-3.5 text-teal-600 dark:text-teal-400" /> Amenities <span className="font-normal text-slate-500 dark:text-slate-400">(comma separated)</span>
                             </label>
                             <input
                                 type="text"
                                 value={amenitiesText}
                                 onChange={(e) => setAmenitiesText(e.target.value)}
                                 placeholder="WiFi, Lift, Generator, Parking, 24/7 Security"
-                                className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-teal-500/50 outline-none"
+                                className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#22333f] text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-teal-500 outline-none"
                             />
                         </div>
 
                         {/* Image URLs */}
                         <div className="space-y-1">
-                            <label className="font-bold text-foreground flex items-center gap-1">
-                                <ImageIcon className="size-3.5 text-teal-600" /> Image URLs <span className="font-normal text-muted-foreground">(one URL per line)</span>
+                            <label className="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1">
+                                <ImageIcon className="size-3.5 text-teal-600 dark:text-teal-400" /> Image URLs <span className="font-normal text-slate-500 dark:text-slate-400">(one URL per line)</span>
                             </label>
                             <textarea
                                 value={imagesText}
                                 onChange={(e) => setImagesText(e.target.value)}
                                 rows={3}
                                 placeholder="https://images.unsplash.com/photo-1..."
-                                className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-teal-500/50 outline-none font-mono text-[11px]"
+                                className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#22333f] text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-teal-500 outline-none font-mono text-[11px]"
                             />
                         </div>
 
                         {/* Available From Date */}
                         <div className="space-y-1">
-                            <label className="font-bold text-foreground">Available From Date</label>
+                            <label className="font-bold text-slate-800 dark:text-slate-200">Available From Date</label>
                             <input
                                 type="date"
                                 value={availableFrom}
                                 onChange={(e) => setAvailableFrom(e.target.value)}
-                                className="w-full p-2.5 rounded-lg border border-border bg-background focus:ring-2 focus:ring-teal-500/50 outline-none"
+                                className="w-full p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#22333f] text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-teal-500 outline-none"
                             />
                         </div>
 
@@ -490,7 +490,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                                 onChange={(e) => setIsAvailable(e.target.checked)}
                                 className="size-4 text-teal-600 rounded focus:ring-teal-500"
                             />
-                            <label htmlFor={`available-${property.id}`} className="font-bold text-foreground cursor-pointer">
+                            <label htmlFor={`available-${property.id}`} className="font-bold text-slate-800 dark:text-slate-200 cursor-pointer">
                                 Mark as Available for Rent
                             </label>
                         </div>
@@ -501,7 +501,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                                 variant="outline"
                                 onClick={() => setOpenEditModal(false)}
                                 disabled={isUpdating}
-                                className="text-xs font-semibold mr-2"
+                                className="text-xs font-semibold mr-2 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300"
                             >
                                 Cancel
                             </Button>
@@ -527,13 +527,13 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
 
             {/* Delete Confirmation Modal */}
             <Dialog open={openDeleteModal} onOpenChange={setOpenDeleteModal}>
-                <DialogContent className="sm:max-w-md bg-white">
+                <DialogContent className="sm:max-w-md bg-white dark:bg-[#182630] text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-slate-800 shadow-2xl">
                     <DialogHeader>
-                        <DialogTitle className="text-rose-600 flex items-center gap-2">
+                        <DialogTitle className="text-rose-600 dark:text-rose-400 flex items-center gap-2">
                             <Trash2 className="size-5" /> Delete Property Confirmation
                         </DialogTitle>
-                        <DialogDescription>
-                            Are you sure you want to delete <span className="font-bold text-foreground">"{property.title}"</span>? This operation cannot be undone.
+                        <DialogDescription className="text-slate-600 dark:text-slate-400">
+                            Are you sure you want to delete <span className="font-bold text-slate-900 dark:text-slate-100">"{property.title}"</span>? This operation cannot be undone.
                         </DialogDescription>
                     </DialogHeader>
 
@@ -543,7 +543,7 @@ export default function LandlordPropertyCard({ property }: LandlordPropertyCardP
                             variant="outline"
                             onClick={() => setOpenDeleteModal(false)}
                             disabled={isDeleting}
-                            className="text-xs font-semibold mr-2"
+                            className="text-xs font-semibold mr-2 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300"
                         >
                             Cancel
                         </Button>

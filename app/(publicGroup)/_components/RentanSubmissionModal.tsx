@@ -111,20 +111,20 @@ const RentanSubmissionModal = ({ property, triggerText = " Contact Landlord / Re
             <DialogTrigger asChild>
                 <Button
                     variant={buttonVariant}
-                    className="w-full h-10 font-bold border-teal-600/30 text-teal-600 hover:bg-teal-600/10 hover:text-teal-700"
+                    className="w-full h-10 font-bold border-teal-600/30 text-teal-600 dark:text-teal-400 hover:bg-teal-600/10 hover:text-teal-700 dark:hover:text-teal-300"
                     disabled={property.isAvailable === false}
                 >
                     {triggerText}
                 </Button>
             </DialogTrigger>
 
-            <DialogContent className="sm:max-w-md p-6 bg-white">
+            <DialogContent className="sm:max-w-md p-6 bg-white dark:bg-[#182630] text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-slate-800 shadow-2xl">
                 <DialogHeader className="space-y-1 text-left">
-                    <DialogTitle className="text-xl font-bold text-foreground">
+                    <DialogTitle className="text-xl font-bold text-slate-900 dark:text-slate-100">
                         Submit Rental Request
                     </DialogTitle>
-                    <DialogDescription className="text-xs text-muted-foreground">
-                        Contact landlord for <span className="font-semibold text-foreground">{property.title}</span>
+                    <DialogDescription className="text-xs text-slate-600 dark:text-slate-400">
+                        Contact landlord for <span className="font-semibold text-slate-900 dark:text-slate-100">{property.title}</span>
                     </DialogDescription>
                 </DialogHeader>
 
@@ -133,8 +133,8 @@ const RentanSubmissionModal = ({ property, triggerText = " Contact Landlord / Re
                     {/* Dates row */}
                     <div className="grid grid-cols-2 gap-3">
                         <div className="space-y-1.5">
-                            <Label htmlFor="moveInDate" className="text-xs font-semibold flex items-center gap-1.5">
-                                <Calendar className="size-3.5 text-teal-600" />
+                            <Label htmlFor="moveInDate" className="text-xs font-semibold flex items-center gap-1.5 text-slate-800 dark:text-slate-200">
+                                <Calendar className="size-3.5 text-teal-600 dark:text-teal-400" />
                                 Move-in Date
                             </Label>
                             <Input
@@ -143,13 +143,13 @@ const RentanSubmissionModal = ({ property, triggerText = " Contact Landlord / Re
                                 value={moveInDate}
                                 onChange={(e) => setMoveInDate(e.target.value)}
                                 required
-                                className="text-xs h-9"
+                                className="text-xs h-9 bg-slate-50 dark:bg-[#22333f] text-slate-900 dark:text-slate-100 border-slate-200 dark:border-slate-700"
                             />
                         </div>
 
                         <div className="space-y-1.5">
-                            <Label htmlFor="moveOutDate" className="text-xs font-semibold flex items-center gap-1.5">
-                                <Calendar className="size-3.5 text-teal-600" />
+                            <Label htmlFor="moveOutDate" className="text-xs font-semibold flex items-center gap-1.5 text-slate-800 dark:text-slate-200">
+                                <Calendar className="size-3.5 text-teal-600 dark:text-teal-400" />
                                 Move-out Date
                             </Label>
                             <Input
@@ -158,27 +158,27 @@ const RentanSubmissionModal = ({ property, triggerText = " Contact Landlord / Re
                                 value={moveOutDate}
                                 onChange={(e) => setMoveOutDate(e.target.value)}
                                 required
-                                className="text-xs h-9"
+                                className="text-xs h-9 bg-slate-50 dark:bg-[#22333f] text-slate-900 dark:text-slate-100 border-slate-200 dark:border-slate-700"
                             />
                         </div>
                     </div>
 
 
                     {/* Calculations Summary Card */}
-                    <div className="p-3 bg-muted/50 rounded-lg border border-border/40 text-xs space-y-2">
-                        <div className="flex justify-between items-center text-muted-foreground">
+                    <div className="p-3 bg-slate-100/70 dark:bg-slate-900/60 rounded-lg border border-slate-200 dark:border-slate-800 text-xs space-y-2">
+                        <div className="flex justify-between items-center text-slate-600 dark:text-slate-400">
                             <span className="flex items-center gap-1">
-                                <Calculator className="size-3.5 text-teal-600" /> Duration:
+                                <Calculator className="size-3.5 text-teal-600 dark:text-teal-400" /> Duration:
                             </span>
-                            <span className="font-semibold text-foreground">{totalMonths} month(s)</span>
+                            <span className="font-semibold text-slate-900 dark:text-slate-100">{totalMonths} month(s)</span>
                         </div>
-                        <div className="flex justify-between items-center text-muted-foreground">
+                        <div className="flex justify-between items-center text-slate-600 dark:text-slate-400">
                             <span className="flex items-center gap-1">
-                                <DollarSign className="size-3.5 text-teal-600" /> Monthly Rent:
+                                <DollarSign className="size-3.5 text-teal-600 dark:text-teal-400" /> Monthly Rent:
                             </span>
-                            <span className="font-semibold text-foreground">৳{Number(monthlyRent).toLocaleString()}</span>
+                            <span className="font-semibold text-slate-900 dark:text-slate-100">৳{Number(monthlyRent).toLocaleString()}</span>
                         </div>
-                        <div className="flex justify-between items-center text-xs font-bold pt-1.5 border-t border-border/40 text-teal-600">
+                        <div className="flex justify-between items-center text-xs font-bold pt-1.5 border-t border-slate-200 dark:border-slate-800 text-teal-600 dark:text-teal-400">
                             <span>Estimated Total:</span>
                             <span>৳{Number(totalAmount).toLocaleString()}</span>
                         </div>
@@ -187,8 +187,8 @@ const RentanSubmissionModal = ({ property, triggerText = " Contact Landlord / Re
 
                     {/* Tenant Message */}
                     <div className="space-y-1.5">
-                        <Label htmlFor="tenantMessage" className="text-xs font-semibold flex items-center gap-1.5">
-                            <MessageSquare className="size-3.5 text-teal-600" />
+                        <Label htmlFor="tenantMessage" className="text-xs font-semibold flex items-center gap-1.5 text-slate-800 dark:text-slate-200">
+                            <MessageSquare className="size-3.5 text-teal-600 dark:text-teal-400" />
                             Message for Landlord (Optional)
                         </Label>
                         <textarea
@@ -197,14 +197,14 @@ const RentanSubmissionModal = ({ property, triggerText = " Contact Landlord / Re
                             placeholder="Tell the landlord a bit about yourself or ask any questions..."
                             value={tenantMessage}
                             onChange={(e) => setTenantMessage(e.target.value)}
-                            className="w-full rounded-md border border-input bg-background p-2.5 text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                            className="w-full rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#22333f] p-2.5 text-xs text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500"
                         />
                     </div>
 
 
                     <DialogFooter className="pt-2 flex gap-2 justify-end sm:justify-end">
                         <DialogClose asChild>
-                            <Button type="button" variant="outline" size="sm" disabled={isPending}>
+                            <Button type="button" variant="outline" size="sm" disabled={isPending} className="border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300">
                                 Cancel
                             </Button>
                         </DialogClose>
