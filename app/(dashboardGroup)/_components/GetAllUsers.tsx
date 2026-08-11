@@ -3,6 +3,7 @@ import { User, Mail, Phone, Calendar, ShieldCheck, UserCheck, Users } from "luci
 import { Badge } from "@/components/ui/badge";
 import { GetAllUsersData } from "../_action/AdminAction";
 import UpdateUserStatusWithModal from "./UpdateUserStatusWithModal";
+import DashboardPagination from "./DashboardPagination";
 
 
 const getRoleBadge = (role: string) => {
@@ -47,8 +48,12 @@ const formatDate = (dateStr: string) => {
 };
 
 
-const GetAllUsers = async () => {
+const GetAllUsers = async ({ page = 1 }: { page?: number }) => {
     const users = await GetAllUsersData();
+    const pageSize = 9;
+    const totalPages = Math.max(1, Math.ceil((users?.length || 0) / pageSize));
+    const currentPage = Math.min(Math.max(page, 1), totalPages);
+    const visibleUsers = users?.slice((currentPage - 1) * pageSize, currentPage * pageSize) || [];
 
     if (!users || users.length === 0) {
         return (
@@ -69,7 +74,7 @@ const GetAllUsers = async () => {
     return (
         <div className="space-y-4 my-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {users.map((user: any) => {
+                {visibleUsers.map((user: any) => {
                     const initials = user.name
                         ? user.name
                             .split(" ")
@@ -148,6 +153,7 @@ const GetAllUsers = async () => {
                     );
                 })}
             </div>
+            <DashboardPagination currentPage={currentPage} totalPages={totalPages} totalItems={users?.length || 0} pageSize={pageSize} unit="users" />
         </div>
     );
 };

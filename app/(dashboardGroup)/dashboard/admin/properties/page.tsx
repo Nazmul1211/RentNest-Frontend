@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import GetAllPropertiesOfLandlords from "@/app/(dashboardGroup)/_components/GetAllPropertiesOfLandlords";
 
 
-export default function AdminPropertiesPage() {
+export default async function AdminPropertiesPage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
+  const { page } = await searchParams;
   return (
     <div className="min-h-screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 mt-12 space-y-6">
 
@@ -34,7 +35,7 @@ export default function AdminPropertiesPage() {
 
       {/* Properties List */}
       <section>
-        <GetAllPropertiesOfLandlords />
+        <GetAllPropertiesOfLandlords page={Number(page) || 1} />
       </section>
     </div>
   );

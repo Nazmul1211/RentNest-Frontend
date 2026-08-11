@@ -3,11 +3,16 @@ import { Building2, PlusCircle, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import LandlordPropertyCard from "@/app/(dashboardGroup)/_components/LandlordPropertyCard";
 import { GetAllLandlordProperties } from "@/app/(dashboardGroup)/_action/LandlordAction";
+import DashboardPagination from "@/app/(dashboardGroup)/_components/DashboardPagination";
 
 
 
-const PropertiesPage = async () => {
+const PropertiesPage = async ({ searchParams }: { searchParams: Promise<{ page?: string }> }) => {
     const properties = await GetAllLandlordProperties();
+    const pageSize = 6;
+    const totalPages = Math.max(1, Math.ceil((properties?.length || 0) / pageSize));
+    const currentPage = Math.min(Math.max(Number((await searchParams).page) || 1, 1), totalPages);
+    const visibleProperties = properties?.slice((currentPage - 1) * pageSize, currentPage * pageSize) || [];
 
     return (
         <div className="min-h-screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 mt-12 space-y-6">
@@ -56,16 +61,17 @@ const PropertiesPage = async () => {
                     </Button>
                 </div>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {properties.map((property: any) => (
-                        <LandlordPropertyCard key={property.id} property={property} />
-                    ))}
-                </div>
+                <>
+                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                        {visibleProperties.map((property: any) => (
+                            <LandlordPropertyCard key={property.id} property={property} />
+                        ))}
+                    </div>
+                    <DashboardPagination currentPage={currentPage} totalPages={totalPages} totalItems={properties?.length || 0} pageSize={pageSize} unit="properties" />
+                </>
             )}
         </div>
     );
 };
 
 export default PropertiesPage;
-
-

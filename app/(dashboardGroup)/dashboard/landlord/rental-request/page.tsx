@@ -3,9 +3,14 @@ import { FileText, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { GetRentalRequestsOfLandlordProperties, LandlordRentalRequest } from '@/app/(dashboardGroup)/_action/LandlordAction';
 import LandlordRentalRequestCard from '@/app/(dashboardGroup)/_components/LandlordRentalRequestCard';
+import DashboardPagination from '@/app/(dashboardGroup)/_components/DashboardPagination';
 
-const PropertiesRentalRequest = async () => {
+const PropertiesRentalRequest = async ({ searchParams }: { searchParams: Promise<{ page?: string }> }) => {
     const rentalRequests: LandlordRentalRequest[] = await GetRentalRequestsOfLandlordProperties();
+    const pageSize = 6;
+    const totalPages = Math.max(1, Math.ceil((rentalRequests?.length || 0) / pageSize));
+    const currentPage = Math.min(Math.max(Number((await searchParams).page) || 1, 1), totalPages);
+    const visibleRequests = rentalRequests?.slice((currentPage - 1) * pageSize, currentPage * pageSize) || [];
 
     return (
         <div className="min-h-screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 mt-12 space-y-6">
@@ -42,16 +47,17 @@ const PropertiesRentalRequest = async () => {
                     </div>
                 </div>
             ) : (
-                <div className="space-y-4 grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {rentalRequests.map((req) => (
-                        <LandlordRentalRequestCard key={req.id} req={req} />
-                    ))}
-                </div>
+                <>
+                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                        {visibleRequests.map((req) => (
+                            <LandlordRentalRequestCard key={req.id} req={req} />
+                        ))}
+                    </div>
+                    <DashboardPagination currentPage={currentPage} totalPages={totalPages} totalItems={rentalRequests?.length || 0} pageSize={pageSize} unit="requests" />
+                </>
             )}
         </div>
     );
 };
 
 export default PropertiesRentalRequest;
-
-

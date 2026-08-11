@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import GetAllTenantRentalRequest from "@/app/(dashboardGroup)/_components/GetAllTenantRentalRequest";
 
 
-export default function AdminRentalRequestsPage() {
+export default async function AdminRentalRequestsPage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
+  const { page } = await searchParams;
 
   return (
     <div className="min-h-screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 mt-12 space-y-6">
@@ -34,7 +35,7 @@ export default function AdminRentalRequestsPage() {
 
       {/* Rental Requests List */}
       <section>
-        <GetAllTenantRentalRequest />
+        <GetAllTenantRentalRequest page={Number(page) || 1} />
       </section>
     </div>
   );

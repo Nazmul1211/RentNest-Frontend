@@ -7,6 +7,7 @@ import { RentalRequest } from "../_action/TenantAction";
 import PaymentDetailsModal from "./PaymentDetailsModal";
 import { GetAllTenantRentalRequests } from "../_action/AdminAction";
 import GetStatusBadge from "./GetStatusBadge";
+import DashboardPagination from "./DashboardPagination";
 
 const formatDate = (dateStr: string) => {
     if (!dateStr) return "N/A";
@@ -20,8 +21,12 @@ const formatDate = (dateStr: string) => {
     });
 }
 
-const GetAllTenantRentalRequest = async () => {
+const GetAllTenantRentalRequest = async ({ page = 1 }: { page?: number }) => {
     const rentalRequests: RentalRequest[] = await GetAllTenantRentalRequests();
+    const pageSize = 6;
+    const totalPages = Math.max(1, Math.ceil((rentalRequests?.length || 0) / pageSize));
+    const currentPage = Math.min(Math.max(page, 1), totalPages);
+    const visibleRequests = rentalRequests?.slice((currentPage - 1) * pageSize, currentPage * pageSize) || [];
 
     if (!rentalRequests || rentalRequests.length === 0) {
         return (
@@ -41,99 +46,102 @@ const GetAllTenantRentalRequest = async () => {
 
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-4">
-            {/* mapping each rental request for Admin view */}
-            {rentalRequests.map((req) => (
+        <div className="space-y-4 my-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {/* mapping each rental request for Admin view */}
+                {visibleRequests.map((req) => (
 
-                <div
-                    key={req.id}
-                    className="p-5 rounded-xl border border-border/50 bg-card hover:border-teal-500/30 transition-all shadow-xs space-y-4"
-                >
-                    {/* Top Header */}
-                    <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-border/40">
-                        <div className="space-y-0.5">
-                            <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">
-                                Request #{req.id?.slice(0, 8)}... • Tenant ID: {req.tenantId?.slice(0, 8)}...
-                            </span>
-                            <h4 className="text-base font-bold text-foreground">
-                                {req.property?.title || `Property ID: ${req.propertyId}`}
-                            </h4>
+                    <div
+                        key={req.id}
+                        className="p-5 rounded-xl border border-border/50 bg-card hover:border-teal-500/30 transition-all shadow-xs space-y-4"
+                    >
+                        {/* Top Header */}
+                        <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-border/40">
+                            <div className="space-y-0.5">
+                                <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">
+                                    Request #{req.id?.slice(0, 8)}... • Tenant ID: {req.tenantId?.slice(0, 8)}...
+                                </span>
+                                <h4 className="text-base font-bold text-foreground">
+                                    {req.property?.title || `Property ID: ${req.propertyId}`}
+                                </h4>
+                            </div>
+
+                            <div className="flex gap-4 items-center">
+                                <GetStatusBadge status={req.status} />
+                            </div>
+
                         </div>
 
-                        <div className="flex gap-4 items-center">
-                            <GetStatusBadge status={req.status} />
+                        {/* Details Grid */}
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                            {/* Move Dates */}
+                            <div className="space-y-1 bg-muted/30 p-2.5 rounded-lg">
+                                <span className="text-muted-foreground flex items-center gap-1 font-medium">
+                                    <Calendar className="size-3.5 text-teal-600" /> Lease Duration
+                                </span>
+                                <p className="font-semibold text-foreground">
+                                    {formatDate(req.moveInDate)} &rarr; {formatDate(req.moveOutDate)}
+                                </p>
+                                <p className="text-[11px] text-muted-foreground">({req.totalMonths} Month{req.totalMonths > 1 ? "s" : ""})</p>
+                            </div>
+
+                            {/* Financial Details */}
+                            <div className="space-y-1 bg-muted/30 p-2.5 rounded-lg">
+                                <span className="text-muted-foreground flex items-center gap-1 font-medium">
+                                    <DollarSign className="size-3.5 text-teal-600" /> Rent & Total
+                                </span>
+                                <p className="font-semibold text-foreground">
+                                    ৳{Number(req.monthlyRent).toLocaleString()} / mo
+                                </p>
+                                <p className="text-[11px] text-teal-600 font-bold">
+                                    Total: ৳{Number(req.totalAmount).toLocaleString()}
+                                </p>
+                            </div>
+
+
+                            {/* Application Date */}
+                            <div className="space-y-1 bg-muted/30 p-2.5 rounded-lg">
+                                <span className="text-muted-foreground flex items-center gap-1 font-medium">
+                                    <Clock className="size-3.5 text-teal-600" /> Submitted On
+                                </span>
+                                <p className="font-semibold text-foreground">{formatDate(req.createdAt)}</p>
+                                <p className="text-[11px] text-muted-foreground">Status: {req.status}</p>
+                            </div>
                         </div>
 
+
+                        {/* Tenant Messages */}
+                        {req.tenantMessage && (
+                            <div className="p-3 bg-muted/20 rounded-lg text-xs space-y-1 border border-border/30">
+                                <span className="font-bold text-foreground text-[11px] uppercase tracking-wide">Tenant Message:</span>
+                                <p className="text-muted-foreground leading-relaxed">{req.tenantMessage}</p>
+                            </div>
+                        )}
+
+
+                        {req.landlordNote && (
+                            <div className="p-3 bg-amber-500/10 rounded-lg text-xs space-y-1 border border-amber-500/20 text-amber-700 dark:text-amber-400">
+                                <span className="font-bold text-[11px] uppercase tracking-wide flex items-center gap-1">
+                                    <AlertCircle className="size-3" /> Landlord Note:
+                                </span>
+                                <p className="leading-relaxed">{req.landlordNote}</p>
+                            </div>
+                        )}
+
+
+                        {/* Actions & Property Link */}
+                        <div className="flex items-center justify-between pt-3">
+                            <PaymentDetailsModal payments={req.payments} />
+                            <Button variant="ghost" size="sm" className="text-xs font-semibold text-teal-600 hover:text-teal-700 p-0 h-auto" asChild>
+                                <Link href={`/properties/${req.propertyId}`}>
+                                    View Property Details <ArrowRight className="size-3 ml-1" />
+                                </Link>
+                            </Button>
+                        </div>
                     </div>
-
-                    {/* Details Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-                        {/* Move Dates */}
-                        <div className="space-y-1 bg-muted/30 p-2.5 rounded-lg">
-                            <span className="text-muted-foreground flex items-center gap-1 font-medium">
-                                <Calendar className="size-3.5 text-teal-600" /> Lease Duration
-                            </span>
-                            <p className="font-semibold text-foreground">
-                                {formatDate(req.moveInDate)} &rarr; {formatDate(req.moveOutDate)}
-                            </p>
-                            <p className="text-[11px] text-muted-foreground">({req.totalMonths} Month{req.totalMonths > 1 ? "s" : ""})</p>
-                        </div>
-
-                        {/* Financial Details */}
-                        <div className="space-y-1 bg-muted/30 p-2.5 rounded-lg">
-                            <span className="text-muted-foreground flex items-center gap-1 font-medium">
-                                <DollarSign className="size-3.5 text-teal-600" /> Rent & Total
-                            </span>
-                            <p className="font-semibold text-foreground">
-                                ৳{Number(req.monthlyRent).toLocaleString()} / mo
-                            </p>
-                            <p className="text-[11px] text-teal-600 font-bold">
-                                Total: ৳{Number(req.totalAmount).toLocaleString()}
-                            </p>
-                        </div>
-
-
-                        {/* Application Date */}
-                        <div className="space-y-1 bg-muted/30 p-2.5 rounded-lg">
-                            <span className="text-muted-foreground flex items-center gap-1 font-medium">
-                                <Clock className="size-3.5 text-teal-600" /> Submitted On
-                            </span>
-                            <p className="font-semibold text-foreground">{formatDate(req.createdAt)}</p>
-                            <p className="text-[11px] text-muted-foreground">Status: {req.status}</p>
-                        </div>
-                    </div>
-
-
-                    {/* Tenant Messages */}
-                    {req.tenantMessage && (
-                        <div className="p-3 bg-muted/20 rounded-lg text-xs space-y-1 border border-border/30">
-                            <span className="font-bold text-foreground text-[11px] uppercase tracking-wide">Tenant Message:</span>
-                            <p className="text-muted-foreground leading-relaxed">{req.tenantMessage}</p>
-                        </div>
-                    )}
-
-
-                    {req.landlordNote && (
-                        <div className="p-3 bg-amber-500/10 rounded-lg text-xs space-y-1 border border-amber-500/20 text-amber-700 dark:text-amber-400">
-                            <span className="font-bold text-[11px] uppercase tracking-wide flex items-center gap-1">
-                                <AlertCircle className="size-3" /> Landlord Note:
-                            </span>
-                            <p className="leading-relaxed">{req.landlordNote}</p>
-                        </div>
-                    )}
-
-
-                    {/* Actions & Property Link */}
-                    <div className="flex items-center justify-between pt-3">
-                        <PaymentDetailsModal payments={req.payments} />
-                        <Button variant="ghost" size="sm" className="text-xs font-semibold text-teal-600 hover:text-teal-700 p-0 h-auto" asChild>
-                            <Link href={`/properties/${req.propertyId}`}>
-                                View Property Details <ArrowRight className="size-3 ml-1" />
-                            </Link>
-                        </Button>
-                    </div>
-                </div>
-            ))}
+                ))}
+            </div>
+            <DashboardPagination currentPage={currentPage} totalPages={totalPages} totalItems={rentalRequests.length} pageSize={pageSize} unit="requests" />
         </div>
     );
 }

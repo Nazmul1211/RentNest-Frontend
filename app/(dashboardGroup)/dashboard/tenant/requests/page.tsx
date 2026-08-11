@@ -1,12 +1,10 @@
-import getCurrentUser from "@/lib/auth";
 import GetTenantRentalRequest from "@/app/(dashboardGroup)/_components/GetTenantRentalRequest";
 import Link from "next/link";
 import { ArrowLeft, ClipboardList } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const TenantRequestsPage = async () => {
-  const userResponse = await getCurrentUser();
-  const user = userResponse?.data || null;
+const TenantRequestsPage = async ({ searchParams }: { searchParams: Promise<{ page?: string }> }) => {
+  const { page } = await searchParams;
 
   return (
     <div className="min-h-screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 mt-12 space-y-6">
@@ -38,7 +36,7 @@ const TenantRequestsPage = async () => {
 
       {/* Main List */}
       <div>
-        <GetTenantRentalRequest />
+        <GetTenantRentalRequest page={Number(page) || 1} />
       </div>
     </div>
   );
