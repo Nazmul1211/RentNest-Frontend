@@ -115,6 +115,11 @@ export function MobileNav({ pathname, user }: MobileNavProps) {
 
   const handleLogout = async () => {
     setOpen(false);
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000"}/api/auth/logout`, {
+      method: "POST",
+      credentials: "include",
+      cache: "no-cache",
+    });
     await LogoutAction();
     router.push("/login");
     router.refresh();

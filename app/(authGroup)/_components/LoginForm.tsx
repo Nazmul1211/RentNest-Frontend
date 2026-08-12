@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import LoginAction, { type LoginState } from "../_actions/authAction";
-import GoogleAuthAction from "../_actions/googleAuthAction";
+import OAuthSuccessAction from "../_actions/oAuthSuccessAction";
 import { loginSchema, type LoginValues } from "../_schemas/authSchemas";
 
 const LoginForm = () => {
@@ -54,32 +54,23 @@ const LoginForm = () => {
     toast.error(state.message);
   }, [router, state]);
 
-  // Google OAuth handoff: backend redirects to /login#accessToken=...&refreshToken=...
-  // Read the tokens once, strip them from the URL, store them in cookies, then redirect.
+  // Google OAuth handoff: backend sets httpOnly cookies and redirects here
+  // as /login?oauth=success. Read the cookie role, then route to the dashboard.
   useEffect(() => {
-    const hash = window.location.hash;
+    const params = new URLSearchParams(window.location.search);
 
-    if (!hash.includes("accessToken=")) return;
-
-    const params = new URLSearchParams(hash.replace("#", "?"));
-    const accessToken = params.get("accessToken");
-    const refreshToken = params.get("refreshToken");
+    if (!params.has("oauth")) return;
 
     window.history.replaceState(null, "", window.location.pathname);
 
-    if (!accessToken || !refreshToken) {
-      toast.error("Invalid Google authentication response");
-      return;
-    }
-
     startTransition(async () => {
-      const result = await GoogleAuthAction(accessToken, refreshToken);
+      const result = await OAuthSuccessAction();
 
       if (result.success && result.redirectTo) {
-        toast.success(result.message);
+        toast.success("Signed in with Google successfully");
         router.replace(result.redirectTo);
       } else {
-        toast.error(result.message);
+        toast.error("Google authentication failed. Please try again.");
       }
     });
   }, [router]);
@@ -156,6 +147,17 @@ const LoginForm = () => {
     >
       <a href={`${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000"}/api/auth/google`}>
         Continue with Google
+      </a>
+    </Button>
+
+    <Button
+      type="button"
+      variant="ghost"
+      asChild
+      className="w-full cursor-pointer text-muted-foreground"
+    >
+      <a href={`${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000"}/api/auth/google?role=LANDLORD`}>
+        Are you a Landlord? Continue with Google as Landlord
       </a>
     </Button>
     </>

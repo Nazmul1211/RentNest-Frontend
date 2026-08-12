@@ -71,11 +71,11 @@ export default async function proxy(request: NextRequest) {
 
   if (accessToken && AUTH_ROUTES.includes(pathname)) {
     if (userRole === "TENANT") {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
+      return NextResponse.redirect(new URL("/dashboard/tenant", request.url));
     } else if (userRole === "ADMIN") {
       return NextResponse.redirect(new URL("/dashboard/admin", request.url));
     } else if (userRole === "LANDLORD") {
-      return NextResponse.redirect(new URL("/author/dashboard", request.url));
+      return NextResponse.redirect(new URL("/dashboard/landlord", request.url));
     } else {
       return NextResponse.redirect(new URL("/", request.url));
     }
