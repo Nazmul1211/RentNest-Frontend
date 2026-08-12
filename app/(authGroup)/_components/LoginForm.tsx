@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import LoginAction, { type LoginState } from "../_actions/authAction";
+import GoogleAuthAction from "../_actions/googleAuthAction";
 import { loginSchema, type LoginValues } from "../_schemas/authSchemas";
 
 const LoginForm = () => {
@@ -53,8 +54,39 @@ const LoginForm = () => {
     toast.error(state.message);
   }, [router, state]);
 
+  // Google OAuth handoff: backend redirects to /login#accessToken=...&refreshToken=...
+  // Read the tokens once, strip them from the URL, store them in cookies, then redirect.
+  useEffect(() => {
+    const hash = window.location.hash;
+
+    if (!hash.includes("accessToken=")) return;
+
+    const params = new URLSearchParams(hash.replace("#", "?"));
+    const accessToken = params.get("accessToken");
+    const refreshToken = params.get("refreshToken");
+
+    window.history.replaceState(null, "", window.location.pathname);
+
+    if (!accessToken || !refreshToken) {
+      toast.error("Invalid Google authentication response");
+      return;
+    }
+
+    startTransition(async () => {
+      const result = await GoogleAuthAction(accessToken, refreshToken);
+
+      if (result.success && result.redirectTo) {
+        toast.success(result.message);
+        router.replace(result.redirectTo);
+      } else {
+        toast.error(result.message);
+      }
+    });
+  }, [router]);
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
+    <>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
       <Card className="space-y-5 p-6">
         <div className="space-y-1.5">
           <Label htmlFor="email">Email address</Label>
@@ -109,6 +141,24 @@ const LoginForm = () => {
         </Button>
       </Card>
     </form>
+
+    <div className="my-4 flex items-center gap-3 text-muted-foreground">
+      <div className="h-px flex-1 bg-border" />
+      <span className="text-sm">OR</span>
+      <div className="h-px flex-1 bg-border" />
+    </div>
+
+    <Button
+      type="button"
+      variant="outline"
+      asChild
+      className="w-full cursor-pointer"
+    >
+      <a href={`${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000"}/api/auth/google`}>
+        Continue with Google
+      </a>
+    </Button>
+    </>
   );
 };
 
