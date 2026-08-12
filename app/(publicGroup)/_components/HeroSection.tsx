@@ -94,10 +94,10 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="rentnest-hero relative flex h-[70svh] min-h-0 max-h-[70svh] flex-col overflow-hidden bg-gradient-to-b from-background via-teal-500/5 to-background py-5 sm:py-6 lg:py-8">
+    <section className="rentnest-hero relative overflow-hidden bg-gradient-to-b from-background via-teal-500/5 to-background py-14 sm:py-16 lg:py-20 border-b border-border/40">
       {/* Decorative ambient background glows */}
-      <div className="pointer-events-none absolute -top-24 left-1/4 size-96 bg-teal-500/10 rounded-full blur-3xl -z-10" />
-      <div className="pointer-events-none absolute top-1/2 right-10 size-80 bg-teal-500/5 rounded-full blur-3xl -z-10" />
+      <div className="pointer-events-none absolute -top-24 left-1/4 size-96 bg-teal-500/10 rounded-full blur-3xl -z-10 animate-pulse-glow" />
+      <div className="pointer-events-none absolute top-1/2 right-10 size-80 bg-teal-500/5 rounded-full blur-3xl -z-10 animate-pulse-glow" />
 
       <div className="mx-auto flex min-h-0 w-full max-w-7xl flex-1 flex-col justify-center px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-6 sm:gap-8 lg:grid-cols-12">
@@ -212,7 +212,7 @@ export default function HeroSection() {
 
           {/* Right Column: Interactive Featured Rental Showcase Slider */}
           <div className="relative hidden lg:col-span-5 lg:block">
-            <div className="relative mx-auto max-w-md">
+            <div className="relative mx-auto max-w-md animate-float">
 
               {/* Decorative Back Card Glow */}
               <div className="absolute inset-0 translate-x-2 translate-y-2 rounded-3xl bg-teal-500/10 border border-teal-500/20 -z-10 transition-all" />

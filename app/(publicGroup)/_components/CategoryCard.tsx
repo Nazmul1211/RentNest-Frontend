@@ -47,7 +47,7 @@ const CategoryCard = ({ category }: { category: categoryType }) => {
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
 
         {/* Floating Icon badge */}
-        <div className="absolute top-3.5 left-3.5 flex size-10 items-center justify-center rounded-lg bg-background/90 text-primary shadow-xs backdrop-blur-md transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
+        <div className="absolute top-3.5 left-3.5 flex size-10 items-center justify-center rounded-lg bg-background/90 text-primary shadow-xs backdrop-blur-md transition-all duration-300 group-hover:bg-primary group-hover:text-primary-foreground group-hover:scale-110 group-hover:rotate-6">
           <CategoryIcon name={name} />
         </div>
 

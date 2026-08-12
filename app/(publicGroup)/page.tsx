@@ -2,39 +2,47 @@ import { Suspense } from "react";
 import HeroSection from "./_components/HeroSection";
 import CategorySection from "./_components/CategorySection";
 import FeaturedProperties, { FeaturedPropertiesSkeleton } from "./_components/FeaturedProperties";
-import HomeFaqSection from "./_components/HomeFaqSection";
-import PricingSection from "./_components/PricingSection";
+import HowItWorksSection from "./_components/HowItWorksSection";
 import RentalClaritySection from "./_components/RentalClaritySection";
 import RoleWorkspaceSection from "./_components/RoleWorkspaceSection";
+import PricingSection from "./_components/PricingSection";
+import TestimonialsSection from "./_components/TestimonialsSection";
 import ValuePropsSection from "./_components/ValuePropsSection";
+import HomeFaqSection from "./_components/HomeFaqSection";
 
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary">
-      {/*Hero & Search Bar Section*/}
+      {/* 1. Hero & Search Bar Section */}
       <HeroSection />
 
-      {/*Property Categories Showcase Section*/}
+      {/* 2. Property Categories Showcase Section */}
       <CategorySection />
 
-      {/*Featured Listings Section*/}
+      {/* 3. Featured Listings Section */}
       <Suspense fallback={<FeaturedPropertiesSkeleton />}>
         <FeaturedProperties />
       </Suspense>
 
-      {/*Rental Transparency Section*/}
+      {/* 4. Interactive 3-Step Rental Process */}
+      <HowItWorksSection />
+
+      {/* 5. Rental Transparency Section */}
       <RentalClaritySection />
 
-      {/*Role-Based Workspaces Section*/}
+      {/* 6. Role-Based Workspaces Section */}
       <RoleWorkspaceSection />
 
-      {/*Rent-Based Pricing(Zero Subscription) Section*/}
+      {/* 7. Rent-Based Pricing (Zero Subscription) Section */}
       <PricingSection />
 
-      {/*Why RentNest & Conversion CTA Section*/}
+      {/* 8. Verified Community Reviews & Testimonials */}
+      <TestimonialsSection />
+
+      {/* 9. Why RentNest & Conversion CTA Section */}
       <ValuePropsSection />
 
-      {/*Frequently Asked Questions*/}
+      {/* 10. Frequently Asked Questions */}
       <HomeFaqSection />
     </main>
   );
