@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import ContactAction from "../_actions/ContactAction";
 
 const FAQS = [
   {
@@ -40,15 +41,29 @@ export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
-    setTimeout(() => {
-      setLoading(false);
+    const formData = new FormData(e.currentTarget);
+
+    const result = await ContactAction({
+      name: String(formData.get("name") || ""),
+      email: String(formData.get("email") || ""),
+      phone: String(formData.get("phone") || ""),
+      topic: String(formData.get("category") || "general"),
+      message: String(formData.get("message") || ""),
+    });
+
+    setLoading(false);
+
+    if (result.success) {
       setSubmitted(true);
       toast.success("Message received! Our team will contact you shortly.");
-    }, 800);
+      e.currentTarget.reset();
+    } else {
+      toast.error(result.message);
+    }
   };
 
   return (
@@ -157,24 +172,24 @@ export default function ContactPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                   <div className="space-y-1.5">
                     <Label htmlFor="name" className="text-xs font-medium">Your Name</Label>
-                    <Input id="name" required placeholder="John Doe" className="h-10 text-sm rounded-xl" />
+                    <Input id="name" name="name" required placeholder="John Doe" className="h-10 text-sm rounded-xl" />
                   </div>
 
                   <div className="space-y-1.5">
                     <Label htmlFor="email" className="text-xs font-medium">Email Address</Label>
-                    <Input id="email" type="email" required placeholder="you@example.com" className="h-10 text-sm rounded-xl" />
+                    <Input id="email" name="email" type="email" required placeholder="you@example.com" className="h-10 text-sm rounded-xl" />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <Label htmlFor="phone" className="text-xs font-medium">Phone Number (Optional)</Label>
-                    <Input id="phone" type="tel" placeholder="+880 1700-000000" className="h-10 text-sm rounded-xl" />
+                    <Input id="phone" name="phone" type="tel" placeholder="+880 1700-000000" className="h-10 text-sm rounded-xl" />
                   </div>
 
                   <div className="space-y-1.5">
                     <Label htmlFor="category" className="text-xs font-medium">Topic</Label>
-                    <select id="category" className="h-10 w-full rounded-xl border border-border bg-background px-3 text-sm font-medium text-foreground focus:ring-2 focus:ring-teal-500">
+                    <select id="category" name="category" className="h-10 w-full rounded-xl border border-border bg-background px-3 text-sm font-medium text-foreground focus:ring-2 focus:ring-teal-500">
                       <option value="general">General Question</option>
                       <option value="tenant">Tenant Application Help</option>
                       <option value="landlord">Landlord Listing Support</option>
@@ -185,7 +200,7 @@ export default function ContactPage() {
 
                 <div className="space-y-1.5">
                   <Label htmlFor="message" className="text-xs font-medium">Message</Label>
-                  <Textarea id="message" rows={4} required placeholder="How can we help you?" className="text-sm rounded-xl" />
+                  <Textarea id="message" name="message" rows={4} required placeholder="How can we help you?" className="text-sm rounded-xl" />
                 </div>
 
                 <Button

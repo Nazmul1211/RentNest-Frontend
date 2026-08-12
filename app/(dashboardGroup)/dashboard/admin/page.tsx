@@ -1,13 +1,24 @@
 import { Button } from "@/components/ui/button";
 import getCurrentUser from "@/lib/auth";
 import Link from "next/link";
-import { Users, Building2, ClipboardList, ArrowRight } from "lucide-react";
+import { Users, Building2, ClipboardList, MessageSquare, ArrowRight } from "lucide-react";
 import DashboardSidebar from "../../_components/DashboardSidebar";
 import DashboardAnalyticsCharts from "../../_components/DashboardAnalyticsCharts";
+import { GetAdminAnalytics } from "../../_action/AdminAction";
+
+const emptyAnalytics = {
+  userCount: 0,
+  propertyCount: 0,
+  requestCount: 0,
+  stats: { pending: 0, approved: 0, paid: 0, rejected: 0 },
+  monthlyTrends: [],
+};
 
 const AdminDashboardPage = async () => {
   const userResponse = await getCurrentUser();
   const user = userResponse?.data || null;
+
+  const analytics = (await GetAdminAnalytics()) || emptyAnalytics;
 
   return (
     <div className="min-h-screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 mt-12">
@@ -29,7 +40,7 @@ const AdminDashboardPage = async () => {
           </div>
 
           {/* Dynamic Analytics Charts */}
-          <DashboardAnalyticsCharts role="ADMIN" />
+          <DashboardAnalyticsCharts role="ADMIN" analytics={analytics} />
 
           <div className="space-y-4">
             <h4 className="text-base font-bold text-foreground">Management Features</h4>
@@ -85,6 +96,24 @@ const AdminDashboardPage = async () => {
                 <Button asChild className="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold">
                   <Link href="/dashboard/admin/rental-requests" className="flex items-center justify-center gap-2">
                     Rental Requests <ArrowRight className="size-4" />
+                  </Link>
+                </Button>
+              </div>
+
+              {/* Feature 4: Contact Messages */}
+              <div className="bg-card rounded-2xl border border-border/50 p-6 space-y-4 flex flex-col justify-between hover:border-teal-500/40 hover:shadow-xs transition-all">
+                <div className="space-y-3">
+                  <div className="size-12 rounded-xl bg-teal-500/10 flex items-center justify-center text-teal-600">
+                    <MessageSquare className="size-6" />
+                  </div>
+                  <h4 className="text-base font-bold text-foreground">Contact Messages</h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Review inquiries sent through the public contact form and respond to visitors.
+                  </p>
+                </div>
+                <Button asChild className="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold">
+                  <Link href="/dashboard/admin/contact-messages" className="flex items-center justify-center gap-2">
+                    View Messages <ArrowRight className="size-4" />
                   </Link>
                 </Button>
               </div>

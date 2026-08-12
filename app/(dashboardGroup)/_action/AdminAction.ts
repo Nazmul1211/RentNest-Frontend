@@ -144,6 +144,134 @@ export const GetSingleUser = async (id: string) => {
 
 
 
+export type ContactMessage = {
+    id: string;
+    name: string;
+    email: string;
+    phone?: string | null;
+    topic: string;
+    message: string;
+    isRead: boolean;
+    createdAt: string;
+    updatedAt: string;
+};
+
+
+
+export const GetAllContactMessages = async () => {
+
+    const cookieStore = await cookies();
+    const token = cookieStore.get("accessToken")?.value;
+
+    if (!token) return [];
+
+    try {
+        const res = await fetch(`${process.env.BACKEND_APP_URL}/api/contacts`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            cache: "no-store",
+        });
+
+        const data = await res.json();
+        if (!data.success) return [];
+        return data?.data || [];
+    } catch (error) {
+        console.error("Error fetching contact messages:", error);
+        return [];
+    }
+};
+
+
+
+export const MarkContactMessageAsRead = async (id: string) => {
+
+    const cookieStore = await cookies();
+    const token = cookieStore.get("accessToken")?.value;
+
+    if (!token) {
+        return {
+            success: false,
+            message: "Unauthorized",
+        };
+    }
+
+    try {
+        const res = await fetch(`${process.env.BACKEND_APP_URL}/api/contacts/${id}/read`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            cache: "no-store",
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            revalidatePath("/dashboard/admin/contact-messages");
+        }
+
+        return data;
+    } catch (error) {
+        console.error("Error marking contact message as read:", error);
+        return {
+            success: false,
+            message: "Failed to mark message as read",
+        };
+    }
+};
+
+
+
+export type AdminAnalytics = {
+    userCount: number;
+    propertyCount: number;
+    requestCount: number;
+    stats: {
+        pending: number;
+        approved: number;
+        paid: number;
+        rejected: number;
+    };
+    monthlyTrends: {
+        month: string;
+        count: number;
+    }[];
+};
+
+
+
+export const GetAdminAnalytics = async (): Promise<AdminAnalytics | null> => {
+
+    const cookieStore = await cookies();
+    const token = cookieStore.get("accessToken")?.value;
+
+    if (!token) return null;
+
+    try {
+        const res = await fetch(`${process.env.BACKEND_APP_URL}/api/admin/analytics`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            cache: "no-store",
+        });
+
+        const data = await res.json();
+        if (!data.success) return null;
+        return data?.data || null;
+    } catch (error) {
+        console.error("Error fetching admin analytics:", error);
+        return null;
+    }
+};
+
+
+
 export const UpdateUserData = async (
     payload: {
         status?: string;

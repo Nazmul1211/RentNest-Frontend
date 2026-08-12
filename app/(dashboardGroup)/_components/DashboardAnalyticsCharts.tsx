@@ -1,51 +1,31 @@
 "use client";
 
 import React, { useState } from "react";
-import { BarChart3, PieChart, TrendingUp, Users, Building2, ClipboardList, CheckCircle, Clock, AlertTriangle } from "lucide-react";
+import { BarChart3, PieChart, TrendingUp, Users, Building2, ClipboardList } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import type { AdminAnalytics } from "../_action/AdminAction";
 
 interface AnalyticsChartsProps {
   role?: string;
-  userCount?: number;
-  propertyCount?: number;
-  requestCount?: number;
-  stats?: {
-    pending?: number;
-    approved?: number;
-    paid?: number;
-    rejected?: number;
-  };
+  analytics: AdminAnalytics;
 }
 
 export default function DashboardAnalyticsCharts({
   role = "ADMIN",
-  userCount = 24,
-  propertyCount = 18,
-  requestCount = 32,
-  stats = { pending: 8, approved: 14, paid: 7, rejected: 3 },
+  analytics,
 }: AnalyticsChartsProps) {
   const [activeTab, setActiveTab] = useState<"overview" | "distribution">("overview");
 
-  // Sample monthly data trend
-  const monthlyTrends = [
-    { month: "Jan", count: 12, label: "12 Applications" },
-    { month: "Feb", count: 19, label: "19 Applications" },
-    { month: "Mar", count: 15, label: "15 Applications" },
-    { month: "Apr", count: 26, label: "26 Applications" },
-    { month: "May", count: 22, label: "22 Applications" },
-    { month: "Jun", count: 34, label: "34 Applications" },
-    { month: "Jul", count: 29, label: "29 Applications" },
-    { month: "Aug", count: 38, label: "38 Applications" },
-  ];
+  const { userCount, propertyCount, requestCount, stats, monthlyTrends } = analytics;
 
   const maxCount = Math.max(...monthlyTrends.map((d) => d.count), 1);
 
   // Distribution chart data
   const distributionData = [
-    { label: "Pending Review", value: stats.pending || 8, color: "bg-amber-500", text: "text-amber-600" },
-    { label: "Approved / Active", value: stats.approved || 14, color: "bg-teal-500", text: "text-teal-600" },
-    { label: "Paid Leases", value: stats.paid || 7, color: "bg-emerald-500", text: "text-emerald-600" },
-    { label: "Rejected / Closed", value: stats.rejected || 3, color: "bg-rose-500", text: "text-rose-600" },
+    { label: "Pending Review", value: stats.pending, color: "bg-amber-500", text: "text-amber-600" },
+    { label: "Approved / Active", value: stats.approved, color: "bg-teal-500", text: "text-teal-600" },
+    { label: "Paid Leases", value: stats.paid, color: "bg-emerald-500", text: "text-emerald-600" },
+    { label: "Rejected / Closed", value: stats.rejected, color: "bg-rose-500", text: "text-rose-600" },
   ];
 
   const totalDist = distributionData.reduce((acc, curr) => acc + curr.value, 0) || 1;
@@ -59,7 +39,7 @@ export default function DashboardAnalyticsCharts({
             <TrendingUp className="size-5 text-teal-600" /> Platform Analytics & Insights
           </h3>
           <p className="text-xs text-muted-foreground">
-            Visual metrics and performance trends for your {role.toLowerCase()} workspace.
+            Live metrics and performance trends for your {role.toLowerCase()} workspace.
           </p>
         </div>
 
@@ -124,7 +104,7 @@ export default function DashboardAnalyticsCharts({
         <div className="space-y-4 pt-2">
           <div className="flex items-center justify-between">
             <h4 className="text-xs font-bold text-foreground flex items-center gap-1.5">
-              <BarChart3 className="size-4 text-teal-600" /> Monthly Application Trend (2026)
+              <BarChart3 className="size-4 text-teal-600" /> Monthly Application Trend (Last 8 Months)
             </h4>
             <Badge variant="outline" className="text-[10px] font-bold bg-teal-500/10 text-teal-600 border-teal-500/30">
               Live Real-Time Data
@@ -143,7 +123,7 @@ export default function DashboardAnalyticsCharts({
                   <div
                     style={{ height: `${heightPercent}%` }}
                     className="w-full max-w-[36px] bg-teal-600/80 hover:bg-teal-600 rounded-t-md transition-all shadow-xs group-hover:shadow-md"
-                    title={d.label}
+                    title={`${d.month}: ${d.count} applications`}
                   />
                   <span className="text-[10px] font-semibold text-muted-foreground">{d.month}</span>
                 </div>

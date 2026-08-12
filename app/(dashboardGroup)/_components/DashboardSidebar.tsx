@@ -16,7 +16,8 @@ import {
   LayoutGrid,
   ShieldCheck,
   UserCheck,
-  Building
+  Building,
+  MessageSquare
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -48,6 +49,7 @@ export default function DashboardSidebar({
       { href: "/dashboard/admin/users", label: "Manage Users", icon: Users, badge: "Admin" },
       { href: "/dashboard/admin/properties", label: "Manage Properties", icon: Building2 },
       { href: "/dashboard/admin/rental-requests", label: "Rental Requests", icon: ClipboardList },
+      { href: "/dashboard/admin/contact-messages", label: "Contact Messages", icon: MessageSquare },
       { href: "/dashboard/profile", label: "My Profile", icon: User },
       { href: "/properties", label: "Browse Properties", icon: Compass },
     ];
