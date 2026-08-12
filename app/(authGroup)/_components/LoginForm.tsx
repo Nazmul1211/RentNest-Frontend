@@ -78,88 +78,77 @@ const LoginForm = () => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
-      <Card className="space-y-5 p-6">
-        <div className="space-y-1.5">
-          <Label htmlFor="email">Email address</Label>
-          <Input
-            id="email"
-            type="email"
-            placeholder="you@example.com"
-            autoComplete="email"
-            aria-invalid={!!errors.email}
-            {...register("email")}
-          />
-          {errors.email && (
-            <p className="text-xs text-destructive">{errors.email.message}</p>
-          )}
-        </div>
-
-        <div className="space-y-1.5">
-          <Label htmlFor="password">Password</Label>
-          <div className="relative">
+        <Card className="space-y-5 p-6">
+          <div className="space-y-1.5">
+            <Label htmlFor="email">Email address</Label>
             <Input
-              id="password"
-              type={showPassword ? "text" : "password"}
-              placeholder="••••••••"
-              autoComplete="current-password"
-              aria-invalid={!!errors.password}
-              className="pr-10"
-              {...register("password")}
+              id="email"
+              type="email"
+              placeholder="you@example.com"
+              autoComplete="email"
+              aria-invalid={!!errors.email}
+              {...register("email")}
             />
-            <button
-              type="button"
-              onClick={() => setShowPassword((visible) => !visible)}
-              className="absolute top-1/2 right-2 -translate-y-1/2 rounded p-1 text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500"
-              aria-label={showPassword ? "Hide password" : "Show password"}
-              aria-pressed={showPassword}
-            >
-              {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
-            </button>
+            {errors.email && (
+              <p className="text-xs text-destructive">{errors.email.message}</p>
+            )}
           </div>
-          {errors.password && (
-            <p className="text-xs text-destructive">
-              {errors.password.message}
-            </p>
-          )}
-        </div>
 
-        <Button
-          type="submit"
-          className="w-full bg-teal-500 hover:bg-teal-600 cursor-pointer"
-          disabled={!isValid || pending}
-        >
-          {pending ? "Signing in..." : "Sign in"}
-        </Button>
-      </Card>
-    </form>
+          <div className="space-y-1.5">
+            <Label htmlFor="password">Password</Label>
+            <div className="relative">
+              <Input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="••••••••"
+                autoComplete="current-password"
+                aria-invalid={!!errors.password}
+                className="pr-10"
+                {...register("password")}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((visible) => !visible)}
+                className="absolute top-1/2 right-2 -translate-y-1/2 rounded p-1 text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-pressed={showPassword}
+              >
+                {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+              </button>
+            </div>
+            {errors.password && (
+              <p className="text-xs text-destructive">
+                {errors.password.message}
+              </p>
+            )}
+          </div>
 
-    <div className="my-4 flex items-center gap-3 text-muted-foreground">
-      <div className="h-px flex-1 bg-border" />
-      <span className="text-sm">OR</span>
-      <div className="h-px flex-1 bg-border" />
-    </div>
+          <Button
+            type="submit"
+            className="w-full bg-teal-500 hover:bg-teal-600 cursor-pointer"
+            disabled={!isValid || pending}
+          >
+            {pending ? "Signing in..." : "Sign in"}
+          </Button>
+        </Card>
+      </form>
 
-    <Button
-      type="button"
-      variant="outline"
-      asChild
-      className="w-full cursor-pointer"
-    >
-      <a href={`${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000"}/api/auth/google`}>
-        Continue with Google
-      </a>
-    </Button>
+      <div className="my-4 flex items-center gap-3 text-muted-foreground">
+        <div className="h-px flex-1 bg-border" />
+        <span className="text-sm">OR</span>
+        <div className="h-px flex-1 bg-border" />
+      </div>
 
-    <Button
-      type="button"
-      variant="ghost"
-      asChild
-      className="w-full cursor-pointer text-muted-foreground"
-    >
-      <a href={`${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000"}/api/auth/google?role=LANDLORD`}>
-        Are you a Landlord? Continue with Google as Landlord
-      </a>
-    </Button>
+      <Button
+        type="button"
+        variant="outline"
+        asChild
+        className="w-full cursor-pointer"
+      >
+        <a href={`${process.env.NEXT_PUBLIC_API_URL}/api/auth/google`}>
+          Continue with Google
+        </a>
+      </Button>
     </>
   );
 };
