@@ -132,11 +132,6 @@ export function Footer({ user }: FooterProps) {
                     Contact Us
                   </Link>
                 </li>
-                <li>
-                  <Link href="/support" className="text-muted-foreground hover:text-teal-600 transition-colors font-medium">
-                    Help & Support
-                  </Link>
-                </li>
               </ul>
             </div>
 
@@ -178,8 +173,6 @@ export function Footer({ user }: FooterProps) {
             <Link href="/contact" className="hover:text-teal-600 transition-colors">Contact</Link>
             <span>•</span>
             <Link href="/blog" className="hover:text-teal-600 transition-colors">Blog</Link>
-            <span>•</span>
-            <Link href="/support" className="hover:text-teal-600 transition-colors">Support</Link>
             <span>•</span>
             <Link href="/terms" className="hover:text-teal-600 transition-colors">Terms & Privacy</Link>
           </div>

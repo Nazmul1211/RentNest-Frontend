@@ -105,8 +105,8 @@ export default function HeroSection() {
           {/* Left Column: Headline & Direct Search CTA */}
           <div className="space-y-3 text-left sm:space-y-5 lg:col-span-7">
             {/* Value Pill */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-teal-500/20 bg-teal-500/10 px-3 py-1.5 text-[11px] font-semibold text-teal-600 dark:text-teal-400 sm:px-3.5 sm:text-xs max-[380px]:hidden">
-              <Sparkles className="size-3.5 shrink-0" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-teal-500/30 bg-teal-500/15 px-3 py-1.5 text-[11px] font-bold text-teal-800 dark:text-teal-400 sm:px-3.5 sm:text-xs max-[380px]:hidden">
+              <Sparkles className="size-3.5 shrink-0 text-teal-700 dark:text-teal-400" />
               <span>Direct Rental Marketplace • Zero Monthly Subscriptions</span>
             </div>
 
