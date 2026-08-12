@@ -39,7 +39,7 @@ export default function HowItWorksSection() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-teal-500/15 border border-teal-600/30 text-xs font-bold text-teal-950 dark:text-teal-300 shadow-xs">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-teal-500/15 border border-teal-600/30 text-xs font-bold text-teal-600 dark:text-teal-400 shadow-xs">
             <Sparkles className="size-3.5 text-teal-600 dark:text-teal-400" />
             <span>✦ Simple 3-Step Journey</span>
           </div>
